@@ -1,0 +1,21 @@
+.modal-body {
+    .dropdown{margin-bottom:0rem; width:100%;
+        button.btn-control{border-radius:8px; background-color:#222E3C; border:none; box-shadow:0px 2px 2px -1px rgba(74, 74, 104, 0.10) inset; 
+            padding: 6px 16px 6px 50px; color:#FAFCFE; font-size:14px; height:56px; width:100%; text-align:left;
+            background-image: url(/assets/images/icon-arrow-bottom.svg); background-repeat: no-repeat; background-position: right 0.75rem center;
+            img.currency-icon{ position:absolute; left:15px; top:50%; transform: translateY(-50%); width:24px;}
+        }
+        .dropdown-menu{width:100%; border-radius:8px; background-color:#222E3C; border:none;
+            .dropdown-item{font-size:14px; position:relative; padding:15px 15px 15px 50px; color:#FAFCFE; cursor: pointer;
+                &:hover{ background:#212121;}
+                &:last-child{border:none;}
+                img.currency-icon{ position:absolute; left:15px; top:50%; transform: translateY(-50%);  width:26px;}
+                span{color: #A3A3A3;}
+            }
+        }
+    }
+    .button{width:100%; border-radius:6px;}
+    .modal-info{font-size:12px; color:#FAFCFE; margin-top:10px;
+        span{color:#FF7F37;}
+    }
+}

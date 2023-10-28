@@ -1,0 +1,23 @@
+@import "../../../../../assets/scss/base/_variables.scss";
+
+.header{
+    padding:1.6rem 0;
+    .btn{font-size:10px; color:$clDefault; font-weight:700; letter-spacing:0.3px;  padding:3px 10px 3px 5px; margin-left:10px;
+        img{width:16px;}
+    }
+    .btn-accent{border-radius:26px; background-color:#E0EAEC;}
+    .btn-link{color:$clWhite;}
+}
+
+
+@media (max-width: $screen-sm-max) {
+    .header{ padding:.8rem 0;
+        .logo{width:110px;
+            img{width:100px;}
+        }
+        .btn-accent,.btn{padding:3px 6px; margin-left:0;}
+        .metamask-btn{
+            img{display: none;}
+        }
+    }
+}

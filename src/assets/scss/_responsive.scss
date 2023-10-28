@@ -1,0 +1,42 @@
+// @media (min-width: $screen-xs-min) { ... }
+// @media (max-width: $screen-xs-max) { ... }
+// @media (min-width: $screen-sm-min) { ... }
+// @media (max-width: $screen-sm-max) { ... }
+// @media (max-width: $screen-md-max) { ... }
+// @media (min-width: $screen-md-min) { ... }
+// @media (max-width: $screen-lg-max) { ... }
+// @media (min-width: $screen-lg-min) { ... }
+
+// @media (max-width: 1400px){
+//     .container{max-width:1620px;}
+// }
+
+@media (min-width: 1800px) {
+    body,html{font-size:18px;}
+    .container{max-width:1620px;} 
+}
+
+
+@media (max-width: $screen-lg-max) {
+    
+}
+
+@media (max-width: $screen-md-max) {
+    body,html{font-size:14px;}
+    body{background-size:auto;}
+    h1,.h1{ font-size:$ft32;}
+    h2,.h2{ font-size:$ft28;}
+    h3,.h3{ font-size:$ft20;}
+}
+
+
+@media (max-width: $screen-sm-max) {
+    body,html{font-size:12px;} 
+}
+
+@media (max-width: $screen-xs-max) {
+       
+}
+
+
+

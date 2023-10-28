@@ -1,0 +1,111 @@
+<div class="front-page">
+    <app-header></app-header>
+    <div class="site-content">
+        <div class="container">
+            <div class="hero-section">
+                <h1>The EstateX Staking Pool</h1>
+                <h2>Staking your $ESX is an excellent way to create a passive income, while doing absolutely nothing for it!</h2>
+                <button *ngIf="!walletAddress; else connected" type="button" (click)="openNetworkModal('staking')" class="btn btn-outline">Connect your wallet to begin</button>
+                <ng-template #connected>
+                    <button routerLink="/staking-pool" type="button" class="btn btn-outline">Connect your wallet to begin</button>
+                </ng-template>
+            </div>
+            <div class="participate">
+                <h2><span>3 easy steps</span> How to participate</h2>
+                <div class="row steps">
+                    <div class="col-md-4">
+                        <div class="d-flex align-items-center">
+                            <div class="flex-shrink-0">
+                                <img src="assets/images/number-1.svg" alt="1">
+                            </div>
+                            <div class="flex-grow-1 ms-3">
+                                <h3>Connect Wallet</h3>
+                                <p>You will get a passive $ESX income, increase your token amount without extra work.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="d-flex align-items-center">
+                            <div class="flex-shrink-0">
+                                <img src="assets/images/number-2.svg" alt="1">
+                            </div>
+                            <div class="flex-grow-1 ms-3">
+                                <h3>Select Plan</h3>
+                                <p>You will get a passive $ESX income, increase your token amount without extra work.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="d-flex align-items-center">
+                            <div class="flex-shrink-0">
+                                <img src="assets/images/number-3.svg" alt="1">
+                            </div>
+                            <div class="flex-grow-1 ms-3">
+                                <h3>Start Staking</h3>
+                                <p>You will get a passive $ESX income, increase your token amount without extra work.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="staking section smt-1">
+                <h2>What is staking?</h2>
+                <h3>Staking is a way to use your crypto holdings or coins to earn additional rewards. It can be helpful to think of it as along the lines of generating interest on cash savings, or earning dividends on stock holdings.</h3>
+                <h3>Staking is beneficial for the investor in several ways:</h3>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="d-flex align-items-center">
+                            <div class="flex-shrink-0">
+                                <img src="assets/images/icon-rewards.svg" alt="1">
+                            </div>
+                            <div class="flex-grow-1 ms-3">
+                                <p>Set once and reap the rewards</p>
+                            <p>You will get a passive $ESX income, increase your token amount without extra work.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="d-flex align-items-center">
+                            <div class="flex-shrink-0">
+                                <img src="assets/images/icon-background.svg" alt="1">
+                            </div>
+                            <div class="flex-grow-1 ms-3">
+                                <p>Works in the background</p>
+                                <p>The more people stake their tokens, the less sell pressure on ESX. Positive impact on the chart, resulting in best return on your investment.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="text-center mt-5">
+                    <button *ngIf="!walletAddress; else connected" type="button" (click)="openNetworkModal()" class="btn btn-outline">Connect your wallet to begin</button>
+                    <ng-template #connected>
+                        <button routerLink="/staking-pool" type="button" class="btn btn-outline">Connect your wallet to begin</button>
+                    </ng-template>
+                </div>
+            </div>
+
+            <div class="it-work section smt-1">
+                <h2>How does it work?</h2>
+                <h3>At EstateX we have two different staking pools: <br>
+                    Gold staking and Dynamic staking. Gold staking will only be accessible for presale investors. Dynamic staking will be available for everybody. Connect your wallet with the click of the button below and start staking!</h3>                
+                <div class="row mt-4" *ngIf="planData">
+                    <div class="col-md-4" *ngFor="let plan of planData">
+                        <div class="price-box">
+                            <h2 [style.color]="plan.title_color">{{plan.name}}</h2>
+                            <div class="description" [innerHTML]="plan.desc"></div>
+                            <div class="text-center">
+                                <button *ngIf="!walletAddress; else connectedStart1" type="button" (click)="openNetworkModal('staking')" [style.background]="plan.button_color" class="btn">Start Staking</button>
+                                <ng-template #connectedStart1>
+                                    <button routerLink="/staking-pool" type="button" class="btn btn-primary" [style.background]="plan.button_color">Start Staking</button>
+                                </ng-template>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <app-footer></app-footer>
+</div>

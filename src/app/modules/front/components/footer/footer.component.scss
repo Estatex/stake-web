@@ -1,0 +1,20 @@
+@import "../../../../../assets/scss/base/_variables.scss";
+
+.footer{font-size:12px; font-weight:$ftSB; color:#808080; margin-top:3rem;
+    .container{border-top: solid 1px #E0EAEC; padding-top:2.5rem;}
+    p{font-size:12px;}
+    .flink{ margin-bottom:.5rem;
+        a{color:#808080; display:inline-block; margin:0 8px;
+            &:hover{color:#FFF;}
+        }
+    }
+}
+
+
+@media (max-width: $screen-sm-max) {
+    .footer{margin-top:2rem;
+        .container{padding-top:1.25rem;}
+        .flink a{margin:0 4px;}
+        p{margin-bottom:0;}
+    }
+}

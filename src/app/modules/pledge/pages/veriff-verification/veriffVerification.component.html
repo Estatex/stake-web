@@ -1,0 +1,53 @@
+<div class="site-content">
+    <div class="container">
+        <div class="d-flex justify-content-between">
+            <h2>Verification</h2>
+            <div class="balance"><span>ESX Balance:</span> {{currentBalance}}</div>
+        </div>
+        <div class="row mb-3">
+            <div class="col-6">
+                <div class="balance-info">
+                    Parent Referral Address : {{refData && refData.parentAddr ? (refData.parentAddr | trimValue) : 'N/A'}}
+                </div>
+            </div>
+        </div>
+        <div id='veriff-root'></div>
+
+        <form class="row mb-4 site-form" [formGroup]="form" (ngSubmit)="onSubmit()">
+            <div class="col-md-6">
+                <div class="form-control-box" [ngClass]="{ 'is-invalid': submitted && f['firstName'].errors }">
+                    <label for="firstName">Given name</label>
+                    <input type="text" id="firstName" formControlName="firstName" class="form-control" autocomplete="name1"/>
+                </div>
+                <div *ngIf="submitted && f['firstName'].errors" class="invalid-feedback">
+                    <div *ngIf="f['firstName'].errors['required']">Name is required</div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-control-box" [ngClass]="{ 'is-invalid': submitted && f['lastName'].errors }">
+                    <label for="lastName">Last name</label>
+                    <input type="text" id="lastName" formControlName="lastName" class="form-control" autocomplete="name1"/>
+                </div>
+                <div *ngIf="submitted && f['lastName'].errors" class="invalid-feedback">
+                    <div *ngIf="f['lastName'].errors['required']">Last is required</div>
+                </div> 
+            </div>
+            <div class="col-md-6">
+                <div class="form-control-box" [ngClass]="{ 'is-invalid': submitted && f['email'].errors }">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" formControlName="email" class="form-control" autocomplete="off"/>
+                </div>
+                <div *ngIf="submitted && f['email'].errors" class="invalid-feedback">
+                    <div *ngIf="f['email'].errors['required']">Email is required</div>
+                    <div *ngIf="f['email'].errors['email']">Email is invalid</div>
+                    <div *ngIf="f['email'].errors['maxlength']">Email must not exceed 100 characters</div>
+                </div>
+            </div>
+            <div class="col-md-12 text-center">
+                <button class="btn btn-focus ms-3" [disabled]="wrongNetwork">Start Verification <svg xmlns="http://www.w3.org/2000/svg" width="24" height="25" viewBox="0 0 24 25" fill="none">
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M16.5021 16.8766C16.1573 17.3079 16.2274 17.9372 16.6587 18.2821C17.0901 18.627 17.7194 18.5568 18.0643 18.1255L21.5625 13.7499C22.1464 13.0197 22.1464 11.9824 21.5625 11.2521L18.0643 6.87655C17.7194 6.44519 17.0901 6.37508 16.6587 6.71996C16.2274 7.06484 16.1573 7.69411 16.5021 8.12547L19.2009 11.501L2.99902 11.501C2.44674 11.501 1.99902 11.9487 1.99902 12.501C1.99902 13.0533 2.44674 13.501 2.99902 13.501L19.2009 13.501L16.5021 16.8766Z" fill="#FAFCFE"/>
+                </svg></button>
+            </div>
+        </form>
+    </div>
+</div>

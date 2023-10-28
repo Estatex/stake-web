@@ -1,0 +1,114 @@
+<div class="site-data">
+    <div class="d-flex justify-content-between">
+        <h2>Transactions</h2>
+        
+    </div>
+    <div class="filter">
+        <div class="filter-box1">
+            <!-- <h3>Plan:</h3> -->
+            <!-- [(ngModel)]="selectedPlan" (ngModelChange)="updateData()" -->
+            <select class="form-select" aria-label="Select Plan"  style="width:150px;">
+                <!-- <option *ngFor="let plan of planList" [value]="plan.id">{{plan.name}}</option> -->
+            </select>
+        </div>
+        <div class="filter-box1">
+            <!-- <h3>Date Range:</h3> -->
+            <!-- [(ngModel)]="trnType" (ngModelChange)="updateData()" -->
+            <select class="form-select" aria-label="Select Plan" style="width:220px;">
+                <option value="ALL">Select Transaction Type</option>
+                <option value="STAKE">Stake</option>
+                <option value="UNSTAKE">Unstake</option>
+                <option value="CLAIM">Claim</option>
+            </select>
+        </div>
+        <div class="filter-box1">
+            <!-- <h3>Date Range:</h3> -->
+            <input type="text" placeholder="Select date range"class="form-input"
+                bsDaterangepicker [bsConfig]="bsConfig" (bsValueChange)="onDateChange($event)">
+        </div>
+        <div class="filter-box">
+            <h3>Locked:</h3>
+            <div class="form-check form-switch">
+                <!-- [(ngModel)]="isLockStatus" (ngModelChange)="updateData()" -->
+                <input class="form-check-input"  type="checkbox" role="switch" >
+            </div>
+        </div>
+        <div class="filter-box">
+            <h3>Search:</h3>
+            <div class="search-input input-group">
+                <span class="input-group-text" id="basic-addon1">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14" fill="none">
+                        <g clip-path="url(#clip0_3341_530)">
+                          <path fill-rule="evenodd" clip-rule="evenodd" d="M10.462 6.35326C10.462 8.62243 8.62243 10.462 6.35326 10.462C4.08409 10.462 2.24457 8.62243 2.24457 6.35326C2.24457 4.08409 4.08409 2.24457 6.35326 2.24457C8.62243 2.24457 10.462 4.08409 10.462 6.35326ZM9.71256 10.681C8.7849 11.4021 7.61923 11.8315 6.35326 11.8315C3.3277 11.8315 0.875 9.37882 0.875 6.35326C0.875 3.3277 3.3277 0.875 6.35326 0.875C9.37882 0.875 11.8315 3.3277 11.8315 6.35326C11.8315 7.61923 11.4021 8.7849 10.681 9.71256L12.9244 11.956C13.1919 12.2234 13.1919 12.657 12.9244 12.9244C12.657 13.1919 12.2234 13.1919 11.956 12.9244L9.71256 10.681Z" fill="#7C7B7B"/>
+                        </g>
+                        <defs>
+                          <clipPath id="clip0_3341_530">
+                            <rect width="14" height="14" fill="white"/>
+                          </clipPath>
+                        </defs>
+                      </svg>
+                </span>
+                <!-- [(ngModel)]="searchStr" (ngModelChange)="updateData()" -->
+                <input type="text" class="form-control" placeholder="Search query" >
+            </div>
+        </div>
+    </div>
+
+    <div class="site-table">
+        <div class="table-container">
+            <table class="table">
+                <thead>
+                    <tr class="sortable">
+                        <th scope="col" [ngClass]="this.sortBy === 'id' ? this.sortOrder : ''" (click)="shortBy('id')">Account ID</th>
+                        <th scope="col" [ngClass]="this.sortBy === 'address' ? this.sortOrder : ''" (click)="shortBy('address')">Users</th>
+                        <th scope="col" [ngClass]="this.sortBy === 'user_email' ? this.sortOrder : ''" (click)="shortBy('user_email')">Email</th>
+                        <th scope="col" [ngClass]="this.sortBy === 'plan_id' ? this.sortOrder : ''" (click)="shortBy('plan_id')">Plan name</th>
+                        <th scope="col" [ngClass]="this.sortBy === 'created' ? this.sortOrder : ''" (click)="shortBy('created')">Open date</th>
+                        <th scope="col" [ngClass]="this.sortBy === 'locked_date' ? this.sortOrder : ''" (click)="shortBy('locked_date')">Close date</th>
+                        <th scope="col" [ngClass]="this.sortBy === 'token_count' ? this.sortOrder : ''" (click)="shortBy('token_count')">Token lock count</th>
+                        <th scope="col" [ngClass]="this.sortBy === 'trn_type' ? this.sortOrder : ''" (click)="shortBy('trn_type')">Transaction Type</th>
+                        <th scope="col" [ngClass]="this.sortBy === 'status' ? this.sortOrder : ''" (click)="shortBy('status')">status</th>
+                    </tr>
+                </thead>
+                <tbody *ngIf="userData">
+                    <tr *ngFor="let item of userData">
+                        <td>{{item.id}}</td>
+                        <td>{{item.address | trimValue}}</td>
+                        <td>{{item.user_email}}</td>
+                        <td>{{item.plan_id }}</td>
+                        <td>{{item.created | date}}</td>
+                        <td>{{item.locked_date | date}}</td>
+                        <td>{{item.token_count}}</td>
+                        <td>{{item.trn_type}}</td>
+                        <td><span class="status true">{{item.status}}</span></td>
+                        <!-- <td><span class="status true">{{item.address}}</span></td> -->
+                    </tr>
+                </tbody>
+                <tr *ngIf="userData && userData.length === 0">
+                    <td colspan="7" class="text-center">No records found.</td>
+                </tr>
+            </table>
+        </div>
+        <div class="d-flex justify-content-between mt-3">
+            <!-- <div><pagination *ngIf="pageTotalItem && pageTotalItem > pageItemlimit" 
+                [totalItems]="pageTotalItem"
+                [itemsPerPage]="pageItemlimit"
+                [customNextTemplate]="nextTemplate"
+                [customPreviousTemplate]="prevTemplate"
+                [(ngModel)]="currentPage"
+                (pageChanged)="getUsers($event.page)"
+            ></pagination></div> -->
+            <!-- <div>Total: {{pageTotalItem}}</div> -->
+        </div>
+        <ng-template #nextTemplate let-disabled="disabled" let-currentPage="currentPage">
+            <svg xmlns="http://www.w3.org/2000/svg" width="8" height="14" viewBox="0 0 8 14" fill="none">
+                <path fill-rule="evenodd" clip-rule="evenodd" d="M0.898176 13.4983C0.613363 13.2537 0.587708 12.8324 0.840876 12.5572L5.95328 7.00007L0.840874 1.44298C0.587706 1.1678 0.613361 0.746413 0.898174 0.501802C1.18299 0.25719 1.61911 0.281977 1.87228 0.557165L6.98468 6.11426C7.44944 6.61944 7.44944 7.38071 6.98468 7.88589L1.87228 13.443C1.61911 13.7182 1.18299 13.743 0.898176 13.4983Z" fill="white"/>
+            </svg>
+        </ng-template>
+        <ng-template #prevTemplate let-disabled="disabled" let-currentPage="currentPage">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
+                <path fill-rule="evenodd" clip-rule="evenodd" d="M11.1018 14.4983C11.3866 14.2537 11.4123 13.8324 11.1591 13.5572L6.04672 8.00007L11.1591 2.44298C11.4123 2.1678 11.3866 1.74641 11.1018 1.5018C10.817 1.25719 10.3809 1.28198 10.1277 1.55717L5.01532 7.11426C4.55056 7.61944 4.55056 8.38071 5.01532 8.88589L10.1277 14.443C10.3809 14.7182 10.817 14.743 11.1018 14.4983Z" fill="white"/>
+            </svg>
+        </ng-template>
+    </div>
+</div>

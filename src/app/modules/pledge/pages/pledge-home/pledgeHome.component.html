@@ -1,0 +1,141 @@
+<div class="site-content">
+    <div class="container">
+        <div class="hero-section">
+            <div class="top-info">Welcome to the EstateX Pledge Pool!</div>
+            <h1>This is your chance to <span class="text-tertiary">GET IN FIRST</span> at our exchange listing!</h1>
+            <h2>With the help of our market maker we will be opening a pledge pool where investors can deposit funds to be used the first moment when we list.</h2>
+            <button *ngIf="!walletAddress; else connected" type="button" (click)="openNetworkModal('pledge')" class="btn btn-outline">Connect your wallet to begin</button>
+            <ng-template #connected> 
+                <button routerLink="/veriff-verification" type="button" class="btn btn-outline"> Connect your wallet to begin</button>
+            </ng-template>
+        </div>
+        <div class="participate">
+            <h2>How to participate</h2>
+            <div class="row steps">
+                <div class="col-md-4">
+                    <div class="d-flex align-items-center">
+                        <div class="flex-shrink-0">
+                            <img src="assets/images/number-1.svg" alt="1">
+                        </div>
+                        <div class="flex-grow-1 ms-3">
+                            <h3>Collect Pledges</h3>
+                            <p>The funds pledged in this pools will be handed over to our market maker to be used to buy ESX as soon as it launches. </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="d-flex align-items-center">
+                        <div class="flex-shrink-0">
+                            <img src="assets/images/number-2.svg" alt="1">
+                        </div>
+                        <div class="flex-grow-1 ms-3">
+                            <h3>Make Trade</h3>
+                            <p>When trading opens we will have the market maker buy ESX for the full pledged amount. This will ensure you will get in at the best price!</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="d-flex align-items-center">
+                        <div class="flex-shrink-0">
+                            <img src="assets/images/number-3.svg" alt="1">
+                        </div>
+                        <div class="flex-grow-1 ms-3">
+                            <h3>Get Rewarded</h3>
+                            <p>The % you have pledged in this pool will be proportional to the % of ESX the market maker has acquired at launch. Tokens will be send to your wallet straight after!</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="bg1">
+        <div class="container">
+            <div class="partnership row smt-1 justify-content-evenly">
+                <div class="col-md-6 col-lg-5">
+                    <h2>Our Partnerships</h2>
+                    <div>Partnerships with Microsoft, GDA Capital & many more </div>
+                </div>
+                <div class="col-md-6 col-lg-5 d-flex justify-content-around">
+                    <div><img src="/assets/images/microsoft.png" alt=""></div>
+                    <div><img src="/assets/images/gda-capital.png" alt=""></div>
+                </div>
+            </div>
+            <div class="text-center smt-3"><button routerLink="/veriff-verification" type="button" class="w-1 btn btn-primary">Make a pledge</button></div> 
+            <div class="pool-detail row smt-1">
+                <div class="col-md-3 col-sm-6">
+                    <div class="box"><div>
+                        <h3>$2.5m +</h3>
+                        <p>Raised</p>
+                    </div></div>
+                </div>
+                <div class="col-md-3 col-sm-6">
+                    <div class="box"><div>
+                        <h3>135k +</h3>
+                        <p>community members</p>
+                    </div></div>
+                </div>
+                <div class="col-md-3 col-sm-6">
+                    <div class="box"><div>
+                        <h3>2300 +</h3>
+                        <p>Active presale ESX holders </p>
+                    </div></div>
+                </div>
+                <div class="col-md-3 col-sm-6">
+                    <div class="box"><div>
+                        <h3>50%</h3>
+                        <p>of presale tokens have been voluntarily staked!</p>
+                    </div></div>
+                </div>
+            </div>
+            <div class="referring row smt-1">
+                <div class="col-md-3 text-center">
+                    <img src="/assets/images/referring.svg" alt="">
+                </div>
+                <div class="col-md-9">
+                    <h2>Get rewarded by referring your friends! </h2>
+                    <h3>Share and receive a <span class="text-focus">5% token bonus</span> of <br> everything they pledge!</h3>
+                    <p>Simply share your unique referral link from your dashboard. </p>
+                </div>
+            </div>
+            <div class="example-scenario smt-1">
+                <div class="row">
+                    <div class="col-lg-8">
+                        <div class="label">Example Scenario</div>
+                        <p>Person A pledges $20,000, if you referred this person you automatically receive 5% of his tokens as a bonus! Your friend will receive an additional 3% in bonus tokens. </p>
+                    </div>
+                    <div class="col-lg-4 align-self-center">
+                        <button *ngIf="!walletAddress; else connected1" type="button" (click)="openNetworkModal('pledge')" class="btn btn-outline">Make a pledge</button>
+                        <ng-template #connected1>
+                            <button routerLink="veriff-verification" type="button" class="btn btn-outline">Make a pledge</button>
+                        </ng-template>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <br><br>
+        <div class="faq smt-1">
+            <h2>Frequently asked questions</h2>
+            <ul>
+                <li>
+                    <h3>What is a SAFT agreement?</h3>
+                    <p>A SAFT agreement is an agreement that states the purpose of your funds and the equivalent in tokens in a legally binding document. In short this means, what we say what we will do with your funds, we will adhere to.</p>
+                </li>
+                <li>
+                    <h3>If i deposit 1% of the total pool, what happens?</h3>
+                    <p>This means that 1% the total amount of tokens acquired at list will be send straight to a wallet! No vesting will apply since the tokens have been bought directly on an exchange.</p>
+                </li>
+                <li>
+                    <h3>Am I able to pledge 2 or possibly 3 times in this pool?</h3>
+                    <p>Yes! You can pledge an many times as you want!</p>
+                </li>
+                <li>
+                    <h3>Is there a maximum one can pledge?</h3>
+                    <p> No, there is no maximum one can pledge. You are completely free to decide how much you want to pledge.</p>
+                </li>
+            </ul>
+        </div>
+        <br><br>
+    </div>
+</div>

@@ -1,0 +1,45 @@
+@import "../../../../assets/scss/base/_variables.scss";
+.auth-page{background: #33404F; min-height:100vh; width:100%; padding:2rem 0; color:#FFF;
+
+    .header{
+        .btn{font-size:10px; color:$clDefault; font-weight:700; letter-spacing:0.3px;  padding:3px 24px;}
+        .btn-accent{border-radius:26px; background-color:#E0EAEC;}
+    }
+
+    .main-page{margin-top:2rem;
+        .container{max-width:420px;}
+        .container-box{background:#FFF; border-radius:16px; color:#0E0E2C; padding:2.5rem 2.5rem;
+            h1{font-size:$ft32;}
+        }
+    }
+
+    .top{margin-bottom:1.75rem; text-align:center;
+        h1{ margin-bottom:1.75rem;}
+        .badge{font-size: 10px; font-weight: 700; letter-spacing: 0.3px; border-radius: 26px;
+            background:#E0EAEC; text-transform:uppercase; padding:5px 8px; color:$clDefault;}
+    }
+
+    .footer{ margin-top:3rem; text-align:center; font-size:10px; color:#FAFCFE;
+        a{color: #FAFCFE; text-decoration:underline;}
+    }
+
+    .site-form{ margin-bottom:1rem;
+        .form-box{margin-bottom:1.25rem;
+            .form-control{font-size:$ft14; padding:.875rem 1rem; border-radius:8px; background-color:#FAFCFE; border-color:#FAFCFE;
+            background-repeat: no-repeat; background-position: right 0.75rem center; background-image:none;}
+            .form-control.ng-touched.ng-valid{box-shadow:0px 0px 0px 4px rgba(49, 208, 170, 0.25); background-image: url(/assets/images/icon-check-success.svg);}
+            .form-control.ng-touched.ng-invalid{
+                border-radius: 8px; border-color:#FF4F6A;background-color:#FFF2F2;
+                box-shadow: 0px 0px 0px 4px rgba(255, 79, 106, 0.25);}
+            select.form-control{background-image: url(/assets/images/icon-arrow-bottom.svg); background-repeat: no-repeat; background-position: right 0.75rem center;}
+            .password-control{position:relative;
+                .form-control{background-image:none!important;}
+                .icon{ position:absolute; top:calc(50% - 8px); right: 0.75em; background:url(/assets/images/icon-eye-show.svg) no-repeat; height:16px; width:16px; cursor:pointer;}
+                .icon.show-password{background-image:url(/assets/images/icon-eye-hide.svg);}
+            }
+        }
+    }
+    .bottom-info{text-align:center; margin-top:2.56rem;
+        a{color:$clPrimary; font-weight:$ftB; text-decoration:underline;}
+    }
+}

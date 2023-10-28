@@ -1,0 +1,355 @@
+<div class="site-content" *ngIf="userData">
+    <div class="container">
+        <!-- <div class="d-flex justify-content-between">
+            <h2>Varification</h2>
+        </div> -->
+        <accordion class="overview-list accordion accordion-icon" [isAnimated]="true">
+            <accordion-group [classList]="'accordion-item'">
+                <div accordion-heading class="accordion-header"><div class="accordion-button">Dashboard</div></div>
+                <div class="accordion-body">
+                    <div class="row mb-3" *ngIf="dashboardData">
+                        <div class="col-6">
+                            <div class="balance-info">
+                                <h4>Amount pledged</h4>
+                                <div class="value">
+                                    <span>USD</span>
+                                    {{dashboardData.total_pledged}}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="balance-info">
+                                <h4>Total Referrals</h4>
+                                <div class="value">
+                                    {{dashboardData.total_referrals}}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="balance-info">
+                                <h4>Pledged by Referres</h4>
+                                <div class="value">
+                                    {{dashboardData.total_ref_pledged}}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="balance-info">
+                                <h4>Commission earned through Referres</h4>
+                                <div class="value">
+                                    <span>USD</span>
+                                    {{dashboardData.total_ref_comm}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </accordion-group>
+            <accordion-group [classList]="'accordion-item'" [isOpen]="isOpen === 1">
+                <div accordion-heading class="accordion-header"><div class="accordion-button">Transactions</div></div>
+                <div class="accordion-body">
+                    <div class="table-container">
+                        <table class="table site-table">
+                            <thead>
+                                <tr>
+                                    <th>Chain</th>
+                                    <th>Token</th>
+                                    <th>Token Value</th>
+                                    <th>Date</th>
+                                    <th>USD Value</th>
+                                    <th>status</th>
+                                </tr>
+                            </thead>
+                            <tbody *ngIf="transactionsData">
+                                <tr *ngFor="let item of transactionsData">
+                                    <td>{{item.chain}}</td>
+                                    <td>{{item.token}}</td>
+                                    <td>{{item.token_value}}</td>
+                                    <td>{{item.created | date}}</td>
+                                    <td>{{item.usd_value}}</td>
+                                    <td>
+                                        <a *ngIf="item.txhash else status" [ngClass]="'status '+item.status"
+                                            href="{{configToken[this.web3Network].blockExplorerUrls+'/tx/'+item.txhash}}"
+                                            [tooltip]="item.status_desc && item.status_desc !== 'null' ? item.status_desc : ''" target="_blank">
+                                            {{item.status}}
+                                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M20 14a1 1 0 0 0-1 1v3.077c0 .459-.022.57-.082.684a.363.363 0 0 1-.157.157c-.113.06-.225.082-.684.082H5.923c-.459 0-.571-.022-.684-.082a.363.363 0 0 1-.157-.157c-.06-.113-.082-.225-.082-.684L4.999 5.5a.5.5 0 0 1 .5-.5l3.5.005a1 1 0 1 0 .002-2L5.501 3a2.5 2.5 0 0 0-2.502 2.5v12.577c0 .76.083 1.185.32 1.627.223.419.558.753.977.977.442.237.866.319 1.627.319h12.154c.76 0 1.185-.082 1.627-.319.419-.224.753-.558.977-.977.237-.442.319-.866.319-1.627V15a1 1 0 0 0-1-1zm-2-9.055v-.291l-.39.09A10 10 0 0 1 15.36 5H14a1 1 0 1 1 0-2l5.5.003a1.5 1.5 0 0 1 1.5 1.5V10a1 1 0 1 1-2 0V8.639c0-.757.086-1.511.256-2.249l.09-.39h-.295a10 10 0 0 1-1.411 1.775l-5.933 5.932a1 1 0 0 1-1.414-1.414l5.944-5.944A10 10 0 0 1 18 4.945z" fill="currentColor"/></svg>
+                                        </a>
+                                        <ng-template #status><span [ngClass]="'status '+item.status" [tooltip]="item.status_desc && item.status_desc !== 'null' ? item.status_desc : ''" class="status true">{{item.status}}</span></ng-template>
+                                    </td>
+                                </tr>
+                            </tbody>
+                            <tr *ngIf="transactionsData && transactionsData.length === 0">
+                                <td colspan="7" class="text-center">No records found.</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </accordion-group>
+            <accordion-group [classList]="'accordion-item'">
+                <div accordion-heading class="accordion-header"><div class="accordion-button">Refree Transactions</div></div>
+                <div class="accordion-body">
+                    <div class="table-container">
+                        <table class="table site-table">
+                            <thead>
+                                <tr>
+                                    <th>User Name</th>
+                                    <th>Chain</th>
+                                    <th>Token</th>
+                                    <th>Token Value</th>
+                                    <th>Date</th>
+                                    <th>USD Value</th>
+                                    <th>Commission Earned</th>
+                                    <th>status</th>
+                                </tr>
+                            </thead>
+                            <tbody *ngIf="refreeTransactionsData">
+                                <tr *ngFor="let item of refreeTransactionsData">
+                                    <td>{{item.userName}}</td>
+                                    <td>{{item.chain}}</td>
+                                    <td>{{item.token}}</td>
+                                    <td>{{item.token_value}}</td>
+                                    <td>{{item.created | date}}</td>
+                                    <td>{{item.usd_value}}</td>
+                                    <td>{{item.comm_earned}}</td>
+                                    <td>
+                                        <a *ngIf="item.txhash else status" [ngClass]="'status '+item.status"
+                                            href="{{configToken[this.web3Network].blockExplorerUrls+'/tx/'+item.txhash}}"
+                                            [tooltip]="item.status_desc && item.status_desc !== 'null' ? item.status_desc : ''" target="_blank">
+                                            {{item.status}}
+                                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M20 14a1 1 0 0 0-1 1v3.077c0 .459-.022.57-.082.684a.363.363 0 0 1-.157.157c-.113.06-.225.082-.684.082H5.923c-.459 0-.571-.022-.684-.082a.363.363 0 0 1-.157-.157c-.06-.113-.082-.225-.082-.684L4.999 5.5a.5.5 0 0 1 .5-.5l3.5.005a1 1 0 1 0 .002-2L5.501 3a2.5 2.5 0 0 0-2.502 2.5v12.577c0 .76.083 1.185.32 1.627.223.419.558.753.977.977.442.237.866.319 1.627.319h12.154c.76 0 1.185-.082 1.627-.319.419-.224.753-.558.977-.977.237-.442.319-.866.319-1.627V15a1 1 0 0 0-1-1zm-2-9.055v-.291l-.39.09A10 10 0 0 1 15.36 5H14a1 1 0 1 1 0-2l5.5.003a1.5 1.5 0 0 1 1.5 1.5V10a1 1 0 1 1-2 0V8.639c0-.757.086-1.511.256-2.249l.09-.39h-.295a10 10 0 0 1-1.411 1.775l-5.933 5.932a1 1 0 0 1-1.414-1.414l5.944-5.944A10 10 0 0 1 18 4.945z" fill="currentColor"/></svg>
+                                        </a>
+                                        <ng-template #status><span [ngClass]="'status '+item.status" [tooltip]="item.status_desc && item.status_desc !== 'null' ? item.status_desc : ''" class="status true">{{item.status}}</span></ng-template>
+                                    </td>
+                                </tr>
+                            </tbody>
+                            <tr *ngIf="refreeTransactionsData && refreeTransactionsData.length === 0">
+                                <td colspan="7" class="text-center">No records found.</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </accordion-group>
+            <accordion-group [classList]="'accordion-item'" [isOpen]="isOpen === 2">
+                <div accordion-heading class="accordion-header"><div class="accordion-button">Profile</div></div>
+                <div class="accordion-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="readonly-value">
+                                <span>Parent Referral Address : {{refData && refData.parentAddr ? (refData.parentAddr | trimValue) : 'N/A'}}</span>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <!-- <div class="readonly-value">
+                                <span>Referral Commission</span>
+                                {{userData.ref_comm_per}}%
+                            </div> -->
+                        </div>
+                        <div class="col-md-6">
+                            <div class="readonly-value">
+                                <span>First Name</span>
+                                {{userData.first_name}} 
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="readonly-value">
+                                <span>Last Name</span>
+                                {{userData.last_name}}
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="readonly-value">
+                                <span>Email</span>
+                                {{userData.email}}
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="readonly-value">
+                                <span>KYC Status</span>
+                                <i [ngClass]="userData.kyc_status +' status'">
+                                    <a *ngIf="userData.kyc_status!=='approved'; else approved" [attr.href]="userData.kyc_url">
+                                        {{userData.kyc_status}}
+                                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M20 14a1 1 0 0 0-1 1v3.077c0 .459-.022.57-.082.684a.363.363 0 0 1-.157.157c-.113.06-.225.082-.684.082H5.923c-.459 0-.571-.022-.684-.082a.363.363 0 0 1-.157-.157c-.06-.113-.082-.225-.082-.684L4.999 5.5a.5.5 0 0 1 .5-.5l3.5.005a1 1 0 1 0 .002-2L5.501 3a2.5 2.5 0 0 0-2.502 2.5v12.577c0 .76.083 1.185.32 1.627.223.419.558.753.977.977.442.237.866.319 1.627.319h12.154c.76 0 1.185-.082 1.627-.319.419-.224.753-.558.977-.977.237-.442.319-.866.319-1.627V15a1 1 0 0 0-1-1zm-2-9.055v-.291l-.39.09A10 10 0 0 1 15.36 5H14a1 1 0 1 1 0-2l5.5.003a1.5 1.5 0 0 1 1.5 1.5V10a1 1 0 1 1-2 0V8.639c0-.757.086-1.511.256-2.249l.09-.39h-.295a10 10 0 0 1-1.411 1.775l-5.933 5.932a1 1 0 0 1-1.414-1.414l5.944-5.944A10 10 0 0 1 18 4.945z" fill="currentColor"/></svg>
+                                    </a>
+                                    <ng-template #approved>{{userData.kyc_status}}</ng-template>
+                                </i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="d-flex justify-content-between mt-3">
+                        <div class="referral">
+                            <button (click)="isSocialIconShow = !isSocialIconShow" class="btn btn-focus">Share Referral code <img src="/assets/images/share-icon.svg"/></button>
+                            <div class="refer-com" *ngIf="planData">**Referral Commission : {{planData.ref_comm_per}}%</div>
+                            <div class="social-icons" [ngClass]="{'show':isSocialIconShow}">
+                                <button class="button" data-sharer="facebook" data-hashtag="EstateX" [attr.data-url]="referralURL"><img src="/assets/images/icon-facebook.svg"/></button>
+                                <button class="button" data-sharer="linkedin" [attr.data-url]="referralURL"><img src="/assets/images/icon-linkedin.svg"/></button>
+                                <button class="button" data-sharer="twitter" [attr.data-title]="referralTitle" [attr.data-url]="referralURL" data-hashtags="EstateX" ><img src="/assets/images/icon-x.svg"/></button>
+                                <button class="button" data-sharer="email" [attr.data-title]="referralTitle" [attr.data-url]="referralURL" [attr.data-subject]="referralTitle" [attr.data-to]="userData.email"><img src="/assets/images/icon-email2.svg"/></button>
+                                <button class="button" data-sharer="whatsapp" [attr.data-title]="referralTitle" [attr.data-url]="referralURL"><img src="/assets/images/icon-whatsapp.svg"/></button>
+                                <button class="button" data-sharer="telegram" [attr.data-title]="referralTitle" [attr.data-url]="referralURL" ><img src="/assets/images/icon-telegram.svg"/></button>
+                                <button class="button" (click)="copy(referralURL)" ><img src="/assets/images/icon-copy.svg"/></button>
+                            </div>
+                        </div>
+                        <div>
+                            <button (click)="openModal(pledgeTemplate)" class="btn btn-focus" [disabled]="userData.kyc_status !== 'approved' || wrongNetwork">Pledge <svg xmlns="http://www.w3.org/2000/svg" width="24" height="25" viewBox="0 0 24 25" fill="none">
+                                <path fill-rule="evenodd" clip-rule="evenodd" d="M16.5021 16.8766C16.1573 17.3079 16.2274 17.9372 16.6587 18.2821C17.0901 18.627 17.7194 18.5568 18.0643 18.1255L21.5625 13.7499C22.1464 13.0197 22.1464 11.9824 21.5625 11.2521L18.0643 6.87655C17.7194 6.44519 17.0901 6.37508 16.6587 6.71996C16.2274 7.06484 16.1573 7.69411 16.5021 8.12547L19.2009 11.501L2.99902 11.501C2.44674 11.501 1.99902 11.9487 1.99902 12.501C1.99902 13.0533 2.44674 13.501 2.99902 13.501L19.2009 13.501L16.5021 16.8766Z" fill="#FAFCFE"/>
+                            </svg></button>
+                        </div>
+                    </div>
+                </div>
+            </accordion-group>
+        </accordion>
+    </div>
+</div>
+
+<ng-template #pledgeTemplate>
+    <div class="d-flex justify-content-between">
+        <h3 class="modal-title">Pledge</h3>
+        <div class="mt-3 me-4 me-sm-0">Balance: {{selectedChain.token_name}} {{currentBalance}}</div>
+    </div>
+    <button type="button" class="btn-close modal-close" aria-label="Close" (click)="close()">
+        <span aria-hidden="true" class="visually-hidden">&times;</span>
+    </button>
+    <div class="modal-body mt-4">
+        <div *ngIf="pledgeUSDAmount" class="amount-value">Value: USD {{pledgeUSDAmount}}</div>
+        <div class="row mb-4">
+            <div class="col-md-6">
+                <div class="form-control-dropdown dropdown" dropdown>
+                    <button id="button-basic" dropdownToggle type="button" class="btn-control">
+                        <span>Select Token/Currency</span>
+                        {{selectedChain.token_name}}
+                    </button>
+                    <ul id="dropdown-basic" *dropdownMenu class="dropdown-menu">
+                        <li class="dropdown-item" (click)="changeToken(token)" *ngFor="let token of tokenList">{{token.token_name}}</li>
+                    </ul>
+                    <div class="invalid-feedback"></div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-control-box">
+                    <label for="claimedAmount">Enter Amount</label>
+                    <div class="input-group">
+                        <input id="claimedAmount" type="number"  class="form-control" [(ngModel)]="pledgeAmount" (ngModelChange)="changePledgeAmount($event)" autocomplete="off"/>
+                        <span role="button" class="text-focus" (click)="pledgeAmount = currentBalance">Max</span>
+                    </div>
+                </div>
+                <div class="invalid-feedback">
+                    <span *ngIf="submitted && !pledgeAmount">Please Enter Amount.</span>
+                    <span *ngIf="submitted && pledgeAmount && isAmountInvalid">
+                        Pledge minimum: {{planData.min_amount}} USD.
+                    </span>
+                    <span *ngIf="submitted && pledgeAmount && pledgeAmount > currentBalance" class="invalid-feedback">
+                        Insufficient Balance.
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div class="d-flex justify-content-end">
+            <button class="btn btn-primary2" (click)="close()">Cancel</button>
+            <button class="btn btn-focus ms-3" (click)="deposit()">{{depositText}}<svg xmlns="http://www.w3.org/2000/svg" width="24" height="25" viewBox="0 0 24 25" fill="none">
+                <path fill-rule="evenodd" clip-rule="evenodd" d="M16.5021 16.8766C16.1573 17.3079 16.2274 17.9372 16.6587 18.2821C17.0901 18.627 17.7194 18.5568 18.0643 18.1255L21.5625 13.7499C22.1464 13.0197 22.1464 11.9824 21.5625 11.2521L18.0643 6.87655C17.7194 6.44519 17.0901 6.37508 16.6587 6.71996C16.2274 7.06484 16.1573 7.69411 16.5021 8.12547L19.2009 11.501L2.99902 11.501C2.44674 11.501 1.99902 11.9487 1.99902 12.501C1.99902 13.0533 2.44674 13.501 2.99902 13.501L19.2009 13.501L16.5021 16.8766Z" fill="#FAFCFE"/>
+              </svg></button>
+        </div>
+    </div>
+</ng-template>
+
+<ng-template #pledgeAgreement>
+    <h3 class="modal-title">Saft Agreement</h3>
+    <button type="button" class="btn-close modal-close" aria-label="Close" (click)="close()">
+        <span aria-hidden="true" class="visually-hidden">&times;</span>
+    </button>
+    <div class="modal-body">
+        <div class="agreement">
+            THIS MEMORANDUM CONSTITUTES AN OFFER OF SAFTS ONLY IN THOSE JURISDICTIONS AND TO THOSE PERSONS WHERE AND TO WHOM THEY LAWFULLY MAY BE OFFERED FOR SALE. THIS MEMORANDUM DOES NOT CONSTITUTE AN OFFER OF AN INVESTMENT IN A SAFT EXCEPT TO THE EXTENT PERMITTED BY THE LAWS OF EACH APPLICABLE JURISDICTION.
+            <br><br>
+            IT IS THE RESPONSIBILITY OF ANY PERSONS WISHING TO INVEST IN THE SAFTS DESCRIBED IN THIS MEMORANDUM TO INFORM THEMSELVES AS TO: (A) THE LEGAL REQUIREMENTS OF THEIR OWN COUNTRIES FOR THE PURCHASE, HOLDING, TRANSFER OR OTHER DISPOSAL OF THE OPP TOKENS AND SAFT; (B) ANY FOREIGN EXCHANGE RESTRICTIONS APPLICABLE TO THE PURCHASE, HOLDING, TRANSFER OR OTHER DISPOSAL OF THE OPP TOKENS OR SAFT WHICH THEY MIGHT ENCOUNTER; AND (C) THE INCOME AND OTHER TAX CONSEQUENCES WHICH MAY APPLY IN THEIR OWN COUNTRIES AS A RESULT OF THE PURCHASE, HOLDING, TRANSFER OR OTHER DISPOSAL OF THE OPP TOKENS OR SAFT.
+            <br><br>
+            IN PARTICULAR, ANY POTENTIAL PURCHASER CONFIRMS THAT ANY DISCUSSIONS BETWEEN THE POTENTIAL PURCHASER OR REPRESENTATIVES OF THE POTENTIAL PURCHASER AND OF THE COMPANY AND ITS AFFILIATES REGARDING A POTENTIAL INVESTMENT IN A SAFT WERE INITIATED BY SUCH PURCHASER OR ONE OR MORE REPRESENTATIVES OF SUCH POTENTIAL PURCHASER.
+            <br><br>
+            THE DISTRIBUTION OF THIS MEMORANDUM IN CERTAIN JURISDICTIONS MAY BE RESTRICTED BY LAW. PERSONS INTO WHOSE POSSESSION THIS MEMORANDUM COMES SHOULD INFORM THEMSELVES ABOUT AND OBSERVE ANY SUCH RESTRICTIONS. FAILURE TO COMPLY WITH ANY SUCH RESTRICTIONS MAY CONSTITUTE A VIOLATION OF THE SECURITIES LAWS OF ANY SUCH JURISDICTION.
+            <br><br>
+            PROSPECTIVE PURCHASERS SHOULD READ THE WHOLE OF THIS MEMORANDUM AND SHOULD BE AWARE THAT THESE INSTRUMENTS ARE SPECULATIVE AND INVOLVE A HIGH DEGREE OF RISK. SEE THE SECTION OF THIS MEMORANDUM ENTITLED “RISK FACTORS” FOR A DISCUSSION OF CERTAIN RISKS AND OTHER FACTORS WHICH SHOULD BE CONSIDERED PRIOR TO ANY INVESTMENT IN THE SAFTS.
+            <br><br>
+            PROSPECTIVE PURCHASERS MUST RELY UPON THEIR OWN REPRESENTATIVES, INCLUDING THEIR OWN LEGAL ADVISERS AND ACCOUNTANTS, AS TO LEGAL, TAX, INVESTMENT OR ANY OTHER RELATED MATTERS CONCERNING OPPORTY, OPP TOKENS, THE SAFT AND AN INVESTMENT THEREIN. THE CONTENTS OF OPPORTY’S WEBSITE, INCLUDING ANY WEBSITES ACCESSIBLE FROM HYPERLINKS ON OPPORTY’S WEBSITE, DO NOT FORM PART OF THIS MEMORANDUM.
+        </div>
+        <div>
+            <div class="form-check form-checkbox form-check-inline">
+                <input class="form-check-input" type="checkbox" id="checkboxTerms" [(ngModel)]="checkboxTerms">
+                <label class="form-check-label" for="checkboxTerms">I have throughly read the SAFT Agreement and agree to pledge.</label>
+            </div>
+            <div *ngIf="submitted && !checkboxTerms" class="invalid-feedback">
+                Please accept the SAFT terms and conditions before moving forward.
+            </div>
+        </div>
+        <div class="d-flex justify-content-end">
+            <button class="btn btn-primary2" (click)="close()">Cancel</button>
+            <button class="btn btn-focus ms-3" (click)="submit()">Submit <svg xmlns="http://www.w3.org/2000/svg" width="24" height="25" viewBox="0 0 24 25" fill="none">
+                <path fill-rule="evenodd" clip-rule="evenodd" d="M16.5021 16.8766C16.1573 17.3079 16.2274 17.9372 16.6587 18.2821C17.0901 18.627 17.7194 18.5568 18.0643 18.1255L21.5625 13.7499C22.1464 13.0197 22.1464 11.9824 21.5625 11.2521L18.0643 6.87655C17.7194 6.44519 17.0901 6.37508 16.6587 6.71996C16.2274 7.06484 16.1573 7.69411 16.5021 8.12547L19.2009 11.501L2.99902 11.501C2.44674 11.501 1.99902 11.9487 1.99902 12.501C1.99902 13.0533 2.44674 13.501 2.99902 13.501L19.2009 13.501L16.5021 16.8766Z" fill="#FAFCFE"/>
+              </svg></button>
+        </div>
+    </div>
+</ng-template>
+
+<ng-template #pledgeStakingDays>
+    <h3 class="modal-title">Participate in Staking and earn Rewards</h3>
+    <button type="button" class="btn-close modal-close" aria-label="Close" (click)="close()">
+        <span aria-hidden="true" class="visually-hidden">&times;</span>
+    </button>
+    <div class="modal-body">
+        <div class="row">
+            <!-- <div class="col-md-4 align-self-center" *ngIf="planData.show_stakeoption === 1">
+                <div class="form-check form-checkbox form-check-inline">
+                    <input class="form-check-input" type="checkbox" id="checkboxTerms" [(ngModel)]="isESXtokens">
+                    <label class="form-check-label" for="checkboxTerms">Interested in Staking ESX tokens?</label>
+                </div>
+            </div> *ngIf="isESXtokens || planData.show_stakeoption === 0" -->
+            <div class="col-6">
+                <div class="form-control-box">
+                    <label for="claimedAmount">Staking Days</label>
+                    <input id="claimedAmount" type="number" class="form-control" autocomplete="off" [(ngModel)]="stakingDays"/>
+                </div>
+                <div class="invalid-feedback">
+                    <span *ngIf="submitted && !stakingDays">Please Enter Staking Days.</span>
+                </div>
+            </div>
+            <div class="col-6 align-self-center">
+                <button class="btn btn-focus" (click)="submitStaking()">Submit <svg xmlns="http://www.w3.org/2000/svg" width="24" height="25" viewBox="0 0 24 25" fill="none">
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M16.5021 16.8766C16.1573 17.3079 16.2274 17.9372 16.6587 18.2821C17.0901 18.627 17.7194 18.5568 18.0643 18.1255L21.5625 13.7499C22.1464 13.0197 22.1464 11.9824 21.5625 11.2521L18.0643 6.87655C17.7194 6.44519 17.0901 6.37508 16.6587 6.71996C16.2274 7.06484 16.1573 7.69411 16.5021 8.12547L19.2009 11.501L2.99902 11.501C2.44674 11.501 1.99902 11.9487 1.99902 12.501C1.99902 13.0533 2.44674 13.501 2.99902 13.501L19.2009 13.501L16.5021 16.8766Z" fill="#FAFCFE"/>
+                  </svg></button>
+                  <div class="invalid-feedback"></div>
+            </div>
+        </div>
+        <div class="d-flex justify-content-end">
+            <!-- <button class="btn btn-primary2" (click)="close()">Cancel</button> -->
+            
+        </div>
+        <div class="staking-video">
+            <video src="/assets/videos/staking.mp4" class="object-fit-contain" autoplay controls></video>
+        </div>
+        
+    </div>
+</ng-template>
+
+<div [hidden]="!isWaitingTxShow" class="page-overlay show">
+    <div class="box">
+        <br><br>
+        <div>
+            <div class="loader loader--style3" title="2">
+                <svg version="1.1" id="loader-1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                   width="80px" height="80px" viewBox="0 0 50 50" style="enable-background:new 0 0 50 50;" xml:space="preserve">
+                <path fill="#FFF" d="M43.935,25.145c0-10.318-8.364-18.683-18.683-18.683c-10.318,0-18.683,8.365-18.683,18.683h4.068c0-8.071,6.543-14.615,14.615-14.615c8.072,0,14.615,6.543,14.615,14.615H43.935z">
+                  <animateTransform attributeType="xml"
+                    attributeName="transform"
+                    type="rotate"
+                    from="0 25 25"
+                    to="360 25 25"
+                    dur="0.6s"
+                    repeatCount="indefinite"/>
+                  </path>
+                </svg>
+            </div>
+        </div>
+        <br>
+        Waiting for Transaction
+        <br><br>
+    </div>
+</div>

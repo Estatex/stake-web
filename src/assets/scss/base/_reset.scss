@@ -1,0 +1,128 @@
+html,body{font-size:16px;}
+body{background:#FFF; font-size:$ft14; font-weight:$ftRg; font-family:$ftDefault; color:$clDefault;}
+
+*:focus{outline: none!important;}
+
+a{color:$clPrimary; text-decoration:none;
+	@include transition(all 0.4s ease-in-out);
+	&:hover{color:$clDefault; text-decoration:none;}
+	&:focus{color:$clDefault; text-decoration:none;}
+}
+
+h1,.h1{ font-family:$ftDefault; font-weight:$ftB; font-size:$ft36;}
+h2,.h2{ font-family:$ftDefault; font-weight:$ftSB; font-size:$ft32;}
+h3,.h3{ font-family:$ftDefault; font-weight:$ftB; font-size:$ft24;}
+h4,.h4{ font-size:$ft16; font-weight:normal; margin-top:10px;}
+h5,.h5{ font-size:$ft14; font-weight:bold; text-transform:uppercase;}
+h6,.h6{ font-size:1.000em; font-weight:normal;}
+
+p{ font-size:$ft14; line-height:1.5em; margin-bottom:15px;}
+
+img{ max-width:100%;}
+img.media-object,
+.input-group-addon img{ max-width:none;}
+
+caption{ padding:0;}
+
+
+@mixin btn($bgcolor, $color) {
+	color: $color;
+	background-color: $bgcolor;
+	border-color: $bgcolor;
+	&:hover, &:focus, &:active {
+		background-color: darken($bgcolor, 12)!important;
+		border-color: darken($bgcolor, 12)!important;
+		color:$color!important;
+	}
+	&.disabled, &:disabled {
+		opacity:.6;
+	}
+}
+
+@mixin btn-outline($bgcolor, $color) {
+	color: $bgcolor;
+	border-color: $bgcolor;
+	border-radius:0;
+	border-width:2px;
+	&:hover, &:focus, &:active {
+		background-color: $bgcolor!important;
+		border-color: $bgcolor!important;
+		color:$color!important;
+	}
+}
+
+.btn{border-radius:100px; font-size:$ft16; font-weight:$ftSB; padding:10px 24px;}
+.btn-icon{display:inline-flex;
+	img{display:inline-block; margin-right:10px;}
+}
+.btn-sm{padding:8px 24px; font-size:$ft14;}
+
+.btn-outline{font-weight:$ftB; font-size:$ft14; border-radius:50px; border:1px solid #33404F; color:$clPrimary;}
+
+.btn-primary{
+  @include btn($clPrimary, $clWhite);
+}
+
+.btn-focus{
+	@include btn($clFocus, #FFF);
+}
+
+.btn-blue{
+	@include btn(#4BC4DE, #FFF);
+}
+
+.btn-blue1{
+	@include btn(#69B0FF, #FFF);
+}
+
+.btn-primary1{
+	@include btn(#426E7C, #FFF);
+}
+
+.btn-primary2{
+	@include btn(#586472, #FFF);
+}
+
+.btn-danger{
+	@include btn($clDanger, #FFF);
+}
+
+.btn-secondary{
+	@include btn($clSecondary, $clPrimary);
+}
+
+
+.btn-link{text-decoration:none;}
+
+.text-warning{color:$clWarning!important;}
+.text-secondary{color:$clSecondary!important;}
+.text-tertiary{color:$clTertiary!important;}
+.text-danger{color:$clDanger!important;}
+.text-focus{color:$clFocus!important;}
+
+// /* ===== Scrollbar CSS ===== */
+//   /* Firefox */
+//   *{
+//     scrollbar-width: auto;
+//     scrollbar-color: #141414 #2D2D2D;
+//   }
+
+//   /* Chrome, Edge, and Safari */
+//   *::-webkit-scrollbar {
+//     width: 12px;
+//   }
+
+//   *::-webkit-scrollbar-track {
+//     background: #141414;
+//   }
+
+//   *::-webkit-scrollbar-thumb {
+//     background-color: #2D2D2D;
+//     border-radius: 10px;
+//     border: none;
+// 	border: 3px solid #141414;
+//   }
+
+@media (max-width: $screen-sm-max) {
+	.btn{padding:6px 12px;}
+}

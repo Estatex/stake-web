@@ -1,0 +1,163 @@
+<div class="dashboard-page">
+    <div class="site-data mt-0">
+        <h2>Staking plan</h2>
+        <form class="row site-form" [formGroup]="form" (ngSubmit)="onSubmit()">
+            <div class="col-md-6">
+                <div class="form-control-box" [ngClass]="{ 'is-invalid': submitted && f['name'].errors }">
+                    <label for="name">Plan name</label>
+                    <input id="name" type="text" formControlName="name" class="form-control" autocomplete="off"/>
+                </div>
+                <div *ngIf="submitted && f['name'].errors" class="invalid-feedback">
+                    <div *ngIf="f['name'].errors['required']">Plan name is required</div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-control-box" [ngClass]="{ 'is-invalid': submitted && f['max_count'].errors }">
+                    <!-- Supply allocation -->
+                    <label for="max_count">Maximum count</label>
+                    <input id="max_count" type="text" formControlName="max_count" class="form-control" autocomplete="off"/>
+                </div>
+                <div *ngIf="submitted && f['max_count'].errors" class="invalid-feedback">
+                    <div *ngIf="f['max_count'].errors['required']">Maximum count is required</div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-control-box" [ngClass]="{ 'is-invalid': submitted && f['startdate'].errors }">
+                    <label for="startdate">Open date</label>
+                    <input id="startdate" type="text" formControlName="startdate" class="form-control"
+                    bsDatepicker [bsConfig]="bsConfig"/>
+                </div>
+                <div *ngIf="submitted && f['startdate'].errors" class="invalid-feedback">
+                    <div *ngIf="f['startdate'].errors['required']">Open date is required</div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-control-box" [ngClass]="{ 'is-invalid': submitted && f['enddate'].errors }">
+                    <label for="enddate">Close date</label>
+                    <input id="enddate" type="text" formControlName="enddate" class="form-control"
+                    bsDatepicker [bsConfig]="bsConfig" autocomplete="off"/>
+                </div>
+                <div *ngIf="submitted && f['enddate'].errors" class="invalid-feedback">
+                    <div *ngIf="f['enddate'].errors['required']">Close date is required</div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-control-box" [ngClass]="{ 'is-invalid': submitted && f['min_stake'].errors }">
+                    <label for="min_stake">Set minimum stake</label>
+                    <input id="min_stake" type="text" formControlName="min_stake" class="form-control" autocomplete="off"/>
+                </div>
+                <div *ngIf="submitted && f['min_stake'].errors" class="invalid-feedback">
+                    <div *ngIf="f['min_stake'].errors['required']">Set minimum stake is required</div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-control-box" [ngClass]="{ 'is-invalid': submitted && f['max_stake'].errors }">
+                    <label for="max_stake">Set maximum stake</label>
+                    <input id="max_stake" type="text" formControlName="max_stake" class="form-control" autocomplete="off"/>
+                </div>
+                <div *ngIf="submitted && f['max_stake'].errors" class="invalid-feedback">
+                    <div *ngIf="f['max_stake'].errors['required']">Set maximum stake is required</div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-control-box" [ngClass]="{ 'is-invalid': submitted && f['min_days'].errors }">
+                    <label for="min_days">Minimum days</label>
+                    <input id="min_days" type="text" formControlName="min_days" class="form-control" autocomplete="off"/>
+                </div>
+                <div *ngIf="submitted && f['min_days'].errors" class="invalid-feedback">
+                    <div *ngIf="f['min_days'].errors['required']">Minimum days is required</div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-control-box" [ngClass]="{ 'is-invalid': submitted && f['max_days'].errors }">
+                    <label for="max_days">Maximum days</label>
+                    <input id="max_days" type="text" formControlName="max_days" class="form-control" autocomplete="off"/>
+                </div>
+                <div *ngIf="submitted && f['max_days'].errors" class="invalid-feedback">
+                    <div *ngIf="f['max_days'].errors['required']">Maximum days is required</div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-control-box" [ngClass]="{ 'is-invalid': submitted && f['fixed_apy'].errors }">
+                    <label for="fixed_apy">Fixed APY %</label>
+                    <input id="fixed_apy" type="text" formControlName="fixed_apy" class="form-control" autocomplete="off"/>
+                </div>
+                <div *ngIf="submitted && f['fixed_apy'].errors" class="invalid-feedback">
+                    <div *ngIf="f['fixed_apy'].errors['required']">Fixed APY is required</div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-control-box">
+                    <label for="title_color">Title Color</label>
+                    <input id="title_color" type="color" class="form-control form-control-color"
+                    formControlName="title_color" title="Choose color" autocomplete="off">
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-control-box">
+                    <label for="button_color">Button Color</label>
+                    <input id="button_color" type="color" class="form-control form-control-color"
+                    formControlName="button_color" title="Choose color" autocomplete="off">
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="form-control-box">
+                    <label for="desc">Description</label>
+                    <textarea id="desc" type="text" formControlName="desc" class="form-control" rows="4"></textarea>
+                </div>
+                <div *ngIf="submitted && f['fixed_apy'].errors" class="invalid-feedback">
+                    <div *ngIf="f['fixed_apy'].errors['required']">Fixed APY is required</div>
+                </div>
+            </div>
+            <div class="col-md-12 mt-3 d-flex justify-content-between align-items-end">
+                <div>
+                    <button routerLink="/user/staking-plans" class="btn btn-sm btn-outline me-3">Cancel</button>
+                    <button type="submit" class="btn btn-sm btn-primary">Save plan</button>
+                </div>
+                <div class="d-flex align-items-center">
+                    <div class="me-5">
+                        <label class="w-25">Whitelist</label>
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" formControlName="is_whitelist" type="checkbox" role="switch" id="whitelistSwitchCheck">
+                        </div>
+                    </div>
+                    <div>
+                        <label class="pe-3">Paused</label>
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" formControlName="is_paused" type="checkbox" role="switch" id="pausedSwitchCheck">
+                        </div>
+                    </div>
+                </div>
+                <!-- <button class="btn btn-sm btn-danger"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="17" viewBox="0 0 16 17" fill="none">
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M4.17675 3.69848C3.90315 3.42914 3.46461 3.43461 3.19725 3.7107C2.92989 3.98679 2.93496 4.42894 3.20856 4.69827L7.07053 8.5L3.20856 12.3017C2.93496 12.5711 2.92989 13.0132 3.19725 13.2893C3.46461 13.5654 3.90315 13.5709 4.17675 13.3015L8.06245 9.47644L11.8233 13.1786C12.0969 13.4479 12.5354 13.4424 12.8027 13.1664C13.0701 12.8903 13.065 12.4481 12.7914 12.1788L9.05436 8.5L12.7914 4.82122C13.065 4.55188 13.0701 4.10973 12.8027 3.83364C12.5354 3.55755 12.0969 3.55208 11.8233 3.82142L8.06245 7.52356L4.17675 3.69848Z" fill="white"/>
+                  </svg> Delete plan</button> -->
+            </div>
+        </form>
+    </div>
+</div>
+
+
+<div [hidden]="!isWaitingTxShow" class="page-overlay show">
+    <div class="box">
+        <br><br>
+        <div>
+            <div class="loader loader--style3" title="2">
+                <svg version="1.1" id="loader-1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                   width="80px" height="80px" viewBox="0 0 50 50" style="enable-background:new 0 0 50 50;" xml:space="preserve">
+                <path fill="#FFF" d="M43.935,25.145c0-10.318-8.364-18.683-18.683-18.683c-10.318,0-18.683,8.365-18.683,18.683h4.068c0-8.071,6.543-14.615,14.615-14.615c8.072,0,14.615,6.543,14.615,14.615H43.935z">
+                  <animateTransform attributeType="xml"
+                    attributeName="transform"
+                    type="rotate"
+                    from="0 25 25"
+                    to="360 25 25"
+                    dur="0.6s"
+                    repeatCount="indefinite"/>
+                  </path>
+                </svg>
+            </div>
+        </div>
+        <br>
+        Waiting for Transaction
+        <br><br>
+    </div>
+</div>

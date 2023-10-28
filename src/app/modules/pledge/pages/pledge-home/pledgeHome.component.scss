@@ -1,0 +1,101 @@
+@import "../../../../../assets/scss/base/_variables.scss";
+
+.hero-section{margin:2.4rem auto 3rem; text-align:left;
+    .top-info{font-size:10px; font-weight:700; color:$clTertiary; margin-bottom:1rem; text-transform:uppercase; letter-spacing:1px; }
+    h1{color:#FFF; text-shadow:0px 2px 20px 0px rgba(10, 95, 113, 0.25); font-size:$ft64; font-weight:$ftB; letter-spacing:-1.28px; margin-bottom:1rem;}
+    h2{font-size:$ft26; margin-bottom:2.4rem;}
+}
+
+.btn-outline{padding:10px 20px; border:solid 1px #FAFCFE; font-size:$ft16; color:#FAFCFE; border-radius:200px;}
+
+.site-content{padding-bottom:3rem;}
+
+.bg1{background:#021419 url(/assets/images/artboard.png) no-repeat bottom 100px center; background-size:100% auto;}
+
+.participate{border-radius:16px; background-color:$clDefault; padding:2.5rem 3rem;
+    h2{font-size:$ft36; text-align:center; letter-spacing: -0.72px;
+        span{font-size:10px; letter-spacing:0.3px; text-transform:uppercase; font-weight:700; color:#00EDFF; display:block; margin-bottom:.5rem;}
+    }
+    .steps{margin-top:3.75rem;
+        h3{font-weight:$ftRg;}
+    }
+}
+
+.smt-1{margin-top:4rem;}
+.smt-2{margin-top:2rem;}
+.smt-3{margin-top:3rem;}
+.w-1{width:20rem;}
+
+.pool-detail{
+    .box{height:300px; border:solid 4px $clDefault; border-radius:16px; text-align:center;
+        display:flex; align-items:center;
+        & > div{width:100%;}
+        h3{margin-bottom:10px; font-size:$ft34; font-weight:$ftB;}
+        p{margin:0;}
+    }
+}
+
+.referring{
+    h2{margin-bottom:20px;}
+    h3{margin-bottom:15px; font-weight:$ftSB; line-height:1.5em;}
+}
+
+.example-scenario{ background:#33404F; padding:3rem 4rem; border-radius:16px;
+    .label{font-size:10px; color:$clTertiary; margin-bottom:.5rem; text-transform:uppercase;}
+    p{margin:0; font-size:$ft18; font-weight:$ftSB;}
+}
+
+.faq{
+    h2{text-align:center; color:$clSecondary; font-size:$ft32; font-weight:$ftSB; margin-bottom:2rem;}
+    ul{margin:0; padding:0; list-style:none;}
+    li{border-bottom:solid #E0EAEC 1px; margin-bottom:1.25rem;}
+    li:last-child{border-bottom:none;}
+    h3{font-size:$ft18; margin-bottom:1.25rem; font-weight:$ftSB;}
+    p{font-size:$ft16; margin-bottom:1.25rem;}
+}
+
+
+
+@media (max-width: $screen-md-max) {
+    
+    .hero-section{margin:0rem auto 2rem;
+        h1{font-size:3.4rem; margin-bottom:.5rem}
+        h2{font-size:1.75rem; margin-bottom:1.5rem;}
+        .top-info{margin-bottom:0;}
+    }
+    .participate{padding:1.5rem;
+        h2{font-size:$ft32;}
+        .steps{margin-top:1.5rem;
+            img{height:40px;}
+        }
+    }
+    .pool-detail .box{
+        height:200px; padding:5px;
+    }
+    .example-scenario{padding:2rem 3rem;
+        p{margin-bottom:.5rem;}
+    }
+    
+    .smt-1{margin-top:3rem!important;}
+}
+
+@media (max-width: $screen-sm-max) {
+    .hero-section{ margin-top:2rem;
+         h1{font-size:2.5rem;}
+         h2{font-size:1.25rem;}
+    }
+    .participate .steps { margin-top:1rem;
+        .d-flex > .flex-shrink-0{ width:36px;}
+    }
+
+    .partnership{text-align:center;
+        h2 + div {margin-bottom:.5rem;}
+    }
+    .pool-detail .box{margin-bottom:20px; height:140px;}
+    .referring{
+        img{width:100px;}
+        h2{margin:20px 0 10px;}
+    }
+    .site-content{padding-bottom:0rem;}
+    .smt-1{margin-top:2rem!important;}
+}

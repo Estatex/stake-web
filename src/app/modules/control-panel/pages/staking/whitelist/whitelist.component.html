@@ -1,0 +1,129 @@
+<div class="dashboard-page">
+    <div class="site-data mt-0">
+        <h2>Whitelist</h2>
+        <div class="filter mt-3">
+            <div class="filter-box1">
+                <h3>Select Plan</h3>
+                <select class="form-select" aria-label="Select Plan" [(ngModel)]="selectedPlan" (ngModelChange)="updateData()">
+                    <option *ngFor="let plan of planList" [value]="plan.id">{{plan.name}}</option>
+                </select>
+                <!-- <button class="btn btn-outline">Apply</button> -->
+            </div>
+            <div class="filter-box">
+                <h3>Search:</h3>
+                <div class="search-input input-group">
+                    <span class="input-group-text" id="basic-addon1">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14" fill="none">
+                            <g clip-path="url(#clip0_3341_530)">
+                              <path fill-rule="evenodd" clip-rule="evenodd" d="M10.462 6.35326C10.462 8.62243 8.62243 10.462 6.35326 10.462C4.08409 10.462 2.24457 8.62243 2.24457 6.35326C2.24457 4.08409 4.08409 2.24457 6.35326 2.24457C8.62243 2.24457 10.462 4.08409 10.462 6.35326ZM9.71256 10.681C8.7849 11.4021 7.61923 11.8315 6.35326 11.8315C3.3277 11.8315 0.875 9.37882 0.875 6.35326C0.875 3.3277 3.3277 0.875 6.35326 0.875C9.37882 0.875 11.8315 3.3277 11.8315 6.35326C11.8315 7.61923 11.4021 8.7849 10.681 9.71256L12.9244 11.956C13.1919 12.2234 13.1919 12.657 12.9244 12.9244C12.657 13.1919 12.2234 13.1919 11.956 12.9244L9.71256 10.681Z" fill="#7C7B7B"/>
+                            </g>
+                            <defs>
+                              <clipPath id="clip0_3341_530">
+                                <rect width="14" height="14" fill="white"/>
+                              </clipPath>
+                            </defs>
+                          </svg>
+                    </span>
+                    <input type="text" class="form-control" placeholder="Search query" [(ngModel)]="searchStr" (ngModelChange)="updateData()">
+                </div>
+            </div>
+        </div>
+
+        <div class="site-table">
+            <div class="table-container">
+                <table class="table">
+                    <thead>
+                        <tr class="sortable">
+                            <th [ngClass]="this.sortBy === 'id' ? this.sortOrder : ''" (click)="shortBy('id')" scope="col">Account ID</th>
+                            <th [ngClass]="this.sortBy === 'address' ? this.sortOrder : ''" (click)="shortBy('address')" scope="col">Users</th>
+                            <th scope="col">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody *ngIf="pageData">
+                        <tr *ngFor="let item of pageData">
+                            <td>{{item.id}}</td>
+                            <td>{{item.address}}</td>
+                            <td><span (click)="removeWhitelist(item)" class="action"><img src="assets/images/icon-remove.svg" alt=""></span></td>
+                        </tr>
+                    </tbody>
+                    <tr *ngIf="pageData && pageData.length === 0">
+                        <td colspan="3" class="text-center">No records found.</td>
+                    </tr>
+                </table>
+            </div>
+            <div class="my-4">
+                <button (click)="openModal(createWhitelistTemplate)" class="btn btn-primary btn-sm btn-icon me-3"><img src="assets/images/icon-card.svg" alt=""> Upload  CSV</button>
+                <button (click)="openModal(addWhitelistTemplate)" class="btn btn-primary btn-sm btn-icon"><img src="assets/images/icon-card.svg" alt=""> Add to whitelist</button>
+            </div>
+            <div class="d-flex justify-content-between mt-3">
+                <div><pagination *ngIf="pageTotalItem && pageTotalItem > pageItemlimit" 
+                    [totalItems]="pageTotalItem"
+                    [itemsPerPage]="pageItemlimit"
+                    [customNextTemplate]="nextTemplate"
+                    [customPreviousTemplate]="prevTemplate"
+                    [(ngModel)]="currentPage"
+                    (pageChanged)="getList($event.page)"
+                ></pagination></div>
+                <div>Total: {{pageTotalItem}}</div>
+            </div>
+            <ng-template #nextTemplate let-disabled="disabled" let-currentPage="currentPage">
+                <svg xmlns="http://www.w3.org/2000/svg" width="8" height="14" viewBox="0 0 8 14" fill="none">
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M0.898176 13.4983C0.613363 13.2537 0.587708 12.8324 0.840876 12.5572L5.95328 7.00007L0.840874 1.44298C0.587706 1.1678 0.613361 0.746413 0.898174 0.501802C1.18299 0.25719 1.61911 0.281977 1.87228 0.557165L6.98468 6.11426C7.44944 6.61944 7.44944 7.38071 6.98468 7.88589L1.87228 13.443C1.61911 13.7182 1.18299 13.743 0.898176 13.4983Z" fill="white"/>
+                </svg>
+            </ng-template>
+            <ng-template #prevTemplate let-disabled="disabled" let-currentPage="currentPage">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M11.1018 14.4983C11.3866 14.2537 11.4123 13.8324 11.1591 13.5572L6.04672 8.00007L11.1591 2.44298C11.4123 2.1678 11.3866 1.74641 11.1018 1.5018C10.817 1.25719 10.3809 1.28198 10.1277 1.55717L5.01532 7.11426C4.55056 7.61944 4.55056 8.38071 5.01532 8.88589L10.1277 14.443C10.3809 14.7182 10.817 14.743 11.1018 14.4983Z" fill="white"/>
+                </svg>
+            </ng-template>
+        </div>
+    </div>
+</div>
+
+
+<ng-template #createWhitelistTemplate>
+    <h3 class="modal-title">Manual Add Whitelist</h3>
+    <button type="button" class="btn-close modal-close" aria-label="Close" (click)="modalRef.hide()">
+        <span aria-hidden="true" class="visually-hidden">&times;</span>
+    </button>
+    <div class="modal-body">
+        <div class="mb-3"><a href="/assets/files/sample-whitelist.csv" target="_blank" download  class="link">Downlowd CSV Template</a></div>
+        <div class="form-control-box mb-3">
+            <label for="planList">Plan name</label>
+            <select id="planList" class="form-control" [(ngModel)]="selectedPlanForCSV">
+                <option *ngFor="let plan of planList" [value]="plan.id">{{plan.name}}</option>
+            </select>
+        </div>
+        <div class="mb-4">
+            <input class="form-control" type="file" id="formFile" (change)="handleFileUpdate($event)" accept=".csv">
+        </div>
+        <div class="text-end">
+            <button (click)="uploadCSVFile()" class="btn btn-sm btn-primary">Upload new users <svg xmlns="http://www.w3.org/2000/svg" width="24" height="25" viewBox="0 0 24 25" fill="none">
+                <path fill-rule="evenodd" clip-rule="evenodd" d="M16.5024 16.8766C16.1575 17.3079 16.2276 17.9372 16.659 18.2821C17.0903 18.627 17.7196 18.5568 18.0645 18.1255L21.5628 13.7499C22.1466 13.0197 22.1466 11.9824 21.5628 11.2521L18.0645 6.87655C17.7196 6.44519 17.0903 6.37508 16.659 6.71996C16.2276 7.06484 16.1575 7.69411 16.5024 8.12547L19.2012 11.501L2.99927 11.501C2.44698 11.501 1.99927 11.9487 1.99927 12.501C1.99927 13.0533 2.44698 13.501 2.99927 13.501L19.2012 13.501L16.5024 16.8766Z" fill="#FAFCFE"/>
+              </svg></button>
+        </div>
+    </div>
+</ng-template>
+<ng-template #addWhitelistTemplate>
+    <h3 class="modal-title">Add to Gold Whitelist</h3>
+    <button type="button" class="btn-close modal-close" aria-label="Close" (click)="modalRef.hide()">
+        <span aria-hidden="true" class="visually-hidden">&times;</span>
+    </button>
+    <div class="modal-body">
+        <div class="form-control-box mb-3">
+            <label for="planList">Plan name</label>
+            <select id="planList" class="form-control" [(ngModel)]="selectedPlanForCSV">
+                <option *ngFor="let plan of planList" [value]="plan.id">{{plan.name}}</option>
+            </select>
+        </div>
+        <div class="form-control-box">
+            <label for="name">Wallet address</label>
+            <input id="name" type="text"  [(ngModel)]="walletaddress" class="form-control" />
+        </div>
+        <div class="text-end">
+            <button (click)="addWhitelist()" class="btn btn-sm btn-primary">Upload new users <svg xmlns="http://www.w3.org/2000/svg" width="24" height="25" viewBox="0 0 24 25" fill="none">
+                <path fill-rule="evenodd" clip-rule="evenodd" d="M16.5024 16.8766C16.1575 17.3079 16.2276 17.9372 16.659 18.2821C17.0903 18.627 17.7196 18.5568 18.0645 18.1255L21.5628 13.7499C22.1466 13.0197 22.1466 11.9824 21.5628 11.2521L18.0645 6.87655C17.7196 6.44519 17.0903 6.37508 16.659 6.71996C16.2276 7.06484 16.1575 7.69411 16.5024 8.12547L19.2012 11.501L2.99927 11.501C2.44698 11.501 1.99927 11.9487 1.99927 12.501C1.99927 13.0533 2.44698 13.501 2.99927 13.501L19.2012 13.501L16.5024 16.8766Z" fill="#FAFCFE"/>
+              </svg></button>
+        </div>
+    </div>
+</ng-template>

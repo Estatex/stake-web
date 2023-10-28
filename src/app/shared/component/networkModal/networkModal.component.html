@@ -1,0 +1,26 @@
+<h3 class="modal-title">Select Network</h3>
+    <button type="button" class="btn-close modal-close" aria-label="Close" (click)="closeModal()">
+        <span aria-hidden="true" class="visually-hidden">&times;</span>
+    </button>
+      <div class="modal-body">
+        <div class="btn-group dropdown" dropdown>
+            <button id="button-basic" dropdownToggle type="button" class="btn-control">
+                <img class="currency-icon" [src]="'/assets/images/'+networkType+'.png'" alt=""> {{networkName}}
+            </button>
+            <ul id="dropdown-basic" *dropdownMenu class="dropdown-menu">
+                <li class="dropdown-item" (click)="setNetworkType('ETH_NETWORK')">
+                    <img class="currency-icon" [src]="'/assets/images/ETH.png'" alt=""> ETHEREUM MAINNET
+                </li>
+                <li class="dropdown-item" (click)="setNetworkType('BSC_NETWORK')">
+                    <img class="currency-icon" [src]="'/assets/images/BNB.png'" alt=""> BINANCE SMARTCHAIN
+                </li>
+                <!-- <li class="dropdown-item" (click)="setNetworkType('POLY_NETWORK')">
+                    <img class="currency-icon" [src]="'/assets/images/MATIC.png'" alt=""> POLYGON MAINNET
+                </li> -->
+            </ul>
+        </div>
+    <span class="modal-info">Recommended Network: <span>Ethereum Mainnet</span></span>
+    <br><br>
+    <div class="buttons text-right">
+        <button class="btn btn-primary" (click)="connectWalletAction()">CONFIRM</button>
+    </div>

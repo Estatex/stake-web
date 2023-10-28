@@ -1,0 +1,26 @@
+@import "../../../../../../assets/scss/base/_variables.scss";
+.chart-box{border-radius:16px; background:#FFF; box-shadow:0px 2px 2px 0px rgba(224, 234, 236, 0.50);
+    box-shadow: 0px 2px 2px 0px rgba(224, 234, 236, 0.50);
+    display:flex; justify-content:space-between;
+    .info{padding:20px;
+        .type{font-size:$ft14; font-weight:$ftB;}
+        .count{font-size:$ft20; font-weight:700; padding: 10px 0;
+            span{font-size:$ft16; font-size:$ftSB;}
+        }
+        .result{background-color:#ECFCF2; border-radius:26px; color:#47E1AC; font-weight:$ft16; font-weight:$ftSB; display:inline-block; padding:2px 6px;
+            img.red{display:none;}
+            &.red{background-color:#FFEDED; color:#FF4F6A;
+                img.red{display:inline-block;}
+                img.green{display:none;}
+            }
+        }
+    }
+    .chart{width:240px; align-self:flex-end; margin-top:-20px; margin-right:20px;}
+}
+  
+
+.table-container{max-height:400px; overflow:auto;}
+
+.filter-box1{
+    .form-select,.form-input{width:200px;}
+}

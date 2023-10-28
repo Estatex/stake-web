@@ -1,0 +1,33 @@
+
+<div class="top">
+    <h1>Login</h1>
+    <div><span class="badge">Admin login</span></div>
+</div>
+<form class="site-form" [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div class="form-box">
+        <input type="text" formControlName="email" class="form-control" placeholder="Email"
+        [ngClass]="{ 'is-invalid': submitted && f['email'].errors }" />
+        <div *ngIf="submitted && f['email'].errors" class="invalid-feedback">
+            <div *ngIf="f['email'].errors['required']">Email is required</div>
+            <div *ngIf="f['email'].errors['email']">Email is invalid</div>
+            <div *ngIf="f['email'].errors['maxlength']">Email must not exceed 100 characters</div>
+        </div>
+    </div>
+    <div class="form-box">
+        <div class="password-control">
+            <input type="password" formControlName="passwd" class="form-control" placeholder="Password"
+                [ngClass]="{ 'is-invalid': submitted && f['passwd'].errors }" />
+            <span class="icon hide-password"></span>
+        </div>
+        <div *ngIf="submitted && f['passwd'].errors" class="invalid-feedback">
+            <div *ngIf="f['passwd'].errors['required']">Password is required</div>
+        </div>
+    </div>
+    <div class="form-button d-grid">
+        <button type="submit" [disabled]="isButtonClicked" class="btn btn-primary btn-block">Login</button>
+    </div>
+</form>
+<div class="bottom-info">
+    <p class="bottom">Not admin yet? <a routerLink="/admin/login">Request access</a></p>
+    <a routerLink="/admin/forgot-password">Forgot password?</a>
+</div>

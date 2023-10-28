@@ -1,0 +1,328 @@
+<div class="overview-page">
+    <app-header></app-header>
+    <div class="site-content">
+        <div class="container">
+            <div class="d-flex justify-content-between">
+                <h2>Overview</h2>
+                <div *ngIf="currentBalance" class="balance"><span>ESX Balance:</span> {{currentBalance}}</div>
+            </div>
+            <div class="overview-head">
+                <div class="token">Plan</div>
+                <div class="detail">Period <br> (Days)</div>
+                <div class="detail">Total <br> Liquidity</div>
+                <div class="detail">APY%</div>
+                <div class="detail">Reward</div>
+                <div class="detail">Earned</div>
+            </div>
+            <accordion *ngIf="planStats && planStats.length > 0" class="overview-list accordion accordion-icon" [isAnimated]="true">
+                <accordion-group [classList]="'accordion-item'" *ngFor="let plan of planStats;let i = index;"  [isOpen]="plan.isOpen" (isOpenChange)="accordionOpen($event,i)">
+                    <div accordion-heading class="accordion-header">
+                        <div class="accordion-button">
+                            <div class="d-flex align-items-center">
+                                <div class="token">{{plan.name}}</div>
+                                <div class="detail">{{plan.period_days}} d</div>
+                                <div class="detail">{{plan.total_staked}}</div>
+                                <div class="detail">{{plan.fixed_apy_per}} %</div>
+                                <div class="detail">ESX {{plan.total_reward}} K</div>
+                                <div class="detail text-tertiary">ESX {{plan.total_claimed}}</div>
+                                <div class="right ms-auto align-items-center">
+                                    <!-- <span class="time" *ngIf="claimTime">Claim in {{claimTime}}</span> -->
+                                    <!-- <button type="button" *ngIf="plan.isOpen" class="btn btn-focus btn-icon" (click)="openModal(addLiquidityTemplate, plan)"> <img src="assets/images/icon-plus.svg" alt="+"> Add liquidity</button> -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-body overview-details">
+                        <table class="table site-table">
+                            <thead>
+                                <tr>
+                                    <th class="subtitle">Token</th>
+                                    <th class="subtitle">Share</th>
+                                    <th class="subtitle">Claimed</th>
+                                    <th class="subtitle">Un-Claimed</th>
+                                    <th class="subtitle">Locked Till</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let item of stakingData">
+                                    <td class="value">
+                                        <div class="text"><span class="type">ESX</span> {{item.staked}}</div>
+                                        <!-- <div class="info">$204.67</div> -->
+                                    </td>
+                                    <td class="value">
+                                        <div class="text">{{item.share}} %</div>
+                                        <!-- <div class="info">%</div> -->
+                                    </td>
+                                    <td class="value">
+                                        <div class="text"><span class="type">ESX</span> {{item.claimed}}</div>
+                                        <!-- <div class="info">$20.56</div> -->
+                                    </td>
+                                    <td class="value">
+                                        <div class="text"><span class="type">ESX</span> {{item.unClaimed}}</div>
+                                        <!-- <div class="info">$20.56</div> -->
+                                    </td>
+                                    <td class="value">
+                                        <div class="text" *ngIf="item.lockTS">{{(item.lockTS * 1000) | date:'medium'}}</div>
+                                    </td>
+                                    <td class="value text-end">
+                                        <button type="button" [disabled]="item.unClaimed == 0 || item.lockTS > currentTime" class="btn btn-blue btn-sm me-2" (click)="openModal(claimTemplate, plan, item)"> <img src="assets/images/icon-download.svg" alt="+"> Claim</button>
+                                        <button type="button" [disabled]="!item.lockTS || item.lockTS > currentTime" class="btn btn-primary1 btn-sm" (click)="openModal(UnStakeTemplate, plan, item)"><img src="assets/images/icon-minus.svg" alt="-"></button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div class="buttons d-flex justify-content-between">
+                            <div>
+                                <button type="button" class="btn btn-primary1" (click)="openModal(addLiquidityTemplate, plan)"> <img src="assets/images/icon-plus.svg" alt="+"> Add liquidity</button>
+                            </div>
+                            <div>
+                                <button type="button" class="btn btn-primary1"><img src="assets/images/icon-pack-variants.svg" alt=""></button>
+                            </div>
+                        </div>
+                    </div>
+                </accordion-group>
+            </accordion>
+        </div>
+        <div class="container mt-4" *ngIf="transaction && transaction.length > 0">
+            <h2>Transaction History</h2>
+            <div class="table-container">
+            <table class="table site-table">
+                <thead>
+                    <tr>
+                        <th>Plan</th>
+                        <th>Token Count</th>
+                        <th>Transaction</th>
+                        <th>Date</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of transaction">
+                        <td>{{item.name}}</td>
+                        <td>{{item.token_count}}</td>
+                        <td>{{item.trn_type}}</td>
+                        <td>{{item.lastupdated | date:'medium'}}</td>
+                        <td><a [ngClass]="'status '+item.status" href="{{configToken.blockchain_url+'/tx/'+item.txhash}}" target="_blank">
+                            {{item.status}}
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M20 14a1 1 0 0 0-1 1v3.077c0 .459-.022.57-.082.684a.363.363 0 0 1-.157.157c-.113.06-.225.082-.684.082H5.923c-.459 0-.571-.022-.684-.082a.363.363 0 0 1-.157-.157c-.06-.113-.082-.225-.082-.684L4.999 5.5a.5.5 0 0 1 .5-.5l3.5.005a1 1 0 1 0 .002-2L5.501 3a2.5 2.5 0 0 0-2.502 2.5v12.577c0 .76.083 1.185.32 1.627.223.419.558.753.977.977.442.237.866.319 1.627.319h12.154c.76 0 1.185-.082 1.627-.319.419-.224.753-.558.977-.977.237-.442.319-.866.319-1.627V15a1 1 0 0 0-1-1zm-2-9.055v-.291l-.39.09A10 10 0 0 1 15.36 5H14a1 1 0 1 1 0-2l5.5.003a1.5 1.5 0 0 1 1.5 1.5V10a1 1 0 1 1-2 0V8.639c0-.757.086-1.511.256-2.249l.09-.39h-.295a10 10 0 0 1-1.411 1.775l-5.933 5.932a1 1 0 0 1-1.414-1.414l5.944-5.944A10 10 0 0 1 18 4.945z" fill="currentColor"/></svg>
+                        </a></td>
+                    </tr>
+                </tbody>
+            </table>
+            </div>
+        </div>
+    </div>
+    <app-footer></app-footer>
+</div>
+
+<ng-template #addLiquidityTemplate>
+    <h3 class="modal-title">Add Liquidity</h3>
+    <button type="button" class="btn-close modal-close" aria-label="Close" (click)="modalRef.hide()">
+        <span aria-hidden="true" class="visually-hidden">&times;</span>
+    </button>
+    <div class="modal-body">
+        <div class="box1 mb-4">
+            <table class="table site-table">
+                <thead>
+                    <tr>
+                        <th>Plan</th>
+                        <th>Period<br>(months)</th>
+                        <th>Total<br>Liquidity</th>
+                        <th>APY%</th>
+                        <th>Reward</th>
+                        <th>Earned</th>
+                        <!-- <th>After 12 months</th> -->
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>{{selectedPlan.name}}</td>
+                        <td class="fw-bold">{{selectedPlan.period_days}} d</td>
+                        <td class="fw-bold">${{selectedPlan.total_staked}} M</td>
+                        <td class="fw-bold">{{selectedPlan.fixed_apy_per}} %</td>
+                        <td class="fw-bold">ESX {{selectedPlan.total_reward}} K</td>
+                        <td class="fw-bold">ESX {{selectedPlan.total_claimed}}</td>
+                        <!-- <td class="fw-bold text-focus">$125</td> -->
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="row mb-4">
+            <div class="col-md-6">
+                <div class="form-control-box">
+                    <label for="liquidityAmount">Enter Amount</label>
+                    <!-- [(ngModel)]="walletaddress" -->
+                    <div class="input-group">
+                        <span>$ESX </span>
+                        <input id="liquidityAmount" type="text"  class="form-control" [(ngModel)]="liquidityAmount" autocomplete="off"/>
+                    </div>
+                </div>
+                <div *ngIf="formError && formError.liquidityAmount" class="invalid-feedback">
+                    {{formError.liquidityAmount}}
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-control-box">
+                    <label for="lockDays">Lock Days</label>
+                    <!-- [(ngModel)]="walletaddress" -->
+                    <div class="input-group">
+                        <input id="lockDays" type="text" class="form-control" [(ngModel)]="lockDays" autocomplete="off"/>
+                    </div>
+                </div>
+                <div *ngIf="formError && formError.lockDays" class="invalid-feedback">
+                    {{formError.lockDays}}
+                </div>
+            </div>
+        </div>
+        <div class="row mb-4">
+            <div class="col-md-12">
+                <div class="form-control-box">
+                    <label for="emailAddr">Confirm your email address</label>
+                    <!-- [(ngModel)]="walletaddress" -->
+                    <input id="emailAddr" type="text" class="form-control" [(ngModel)]="emailAddr" autocomplete="off"/>
+                </div>
+                <div *ngIf="formError && formError.emailAddr" class="invalid-feedback">
+                    {{formError.emailAddr}}
+                </div>
+            </div>
+        </div>
+        <div class="row mb-4">
+            <div class="col-md-6">
+                <div class="form-check form-checkbox form-check-inline">
+                    <input class="form-check-input" type="checkbox" id="checkboxTerms" [(ngModel)]="checkboxTerms">
+                    <label class="form-check-label mt-0" for="checkboxTerms">I have read and agree to the EstateX 
+                        <br> <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a></label>
+                </div>
+                <div *ngIf="formError && formError.checkboxTerms" class="invalid-feedback">
+                    {{formError.checkboxTerms}}
+                </div>
+            </div>
+        </div>
+        <div class="d-flex justify-content-end">
+            <button class="btn btn-primary2" (click)="resetStakeForm()">Cancel</button>
+            <button (click)="saveTransaction('STAKE')" class="btn btn-focus ms-3">Confirm <svg xmlns="http://www.w3.org/2000/svg" width="24" height="25" viewBox="0 0 24 25" fill="none">
+                <path fill-rule="evenodd" clip-rule="evenodd" d="M16.5021 16.8766C16.1573 17.3079 16.2274 17.9372 16.6587 18.2821C17.0901 18.627 17.7194 18.5568 18.0643 18.1255L21.5625 13.7499C22.1464 13.0197 22.1464 11.9824 21.5625 11.2521L18.0643 6.87655C17.7194 6.44519 17.0901 6.37508 16.6587 6.71996C16.2274 7.06484 16.1573 7.69411 16.5021 8.12547L19.2009 11.501L2.99902 11.501C2.44674 11.501 1.99902 11.9487 1.99902 12.501C1.99902 13.0533 2.44674 13.501 2.99902 13.501L19.2009 13.501L16.5021 16.8766Z" fill="#FAFCFE"/>
+              </svg></button>
+              <!-- <button class="btn btn-focus ms-3">Approve <svg xmlns="http://www.w3.org/2000/svg" width="24" height="25" viewBox="0 0 24 25" fill="none">
+                <path fill-rule="evenodd" clip-rule="evenodd" d="M16.5021 16.8766C16.1573 17.3079 16.2274 17.9372 16.6587 18.2821C17.0901 18.627 17.7194 18.5568 18.0643 18.1255L21.5625 13.7499C22.1464 13.0197 22.1464 11.9824 21.5625 11.2521L18.0643 6.87655C17.7194 6.44519 17.0901 6.37508 16.6587 6.71996C16.2274 7.06484 16.1573 7.69411 16.5021 8.12547L19.2009 11.501L2.99902 11.501C2.44674 11.501 1.99902 11.9487 1.99902 12.501C1.99902 13.0533 2.44674 13.501 2.99902 13.501L19.2009 13.501L16.5021 16.8766Z" fill="#FAFCFE"/>
+              </svg></button>
+              <button class="btn btn-focus ms-3">Stake <svg xmlns="http://www.w3.org/2000/svg" width="24" height="25" viewBox="0 0 24 25" fill="none">
+                <path fill-rule="evenodd" clip-rule="evenodd" d="M16.5021 16.8766C16.1573 17.3079 16.2274 17.9372 16.6587 18.2821C17.0901 18.627 17.7194 18.5568 18.0643 18.1255L21.5625 13.7499C22.1464 13.0197 22.1464 11.9824 21.5625 11.2521L18.0643 6.87655C17.7194 6.44519 17.0901 6.37508 16.6587 6.71996C16.2274 7.06484 16.1573 7.69411 16.5021 8.12547L19.2009 11.501L2.99902 11.501C2.44674 11.501 1.99902 11.9487 1.99902 12.501C1.99902 13.0533 2.44674 13.501 2.99902 13.501L19.2009 13.501L16.5021 16.8766Z" fill="#FAFCFE"/>
+              </svg></button> -->
+        </div>
+    </div>
+</ng-template>
+
+<ng-template #claimTemplate>
+    <h3 class="modal-title">Claim</h3>
+    <button type="button" class="btn-close modal-close" aria-label="Close" (click)="modalRef.hide()">
+        <span aria-hidden="true" class="visually-hidden">&times;</span>
+    </button>
+    <div class="modal-body">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="balance-info">
+                    <h4>IN YOUR STAKING POOL</h4>
+                    <div class="value">
+                        <span>ESX</span>
+                        {{selectedStaked.staked}}
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="balance-info">
+                    <h4>REWARD AMOUNT</h4>
+                    <div class="value">
+                        <span>ESX</span>
+                        {{selectedStaked.unClaimed}}
+                        <!-- <span class="amount">$204.67</span> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row mb-4 mt-4">
+            <div class="col-md-6">
+                <div class="form-control-box">
+                    <label for="claimedAmount">Enter Amount</label>
+                    <div class="input-group">
+                        <span>$ESX </span>
+                        <input id="claimedAmount" type="text"  class="form-control" [(ngModel)]="claimedAmount" />
+                        <span role="button" (click)="claimedAmount = selectedStaked.unClaimed" class="text-focus">Max</span>
+                    </div>
+                </div>
+                <div *ngIf="formError && formError.claimedAmount" class="invalid-feedback">
+                    {{formError.claimedAmount}}
+                </div>
+            </div>
+        </div>
+        <div class="d-flex justify-content-end">
+            <button class="btn btn-primary2" (click)="resetStakeForm()">Cancel</button>
+            <button class="btn btn-focus ms-3" (click)="saveTransaction('CLAIM')">Claim <svg xmlns="http://www.w3.org/2000/svg" width="24" height="25" viewBox="0 0 24 25" fill="none">
+                <path fill-rule="evenodd" clip-rule="evenodd" d="M16.5021 16.8766C16.1573 17.3079 16.2274 17.9372 16.6587 18.2821C17.0901 18.627 17.7194 18.5568 18.0643 18.1255L21.5625 13.7499C22.1464 13.0197 22.1464 11.9824 21.5625 11.2521L18.0643 6.87655C17.7194 6.44519 17.0901 6.37508 16.6587 6.71996C16.2274 7.06484 16.1573 7.69411 16.5021 8.12547L19.2009 11.501L2.99902 11.501C2.44674 11.501 1.99902 11.9487 1.99902 12.501C1.99902 13.0533 2.44674 13.501 2.99902 13.501L19.2009 13.501L16.5021 16.8766Z" fill="#FAFCFE"/>
+              </svg></button>
+        </div>
+    </div>
+</ng-template>
+
+<ng-template #UnStakeTemplate>
+    <h3 class="modal-title">UnStake</h3>
+    <button type="button" class="btn-close modal-close" aria-label="Close" (click)="modalRef.hide()">
+        <span aria-hidden="true" class="visually-hidden">&times;</span>
+    </button>
+    <div class="modal-body">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="balance-info">
+                    <h4>IN YOUR STAKING POOL</h4>
+                    <div class="value">
+                        <span>ESX</span>
+                        {{selectedStaked.staked}}
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="balance-info">
+                    <h4>REWARD AMOUNT</h4>
+                    <div class="value">
+                        <span>ESX</span>
+                        {{selectedStaked.unClaimed}}
+                        <!-- <span class="amount">$204.67</span> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="d-flex justify-content-end">
+            <button class="btn btn-primary2" (click)="resetStakeForm()">Cancel</button>
+            <button class="btn btn-focus ms-3" (click)="saveTransaction('UNSTAKE')">UnStake <svg xmlns="http://www.w3.org/2000/svg" width="24" height="25" viewBox="0 0 24 25" fill="none">
+                <path fill-rule="evenodd" clip-rule="evenodd" d="M16.5021 16.8766C16.1573 17.3079 16.2274 17.9372 16.6587 18.2821C17.0901 18.627 17.7194 18.5568 18.0643 18.1255L21.5625 13.7499C22.1464 13.0197 22.1464 11.9824 21.5625 11.2521L18.0643 6.87655C17.7194 6.44519 17.0901 6.37508 16.6587 6.71996C16.2274 7.06484 16.1573 7.69411 16.5021 8.12547L19.2009 11.501L2.99902 11.501C2.44674 11.501 1.99902 11.9487 1.99902 12.501C1.99902 13.0533 2.44674 13.501 2.99902 13.501L19.2009 13.501L16.5021 16.8766Z" fill="#FAFCFE"/>
+              </svg></button>
+        </div>
+    </div>
+</ng-template>
+
+
+<div [hidden]="!isWaitingTxShow" class="page-overlay show">
+    <div class="box">
+        <br><br>
+        <div>
+            <div class="loader loader--style3" title="2">
+                <svg version="1.1" id="loader-1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                   width="80px" height="80px" viewBox="0 0 50 50" style="enable-background:new 0 0 50 50;" xml:space="preserve">
+                <path fill="#FFF" d="M43.935,25.145c0-10.318-8.364-18.683-18.683-18.683c-10.318,0-18.683,8.365-18.683,18.683h4.068c0-8.071,6.543-14.615,14.615-14.615c8.072,0,14.615,6.543,14.615,14.615H43.935z">
+                  <animateTransform attributeType="xml"
+                    attributeName="transform"
+                    type="rotate"
+                    from="0 25 25"
+                    to="360 25 25"
+                    dur="0.6s"
+                    repeatCount="indefinite"/>
+                  </path>
+                </svg>
+            </div>
+        </div>
+        <br>
+        Waiting for Transaction
+        <br><br>
+    </div>
+</div>
