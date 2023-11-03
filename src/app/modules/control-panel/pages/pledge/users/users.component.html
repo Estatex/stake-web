@@ -2,39 +2,19 @@
     <div class="d-flex justify-content-between">
         <h2>Pledge Users</h2>
         <div>
-            <button class="btn btn-primary btn-sm btn-icon me-3"><img src="assets/images/icon-card.svg" alt="">Upload Staking - CSV</button>
-            <button class="btn btn-primary btn-sm btn-icon me-3"><img src="assets/images/icon-download.svg" alt="">Download</button>
+            <button (click)="downloadCSV('csvPledgeUsers')" class="btn btn-primary btn-sm btn-icon me-3"><img src="assets/images/icon-download.svg" alt="">Download</button>
         </div>
     </div>
     <div class="filter">
         <div class="filter-box1">
-            <!-- <h3>Plan:</h3> -->
-            <!-- [(ngModel)]="selectedPlan" (ngModelChange)="updateData()" -->
-            <select class="form-select" aria-label="Select Plan"  style="width:150px;">
-                <!-- <option *ngFor="let plan of planList" [value]="plan.id">{{plan.name}}</option> -->
+            <select class="form-select" aria-label="Select Plan" [(ngModel)]="selectedStatus" (ngModelChange)="updateData();" style="width:200px;" >
+                <option value="">Select KYC Status</option>
+                <option class="text-uppercase" *ngFor="let status of kycStatus" [value]="status">{{status}}</option>
             </select>
         </div>
         <div class="filter-box1">
-            <!-- <h3>Date Range:</h3> -->
-            <!-- [(ngModel)]="trnType" (ngModelChange)="updateData()" -->
-            <select class="form-select" aria-label="Select Plan" style="width:220px;">
-                <option value="ALL">Select Transaction Type</option>
-                <option value="STAKE">Stake</option>
-                <option value="UNSTAKE">Unstake</option>
-                <option value="CLAIM">Claim</option>
-            </select>
-        </div>
-        <div class="filter-box1">
-            <!-- <h3>Date Range:</h3> -->
             <input type="text" placeholder="Select date range"class="form-input"
-                bsDaterangepicker [bsConfig]="bsConfig" (bsValueChange)="onDateChange($event)">
-        </div>
-        <div class="filter-box">
-            <h3>Locked:</h3>
-            <div class="form-check form-switch">
-                <!-- [(ngModel)]="isLockStatus" (ngModelChange)="updateData()" -->
-                <input class="form-check-input"  type="checkbox" role="switch" >
-            </div>
+                bsDaterangepicker [bsConfig]="bsConfig" (bsValueChange)="dateChange($event)">
         </div>
         <div class="filter-box">
             <h3>Search:</h3>
@@ -51,57 +31,52 @@
                         </defs>
                       </svg>
                 </span>
-                <!-- [(ngModel)]="searchStr" (ngModelChange)="updateData()" -->
-                <input type="text" class="form-control" placeholder="Search query" >
+                <input type="text" class="form-control" placeholder="Search query" [(ngModel)]="searchStr" (ngModelChange)="updateData()">
             </div>
         </div>
     </div>
-
     <div class="site-table">
         <div class="table-container">
             <table class="table">
                 <thead>
                     <tr class="sortable">
                         <th scope="col" [ngClass]="this.sortBy === 'id' ? this.sortOrder : ''" (click)="shortBy('id')">Account ID</th>
-                        <th scope="col" [ngClass]="this.sortBy === 'address' ? this.sortOrder : ''" (click)="shortBy('address')">Users</th>
-                        <th scope="col" [ngClass]="this.sortBy === 'user_email' ? this.sortOrder : ''" (click)="shortBy('user_email')">Email</th>
-                        <th scope="col" [ngClass]="this.sortBy === 'plan_id' ? this.sortOrder : ''" (click)="shortBy('plan_id')">Plan name</th>
+                        <th scope="col" [ngClass]="this.sortBy === 'name' ? this.sortOrder : ''" (click)="shortBy('name')">Name</th>
+                        <th scope="col" [ngClass]="this.sortBy === 'email' ? this.sortOrder : ''" (click)="shortBy('email')">Email</th>
+                        <th scope="col" [ngClass]="this.sortBy === 'plan_id' ? this.sortOrder : ''" (click)="shortBy('plan_id')">Plan</th>
+                        <th scope="col" [ngClass]="this.sortBy === 'wallet_addr' ? this.sortOrder : ''" (click)="shortBy('wallet_addr')">Wallet Address</th>
+                        <th scope="col" [ngClass]="this.sortBy === 'parent_addr' ? this.sortOrder : ''" (click)="shortBy('parent_addr')">Parent Address</th>
                         <th scope="col" [ngClass]="this.sortBy === 'created' ? this.sortOrder : ''" (click)="shortBy('created')">Open date</th>
-                        <th scope="col" [ngClass]="this.sortBy === 'locked_date' ? this.sortOrder : ''" (click)="shortBy('locked_date')">Close date</th>
-                        <th scope="col" [ngClass]="this.sortBy === 'token_count' ? this.sortOrder : ''" (click)="shortBy('token_count')">Token lock count</th>
-                        <th scope="col" [ngClass]="this.sortBy === 'trn_type' ? this.sortOrder : ''" (click)="shortBy('trn_type')">Transaction Type</th>
-                        <th scope="col" [ngClass]="this.sortBy === 'status' ? this.sortOrder : ''" (click)="shortBy('status')">status</th>
+                        <th scope="col" [ngClass]="this.sortBy === 'kyc_status' ? this.sortOrder : ''" (click)="shortBy('kyc_status')">status</th>
                     </tr>
                 </thead>
                 <tbody *ngIf="userData">
                     <tr *ngFor="let item of userData">
                         <td>{{item.id}}</td>
-                        <td>{{item.address | trimValue}}</td>
-                        <td>{{item.user_email}}</td>
-                        <td>{{item.plan_id }}</td>
+                        <td>{{item.name}}</td>
+                        <td>{{item.email }}</td>
+                        <td>{{item.plan_id}}</td>
+                        <td>{{item.wallet_addr | trimValue}}</td>
+                        <td>{{item.parent_addr | trimValue}}</td>
                         <td>{{item.created | date}}</td>
-                        <td>{{item.locked_date | date}}</td>
-                        <td>{{item.token_count}}</td>
-                        <td>{{item.trn_type}}</td>
-                        <td><span class="status true">{{item.status}}</span></td>
-                        <!-- <td><span class="status true">{{item.address}}</span></td> -->
+                        <td><span class="status" [ngClass]="{'false': item.kyc_status !== 'approved'}">{{item.kyc_status}}</span></td>
                     </tr>
                 </tbody>
                 <tr *ngIf="userData && userData.length === 0">
-                    <td colspan="7" class="text-center">No records found.</td>
+                    <td colspan="9" class="text-center">No records found.</td>
                 </tr>
             </table>
         </div>
         <div class="d-flex justify-content-between mt-3">
-            <!-- <div><pagination *ngIf="pageTotalItem && pageTotalItem > pageItemlimit" 
+            <div><pagination *ngIf="pageTotalItem && pageTotalItem > pageItemCount" 
                 [totalItems]="pageTotalItem"
-                [itemsPerPage]="pageItemlimit"
+                [itemsPerPage]="pageItemCount"
                 [customNextTemplate]="nextTemplate"
                 [customPreviousTemplate]="prevTemplate"
                 [(ngModel)]="currentPage"
-                (pageChanged)="getUsers($event.page)"
-            ></pagination></div> -->
-            <!-- <div>Total: {{pageTotalItem}}</div> -->
+                (pageChanged)="getUserDate($event.page)"
+            ></pagination></div>
+            <div>Total: {{pageTotalItem}}</div>
         </div>
         <ng-template #nextTemplate let-disabled="disabled" let-currentPage="currentPage">
             <svg xmlns="http://www.w3.org/2000/svg" width="8" height="14" viewBox="0 0 8 14" fill="none">

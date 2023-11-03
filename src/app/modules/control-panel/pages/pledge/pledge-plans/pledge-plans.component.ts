@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ControlPanelService } from '../../../services/control-panel.service';
 import { ToastrService } from 'ngx-toastr';
+import { BaseComponent } from '../base.component';
+import { DatePipe } from '@angular/common';
+import { PledgeControlPanelService } from 'app/modules/control-panel/services/pledge-control-panel.service';
 
 @Component({
     selector: 'app-pledge-plans',
@@ -9,12 +12,11 @@ import { ToastrService } from 'ngx-toastr';
 })
 
 export class PledgePlansComponent implements OnInit {
-        pageData:any;
-        selectedStatus:string = 'SUCCESS';
+        planData:any;
         isLockStatus:boolean = false;
     constructor(
-        private controlPanelService:ControlPanelService,
-        private toastrService:ToastrService,
+        private toastrService: ToastrService,
+        private pledgeService: PledgeControlPanelService
     ) {
 
     }
@@ -24,15 +26,11 @@ export class PledgePlansComponent implements OnInit {
     }
 
     getPlans() {
-        const data = {
-            plan_status:this.selectedStatus,
-            is_paused:this.isLockStatus ? 1 : 0,
-        }
-        this.controlPanelService.get_plans(data).subscribe({
+        this.pledgeService.getPledgePlans().subscribe({
             next: (data) => {
                 if(data.type === true){
-                    this.pageData = data.data;
-                    this.controlPanelService.stakingPlans = data.data;
+                    this.planData = data.data;
+                    this.pledgeService.pledgePlans = data.data;
                 } else {
                     this.toastrService.error(data.message);
                 }

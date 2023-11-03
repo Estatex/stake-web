@@ -17,10 +17,10 @@ export class HeaderComponent extends BaseWeb3Class {
     isPledgeLogin: boolean = false;
     constructor(
         private pledgeService: PledgeService,
+        private authenticationService: AuthenticationService,
+        private router: Router,
         modalService: BsModalService,
         web3Service: Web3Service,
-        authenticationService: AuthenticationService,
-        private router: Router
     ) {
         super(web3Service,modalService);
         authenticationService.getLogoutEvent.subscribe(event => {
@@ -43,5 +43,9 @@ export class HeaderComponent extends BaseWeb3Class {
         });
         
     }
-    
+
+    logout(){
+        this.authenticationService.logout();
+        this.router.navigate(['/']);
+    }
 }

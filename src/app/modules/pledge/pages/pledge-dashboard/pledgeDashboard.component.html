@@ -177,8 +177,7 @@
                     </div>
                     <div class="d-flex justify-content-between mt-3">
                         <div class="referral">
-                            <button (click)="isSocialIconShow = !isSocialIconShow" class="btn btn-focus">Share Referral code <img src="/assets/images/share-icon.svg"/></button>
-                            <div class="refer-com" *ngIf="planData">**Referral Commission : {{planData.ref_comm_per}}%</div>
+                            <button (click)="isSocialIconShow = !isSocialIconShow" class="btn btn-focus">Refer Your Friends <img src="/assets/images/share-icon.svg"/></button>
                             <div class="social-icons" [ngClass]="{'show':isSocialIconShow}">
                                 <button class="button" data-sharer="facebook" data-hashtag="EstateX" [attr.data-url]="referralURL"><img src="/assets/images/icon-facebook.svg"/></button>
                                 <button class="button" data-sharer="linkedin" [attr.data-url]="referralURL"><img src="/assets/images/icon-linkedin.svg"/></button>
@@ -187,6 +186,7 @@
                                 <button class="button" data-sharer="whatsapp" [attr.data-title]="referralTitle" [attr.data-url]="referralURL"><img src="/assets/images/icon-whatsapp.svg"/></button>
                                 <button class="button" data-sharer="telegram" [attr.data-title]="referralTitle" [attr.data-url]="referralURL" ><img src="/assets/images/icon-telegram.svg"/></button>
                                 <button class="button" (click)="copy(referralURL)" ><img src="/assets/images/icon-copy.svg"/></button>
+                                <div class="refer-com" *ngIf="planData">**Referral Commission : {{planData.ref_comm_per}}%</div>
                             </div>
                         </div>
                         <div>
@@ -323,7 +323,7 @@
             
         </div>
         <div class="staking-video">
-            <video src="/assets/videos/staking.mp4" class="object-fit-contain" autoplay controls></video>
+            <video src="https://staking.estatex.eu/video/staking.mp4" class="object-fit-contain" autoplay controls></video>
         </div>
         
     </div>

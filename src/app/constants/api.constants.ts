@@ -23,7 +23,24 @@ export class ApiConstants {
     public static get GET_STAKE_USERS_COUNT() : string { return this.ADMIN_API_URL + 'getStakeUsersCount'}
     public static get CSV_STAKE_USERS() : string { return this.ADMIN_API_URL + 'csvStakeUsers'}
     public static get DASHBOARD() : string { return this.ADMIN_API_URL + 'dashboard'}
-    
+
+    public static get PLEDGE_DASHBOARD() : string { return this.ADMIN_API_URL + 'pledgeDashboard'}
+    public static get PLEDGE_GET_PLANS() : string { return this.ADMIN_API_URL + 'getPledgePlans'}
+    public static get PLEDGE_SAVE_PLAN() : string { return this.ADMIN_API_URL + 'savePledgePlan'}
+    public static get PLEDGE_GET_USERS_COUNT() : string { return this.ADMIN_API_URL + 'getPledgeUsersCount'}
+    public static get PLEDGE_GET_USERS() : string { return this.ADMIN_API_URL + 'getPledgeUsers'}
+    public static get PLEDGE_CSV_USERS() : string { return this.ADMIN_API_URL + 'csvPledgeUsers'}
+    public static get PLEDGE_GET_TRANSACTION_COUNT() : string { return this.ADMIN_API_URL + 'getPledgeTransCount'}
+    public static get PLEDGE_GET_TRANSACTION() : string { return this.ADMIN_API_URL + 'getPledgeTrans'}
+    public static get PLEDGE_CSV_TRANSACTION() : string { return this.ADMIN_API_URL + 'csvPledgeTrans'}
+    public static get PLEDGE_GET_WITHDRAW_COUNT() : string { return this.ADMIN_API_URL + 'getWithdrawTransCount'}
+    public static get PLEDGE_GET_WITHDRAW() : string { return this.ADMIN_API_URL + 'getWithdrawTrans'}
+    public static get PLEDGE_CSV_WITHDRAW() : string { return this.ADMIN_API_URL + 'csvWithdrawTrans'}
+    public static get PLEDGE_GET_CHAIN_BALANCE() : string { return this.ADMIN_API_URL + 'getChainBalance'}
+    public static get PLEDGE_ADMIN_GET_CHAINS_TOKEN() : string { return this.ADMIN_API_URL + 'getChainToken'}
+    public static get PLEDGE_SAVE_WITHDRAW_TRANSACTION() : string { return this.ADMIN_API_URL + 'saveWithdrawTransaction'}
+    public static get PLEDGE_UPDATE_WITHDRAW_TRANSACTION() : string { return this.ADMIN_API_URL + 'updateWithdrawTx'}
+
     public static get SAVE_TRANSACTION() : string { return this.STAKING_API_URL + 'saveTransaction'}
     public static get GET_TRANSACTIONS() : string { return this.STAKING_API_URL + 'getTransactions'}
     public static get UPDATE_TX() : string { return this.STAKING_API_URL + 'updateTx'}

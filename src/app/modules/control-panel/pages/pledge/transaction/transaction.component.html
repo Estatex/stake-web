@@ -1,37 +1,32 @@
 <div class="site-data">
     <div class="d-flex justify-content-between">
         <h2>Transactions</h2>
-        
+        <div>
+            <button (click)="downloadCSV('csvPledgeTrans')" class="btn btn-primary btn-sm btn-icon me-3"><img src="assets/images/icon-download.svg" alt="">Download</button>
+        </div>
     </div>
     <div class="filter">
         <div class="filter-box1">
-            <!-- <h3>Plan:</h3> -->
-            <!-- [(ngModel)]="selectedPlan" (ngModelChange)="updateData()" -->
-            <select class="form-select" aria-label="Select Plan"  style="width:150px;">
-                <!-- <option *ngFor="let plan of planList" [value]="plan.id">{{plan.name}}</option> -->
+            <select class="form-select" aria-label="Select Plan" [(ngModel)]="selectedPlan" (ngModelChange)="getData()" style="width:180px;" >
+                <option value="">Select Plan</option>
+                <option *ngFor="let plan of planData" [value]="plan.id">{{plan.name}}</option>
             </select>
         </div>
         <div class="filter-box1">
-            <!-- <h3>Date Range:</h3> -->
-            <!-- [(ngModel)]="trnType" (ngModelChange)="updateData()" -->
-            <select class="form-select" aria-label="Select Plan" style="width:220px;">
-                <option value="ALL">Select Transaction Type</option>
-                <option value="STAKE">Stake</option>
-                <option value="UNSTAKE">Unstake</option>
-                <option value="CLAIM">Claim</option>
+            <select class="form-select" aria-label="Select Chain" [(ngModel)]="selectedChain" (ngModelChange)="getToken();" style="width:180px;" >
+                <option value="">Select Chain</option>
+                <option *ngFor="let chain of chainList" [value]="chain">{{chain}}</option>
             </select>
         </div>
         <div class="filter-box1">
-            <!-- <h3>Date Range:</h3> -->
-            <input type="text" placeholder="Select date range"class="form-input"
-                bsDaterangepicker [bsConfig]="bsConfig" (bsValueChange)="onDateChange($event)">
+            <select class="form-select" aria-label="Select Token" style="width:180px;" [(ngModel)]="selectedToken" (ngModelChange)="getData()">
+                <option value="">Select Token</option>
+                <option *ngFor="let token of tokenList" [value]="token.token_name">{{token.token_name}}</option>
+            </select>
         </div>
-        <div class="filter-box">
-            <h3>Locked:</h3>
-            <div class="form-check form-switch">
-                <!-- [(ngModel)]="isLockStatus" (ngModelChange)="updateData()" -->
-                <input class="form-check-input"  type="checkbox" role="switch" >
-            </div>
+        <div class="filter-box1">
+            <input type="text" placeholder="Select date range" class="form-input" style="width:220px;"
+                bsDaterangepicker [bsConfig]="bsConfig" (bsValueChange)="dateChange($event)">
         </div>
         <div class="filter-box">
             <h3>Search:</h3>
@@ -48,57 +43,60 @@
                         </defs>
                       </svg>
                 </span>
-                <!-- [(ngModel)]="searchStr" (ngModelChange)="updateData()" -->
-                <input type="text" class="form-control" placeholder="Search query" >
+                <input type="text" class="form-control" placeholder="Search query" [(ngModel)]="searchStr" (ngModelChange)="getData()">
             </div>
         </div>
     </div>
-
     <div class="site-table">
         <div class="table-container">
             <table class="table">
                 <thead>
                     <tr class="sortable">
-                        <th scope="col" [ngClass]="this.sortBy === 'id' ? this.sortOrder : ''" (click)="shortBy('id')">Account ID</th>
-                        <th scope="col" [ngClass]="this.sortBy === 'address' ? this.sortOrder : ''" (click)="shortBy('address')">Users</th>
-                        <th scope="col" [ngClass]="this.sortBy === 'user_email' ? this.sortOrder : ''" (click)="shortBy('user_email')">Email</th>
-                        <th scope="col" [ngClass]="this.sortBy === 'plan_id' ? this.sortOrder : ''" (click)="shortBy('plan_id')">Plan name</th>
+                        <th scope="col" [ngClass]="this.sortBy === 'chain' ? this.sortOrder : ''" (click)="shortBy('chain')">chain</th>
+                        <th scope="col" [ngClass]="this.sortBy === 'token' ? this.sortOrder : ''" (click)="shortBy('token')">token</th>
+                        <th scope="col" [ngClass]="this.sortBy === 'token_value' ? this.sortOrder : ''" (click)="shortBy('token_value')">Token Value</th>
+                        <th scope="col" [ngClass]="this.sortBy === 'usd_value' ? this.sortOrder : ''" (click)="shortBy('usd_value')">USD Value</th>
+                        <th scope="col" [ngClass]="this.sortBy === 'stake_days' ? this.sortOrder : ''" (click)="shortBy('stake_days')">Staking Days</th>
+                        <th scope="col" [ngClass]="this.sortBy === 'wallet_addr' ? this.sortOrder : ''" (click)="shortBy('wallet_addr')">Wallet Address</th>
                         <th scope="col" [ngClass]="this.sortBy === 'created' ? this.sortOrder : ''" (click)="shortBy('created')">Open date</th>
-                        <th scope="col" [ngClass]="this.sortBy === 'locked_date' ? this.sortOrder : ''" (click)="shortBy('locked_date')">Close date</th>
-                        <th scope="col" [ngClass]="this.sortBy === 'token_count' ? this.sortOrder : ''" (click)="shortBy('token_count')">Token lock count</th>
-                        <th scope="col" [ngClass]="this.sortBy === 'trn_type' ? this.sortOrder : ''" (click)="shortBy('trn_type')">Transaction Type</th>
-                        <th scope="col" [ngClass]="this.sortBy === 'status' ? this.sortOrder : ''" (click)="shortBy('status')">status</th>
+                        <th scope="col" [ngClass]="this.sortBy === 'status' ? this.sortOrder : ''" (click)="shortBy('status')">Status</th>
                     </tr>
                 </thead>
-                <tbody *ngIf="userData">
-                    <tr *ngFor="let item of userData">
-                        <td>{{item.id}}</td>
-                        <td>{{item.address | trimValue}}</td>
-                        <td>{{item.user_email}}</td>
-                        <td>{{item.plan_id }}</td>
+                <tbody *ngIf="transData">
+                    <tr *ngFor="let item of transData">
+                        <td>{{item.chain}}</td>
+                        <td>{{item.token}}</td>
+                        <td>{{item.token_value }}</td>
+                        <td>{{item.usd_value }}</td>
+                        <td>{{item.stake_days}}</td>
+                        <td>{{item.wallet_addr | trimValue}}</td>
                         <td>{{item.created | date}}</td>
-                        <td>{{item.locked_date | date}}</td>
-                        <td>{{item.token_count}}</td>
-                        <td>{{item.trn_type}}</td>
-                        <td><span class="status true">{{item.status}}</span></td>
-                        <!-- <td><span class="status true">{{item.address}}</span></td> -->
+                        <td>
+                            <a *ngIf="item.txhash else status" [ngClass]="'status '+item.status"
+                                href="{{configToken[item?.chainType].blockExplorerUrls+'/tx/'+item.txhash}}"
+                                [tooltip]="item.status_desc && item.status_desc !== 'null' ? item.status_desc : ''" target="_blank">
+                                {{item.status}}
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M20 14a1 1 0 0 0-1 1v3.077c0 .459-.022.57-.082.684a.363.363 0 0 1-.157.157c-.113.06-.225.082-.684.082H5.923c-.459 0-.571-.022-.684-.082a.363.363 0 0 1-.157-.157c-.06-.113-.082-.225-.082-.684L4.999 5.5a.5.5 0 0 1 .5-.5l3.5.005a1 1 0 1 0 .002-2L5.501 3a2.5 2.5 0 0 0-2.502 2.5v12.577c0 .76.083 1.185.32 1.627.223.419.558.753.977.977.442.237.866.319 1.627.319h12.154c.76 0 1.185-.082 1.627-.319.419-.224.753-.558.977-.977.237-.442.319-.866.319-1.627V15a1 1 0 0 0-1-1zm-2-9.055v-.291l-.39.09A10 10 0 0 1 15.36 5H14a1 1 0 1 1 0-2l5.5.003a1.5 1.5 0 0 1 1.5 1.5V10a1 1 0 1 1-2 0V8.639c0-.757.086-1.511.256-2.249l.09-.39h-.295a10 10 0 0 1-1.411 1.775l-5.933 5.932a1 1 0 0 1-1.414-1.414l5.944-5.944A10 10 0 0 1 18 4.945z" fill="currentColor"/></svg>
+                            </a>
+                            <ng-template #status><span [ngClass]="'status '+item.status" [tooltip]="item.status_desc && item.status_desc !== 'null' ? item.status_desc : ''" class="status true">{{item.status}}</span></ng-template>
+                        </td>
                     </tr>
                 </tbody>
-                <tr *ngIf="userData && userData.length === 0">
-                    <td colspan="7" class="text-center">No records found.</td>
+                <tr *ngIf="transData && transData.length === 0">
+                    <td colspan="9" class="text-center">No records found.</td>
                 </tr>
             </table>
         </div>
         <div class="d-flex justify-content-between mt-3">
-            <!-- <div><pagination *ngIf="pageTotalItem && pageTotalItem > pageItemlimit" 
+            <div><pagination *ngIf="pageTotalItem && pageTotalItem > pageItemCount" 
                 [totalItems]="pageTotalItem"
-                [itemsPerPage]="pageItemlimit"
+                [itemsPerPage]="pageItemCount"
                 [customNextTemplate]="nextTemplate"
                 [customPreviousTemplate]="prevTemplate"
                 [(ngModel)]="currentPage"
-                (pageChanged)="getUsers($event.page)"
-            ></pagination></div> -->
-            <!-- <div>Total: {{pageTotalItem}}</div> -->
+                (pageChanged)="getTransData($event.page)"
+            ></pagination></div>
+            <div>Total: {{pageTotalItem}}</div>
         </div>
         <ng-template #nextTemplate let-disabled="disabled" let-currentPage="currentPage">
             <svg xmlns="http://www.w3.org/2000/svg" width="8" height="14" viewBox="0 0 8 14" fill="none">

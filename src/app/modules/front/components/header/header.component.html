@@ -11,7 +11,7 @@
                 <button type="button" class="btn metamask-btn btn-accent"><img src="assets/images/eth.svg" alt=""> {{walletAddress | trimValue}}</button>
                 <button *ngIf="wrongNetwork" (click)="changeNetwork()" class="btn btn-link text-danger">Change Network</button>
                 <button type="button" class="btn btn-link" *ngIf="type==='pledge' && isPledgeLogin" routerLink="/dashboard">Dashboard</button>
-                <button type="button" class="btn btn-link" (click)="logoutWallet()">Logout</button>
+                <button type="button" class="btn btn-link" (click)="logout()">Logout</button>
             </ng-template>
         </div>
     </div>

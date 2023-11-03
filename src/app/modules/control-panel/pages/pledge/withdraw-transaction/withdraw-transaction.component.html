@@ -1,0 +1,114 @@
+<div class="text-end my-3">
+    <button (click)="downloadCSV('csvWithdrawTrans')" class="btn btn-primary btn-sm btn-icon me-3"><img src="assets/images/icon-download.svg" alt="">Download</button>
+</div> 
+<div class="filter">
+    <div class="filter-box1">
+        <select class="form-select" aria-label="Select Plan" [(ngModel)]="selectedPlan" (ngModelChange)="getData()" style="width:180px;" >
+            <option value="">Select Plan</option>
+            <option *ngFor="let plan of planData" [value]="plan.id">{{plan.name}}</option>
+        </select>
+    </div>
+    <div class="filter-box1">
+        <select class="form-select" aria-label="Select Chain" [(ngModel)]="selectedChain" (ngModelChange)="getToken();" style="width:180px;" >
+            <option value="">Select Chain</option>
+            <option *ngFor="let chain of chainList" [value]="chain">{{chain}}</option>
+        </select>
+    </div>
+    <div class="filter-box1">
+        <select class="form-select" aria-label="Select Token" style="width:180px;" [(ngModel)]="selectedToken" (ngModelChange)="getData()">
+            <option value="">Select Token</option>
+            <option *ngFor="let token of tokenList" [value]="token.token_name">{{token.token_name}}</option>
+        </select>
+    </div>
+    <div class="filter-box1">
+        <input type="text" placeholder="Select date range" class="form-input" style="width:220px;"
+            bsDaterangepicker [bsConfig]="bsConfig" (bsValueChange)="onDateChange($event)">
+    </div>
+    <div class="filter-box">
+        <h3>Search:</h3>
+        <div class="search-input input-group">
+            <span class="input-group-text" id="basic-addon1">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14" fill="none">
+                    <g clip-path="url(#clip0_3341_530)">
+                      <path fill-rule="evenodd" clip-rule="evenodd" d="M10.462 6.35326C10.462 8.62243 8.62243 10.462 6.35326 10.462C4.08409 10.462 2.24457 8.62243 2.24457 6.35326C2.24457 4.08409 4.08409 2.24457 6.35326 2.24457C8.62243 2.24457 10.462 4.08409 10.462 6.35326ZM9.71256 10.681C8.7849 11.4021 7.61923 11.8315 6.35326 11.8315C3.3277 11.8315 0.875 9.37882 0.875 6.35326C0.875 3.3277 3.3277 0.875 6.35326 0.875C9.37882 0.875 11.8315 3.3277 11.8315 6.35326C11.8315 7.61923 11.4021 8.7849 10.681 9.71256L12.9244 11.956C13.1919 12.2234 13.1919 12.657 12.9244 12.9244C12.657 13.1919 12.2234 13.1919 11.956 12.9244L9.71256 10.681Z" fill="#7C7B7B"/>
+                    </g>
+                    <defs>
+                      <clipPath id="clip0_3341_530">
+                        <rect width="14" height="14" fill="white"/>
+                      </clipPath>
+                    </defs>
+                  </svg>
+            </span>
+            <input type="text" class="form-control" placeholder="Search query" [(ngModel)]="searchStr" (ngModelChange)="getData()">
+        </div>
+    </div>
+</div>
+<div class="site-table">
+    <div class="table-container">
+        <table class="table">
+            <thead>
+                <!-- {
+                    "wallet_addr": "0x79ABcB53e5F17131e8405307bF70FB01F6E0c712",
+                    //"chain": "Ethereum Chain",
+                    //"token": "USDT",
+                    //"token_value": "0.1000",
+                    ?"to_addr": "0x79ABcB53e5F17131e8405307bF70FB01F6E0c712",
+                    //"status": "FAILED",
+                    //"txhash": "0xef98af8e2b41a9d9df34e5baedcfecba3ea3797f81876551ade0d3d915365069",
+                    ?"ip_addr": "::ffff:127.0.0.1",
+                    //"created": "2023-11-01T09:18:36.000Z",
+                    "lastupdated": "2023-11-01T09:19:18.000Z"
+                } -->
+                <tr class="sortable">
+                    <th scope="col" [ngClass]="this.sortBy === 'chain' ? this.sortOrder : ''" (click)="shortBy('chain')">Chain</th>
+                    <th scope="col" [ngClass]="this.sortBy === 'token' ? this.sortOrder : ''" (click)="shortBy('token')">Token</th>
+                    <th scope="col" [ngClass]="this.sortBy === 'token_value' ? this.sortOrder : ''" (click)="shortBy('token_value')">Token Value</th>
+                    <th scope="col" [ngClass]="this.sortBy === 'wallet_addr' ? this.sortOrder : ''" (click)="shortBy('wallet_addr')">Wallet Address</th>
+                    <th scope="col" [ngClass]="this.sortBy === 'created' ? this.sortOrder : ''" (click)="shortBy('created')">Withdraw Date</th>
+                    <th scope="col" [ngClass]="this.sortBy === 'status' ? this.sortOrder : ''" (click)="shortBy('status')">status</th>
+                </tr>
+            </thead>
+            <tbody *ngIf="withdrawDate">
+                <tr *ngFor="let item of withdrawDate">
+                    <td>{{item.chain}}</td>
+                    <td>{{item.token}}</td>
+                    <td>{{item.token_value}}</td>
+                    <td>{{item.wallet_addr  | trimValue}}</td>
+                    <td>{{item.created | date}}</td>
+                    <td><a *ngIf="item.txhash else status" [ngClass]="'status '+item.status"
+                            href="{{configToken[item.chainType].blockExplorerUrls+'/tx/'+item.txhash}}"
+                            [tooltip]="item.status_desc && item.status_desc !== 'null' ? item.status_desc : ''" target="_blank">
+                            {{item.status}}
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M20 14a1 1 0 0 0-1 1v3.077c0 .459-.022.57-.082.684a.363.363 0 0 1-.157.157c-.113.06-.225.082-.684.082H5.923c-.459 0-.571-.022-.684-.082a.363.363 0 0 1-.157-.157c-.06-.113-.082-.225-.082-.684L4.999 5.5a.5.5 0 0 1 .5-.5l3.5.005a1 1 0 1 0 .002-2L5.501 3a2.5 2.5 0 0 0-2.502 2.5v12.577c0 .76.083 1.185.32 1.627.223.419.558.753.977.977.442.237.866.319 1.627.319h12.154c.76 0 1.185-.082 1.627-.319.419-.224.753-.558.977-.977.237-.442.319-.866.319-1.627V15a1 1 0 0 0-1-1zm-2-9.055v-.291l-.39.09A10 10 0 0 1 15.36 5H14a1 1 0 1 1 0-2l5.5.003a1.5 1.5 0 0 1 1.5 1.5V10a1 1 0 1 1-2 0V8.639c0-.757.086-1.511.256-2.249l.09-.39h-.295a10 10 0 0 1-1.411 1.775l-5.933 5.932a1 1 0 0 1-1.414-1.414l5.944-5.944A10 10 0 0 1 18 4.945z" fill="currentColor"/></svg>
+                        </a>
+                        <ng-template #status><span [ngClass]="'status '+item.status" [tooltip]="item.status_desc && item.status_desc !== 'null' ? item.status_desc : ''" class="status true">{{item.status}}</span></ng-template>
+                    </td>
+                </tr>
+            </tbody>
+            <tr *ngIf="withdrawDate && withdrawDate.length === 0">
+                <td colspan="9" class="text-center">No records found.</td>
+            </tr>
+        </table>
+    </div>
+    <div class="d-flex justify-content-between mt-3">
+        <div><pagination *ngIf="pageTotalItem && pageTotalItem > pageItemCount" 
+            [totalItems]="pageTotalItem"
+            [itemsPerPage]="pageItemCount"
+            [customNextTemplate]="nextTemplate"
+            [customPreviousTemplate]="prevTemplate"
+            [(ngModel)]="currentPage"
+            (pageChanged)="getWithdrawDate($event.page)"
+        ></pagination></div>
+        <div>Total: {{pageTotalItem}}</div>
+    </div>
+    <ng-template #nextTemplate let-disabled="disabled" let-currentPage="currentPage">
+        <svg xmlns="http://www.w3.org/2000/svg" width="8" height="14" viewBox="0 0 8 14" fill="none">
+            <path fill-rule="evenodd" clip-rule="evenodd" d="M0.898176 13.4983C0.613363 13.2537 0.587708 12.8324 0.840876 12.5572L5.95328 7.00007L0.840874 1.44298C0.587706 1.1678 0.613361 0.746413 0.898174 0.501802C1.18299 0.25719 1.61911 0.281977 1.87228 0.557165L6.98468 6.11426C7.44944 6.61944 7.44944 7.38071 6.98468 7.88589L1.87228 13.443C1.61911 13.7182 1.18299 13.743 0.898176 13.4983Z" fill="white"/>
+        </svg>
+    </ng-template>
+    <ng-template #prevTemplate let-disabled="disabled" let-currentPage="currentPage">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
+            <path fill-rule="evenodd" clip-rule="evenodd" d="M11.1018 14.4983C11.3866 14.2537 11.4123 13.8324 11.1591 13.5572L6.04672 8.00007L11.1591 2.44298C11.4123 2.1678 11.3866 1.74641 11.1018 1.5018C10.817 1.25719 10.3809 1.28198 10.1277 1.55717L5.01532 7.11426C4.55056 7.61944 4.55056 8.38071 5.01532 8.88589L10.1277 14.443C10.3809 14.7182 10.817 14.743 11.1018 14.4983Z" fill="white"/>
+        </svg>
+    </ng-template>
+</div>

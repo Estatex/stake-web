@@ -1,18 +1,18 @@
 import { DatePipe } from '@angular/common';
-import { Component, OnInit,TemplateRef } from '@angular/core';
-import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
+import { Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import { BaseComponent } from '../base.component';
 import { ToastrService } from 'ngx-toastr';
 import { PledgeControlPanelService } from 'app/modules/control-panel/services/pledge-control-panel.service';
 
 @Component({
-    selector: 'app-pledge-transaction',
-    templateUrl: './transaction.component.html',
-    styleUrls: ['./transaction.component.scss']
+    selector: 'app-withdraw-transaction',
+    templateUrl: './withdraw-transaction.component.html',
+    styleUrls: ['./withdraw-transaction.component.scss']
 })
 
-export class PledgeTransactionComponent extends BaseComponent implements OnInit {
-    transData:any[] = [];
+export class PledgeWithdrawTransactionComponent extends BaseComponent implements OnInit {
+    withdrawDate:any[] = [];
+    @Input() eventEmitter: EventEmitter<string>; 
     constructor(
         datePipe: DatePipe, 
         toastrService: ToastrService,
@@ -22,10 +22,14 @@ export class PledgeTransactionComponent extends BaseComponent implements OnInit 
     }
 
     ngOnInit(): void {
+        this.eventEmitter.subscribe((data: string) => { 
+            console.log('eventEmitter =>', data);
+            this.getData();
+        });
         this.getData();
     }
 
-    getTransData(pageNumber?:number) {
+    getWithdrawDate(pageNumber?:number) {
         this.currentPage = pageNumber ? pageNumber : this.currentPage;
         const data = {
             plan_id: this.selectedPlan,
@@ -39,11 +43,11 @@ export class PledgeTransactionComponent extends BaseComponent implements OnInit 
             page:this.currentPage,
             limit:this.pageItemCount
         }
-        this.pledgeService.getTransaction(data).subscribe({
+        this.pledgeService.getWithdraw(data).subscribe({
             next: (data) => {
                 if(data.type === true){
-                    this.transData = data.data;
-                    this.transData.forEach((item:any) => {
+                    this.withdrawDate = data.data;
+                    this.withdrawDate.forEach((item:any) => {
                         item.chainType = item.chain === 'Ethereum Chain' ? 'ETH_NETWORK': 'BSC_NETWORK';	
                     });
                 } else {
@@ -59,7 +63,7 @@ export class PledgeTransactionComponent extends BaseComponent implements OnInit 
 
     shortBy(type:string){
         this.shortDataBy(type);
-        this.getTransData();
+        this.getWithdrawDate();
     }
 
     dateChange(event:any){
@@ -68,8 +72,10 @@ export class PledgeTransactionComponent extends BaseComponent implements OnInit 
     }
 
     getData(){
-        this.getTransData();
-        this.getDateCount('getPledgeTransCount');
+        this.getWithdrawDate();
+        this.getDateCount('getWithdrawTransCount');
     }
+
+    
 
 }

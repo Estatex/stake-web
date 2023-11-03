@@ -1,3 +1,8 @@
 .site-form > div{margin-bottom:20px;}
 
-.colorpick-eyedropper-input-trigger{display:none!important;}
+.form-control-box{
+    input::-webkit-outer-spin-button,
+    input::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+    }
+}

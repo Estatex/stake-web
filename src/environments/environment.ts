@@ -16,7 +16,7 @@ export const environment = {
     Token		: "0x73da84ad118aea1327d0fdec3549356c963218c1",
     ETH_NETWORK : {
       StakingContractAddress: "0x5b87b33307783a6705BD76DA0a638Dcf741EEa94",
-      PledgeContractAddress: "0x63Be7845A10BAEB064ecFfB4fe58e269f4F33121",
+      PledgeContractAddress: "0x56c7cC9199CaCcfb00824bA2DCb71CdD5c1893D4",
       Web3Modal: {
         network: 5,
         rpcUrl:'https://rpc.ankr.com/eth_goerli',
@@ -31,7 +31,7 @@ export const environment = {
       blockExplorerUrls:'https://goerli.etherscan.io/'
     },
     BSC_NETWORK : {
-      PledgeContractAddress: "0x97315D3EEbAe38C1cdAc5bee24f2806601bEbACE",
+      PledgeContractAddress: "0x9ba6747497b2563c2477fA278658Ed3Fe8b20A7c",
       Web3Modal: {
         network: 97,
         rpcUrl:'https://rpc.ankr.com/bsc_testnet_chapel',

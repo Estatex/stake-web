@@ -168,7 +168,6 @@ export class Web3Service {
 
     logoutWallet = async () => {
         localStorage.removeItem('accountAddress');
-        localStorage.clear();
         if(this.provider){
             await this.provider.close();
             await this.web3Modal.clearCachedProvider();
@@ -248,6 +247,15 @@ export class Web3Service {
 
         window.ethereum.on('networkChanged', (network:any) => {
             this.isWrongNetwork(network);
+            if(window.location.pathname.includes('user/pledge')){
+                if(network == environment.config.ETH_NETWORK.Web3Modal.network){
+                    this.web3Network = 'ETH_NETWORK';
+                } else if (network == environment.config.BSC_NETWORK.Web3Modal.network){
+                    this.web3Network = 'BSC_NETWORK';
+                }
+                localStorage.setItem('network',this.web3Network);
+                this.networkType = this.getNetworkType(this.web3Network);
+            }
             window.location.reload();
         });
 

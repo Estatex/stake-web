@@ -1,6 +1,8 @@
 import { DatePipe } from '@angular/common';
-import { Component, OnInit,TemplateRef } from '@angular/core';
-import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
+import { Component, OnInit } from '@angular/core';
+import { BaseComponent } from '../base.component';
+import { ToastrService } from 'ngx-toastr';
+import { PledgeControlPanelService } from 'app/modules/control-panel/services/pledge-control-panel.service';
 
 @Component({
     selector: 'app-pledge-users',
@@ -8,41 +10,63 @@ import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
     styleUrls: ['./users.component.scss']
 })
 
-export class PledgeUsersComponent implements OnInit {
-    filterDates:any[] = ['',''];
-    bsConfig?: Partial<BsDatepickerConfig>;
-    sortBy:string;
-    sortOrder:'asc'|'desc';
+export class PledgeUsersComponent extends BaseComponent implements OnInit {
     userData:any[] = [];
+    kycStatus:string[] = ['success','approved','expired'];
     constructor(
-        private datePipe: DatePipe, 
+        datePipe: DatePipe, 
+        toastrService: ToastrService,
+        pledgeService: PledgeControlPanelService
     ) {
+        super(pledgeService,toastrService,datePipe);
     }
 
     ngOnInit(): void {
-        this.bsConfig = Object.assign({}, {
-            isAnimated: true,
-            dateInputFormat: 'DD/MM/YYYY'
+        this.getUserDate();
+        this.getDateCount('getPledgeUsersCount');
+    }
+
+    getUserDate(pageNumber?:number) {
+        this.currentPage = pageNumber ? pageNumber : this.currentPage;
+        const data = {
+            plan_id: this.selectedPlan,
+            kycStatus:this.selectedStatus,
+            searchStr:this.searchStr,
+            fromDate:this.filterDates[0] || '',
+            toDate:this.filterDates[1] || '',
+            sortBy: this.sortBy,
+            sortOrder: this.sortOrder,
+            page:this.currentPage,
+            limit:this.pageItemCount
+        }
+        this.pledgeService.getUser(data).subscribe({
+            next: (data) => {
+                if(data.type === true){
+                    this.userData = data.data;
+                } else {
+                    this.toastrService.error(data.message);
+                }
+            },
+            error: (error) => {
+                console.error(error);
+            }
         });
     }
 
-
-    onDateChange(event:any){
-        this.filterDates = ['',''];
-        if(event){
-            this.filterDates[0] = this.datePipe.transform(event[0], 'yyyy-MM-dd')?.toString();
-            this.filterDates[1] = this.datePipe.transform(event[1], 'yyyy-MM-dd')?.toString();
-        }
+    shortBy(type:string){
+        this.shortDataBy(type);
+        this.getUserDate();
     }
 
-    shortBy(type:string){
-        if(this.sortBy === type){
-            this.sortOrder = this.sortOrder === 'asc' ? 'desc' : 'asc';
-        } else {
-            this.sortOrder = 'asc';
-        }
-        this.sortBy = type;
-        // this.getUsers();
+    dateChange(event:any){
+        this.onDateChange(event);
+        this.getUserDate();
+        this.getDateCount('getPledgeUsersCount');
+    }
+
+    updateData(){
+        this.getUserDate();
+        this.getDateCount('getPledgeUsersCount');
     }
 
 }

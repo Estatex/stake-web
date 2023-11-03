@@ -1,28 +1,10 @@
 <div class="dashboard-page">
     <div class="site-data mt-0">
         <div class="d-flex justify-content-between mb-4">
-            <h2 class="mb-0">Staking Plans</h2>
-            <button routerLink="/user/create-plans" class="btn btn-primary btn-sm btn-icon"><img src="assets/images/icon-card.svg" alt=""> Create Plan</button>
+            <h2 class="mb-0">Pledge Plans</h2>
+            <!-- <button routerLink="/user/pledge/create-plans" class="btn btn-primary btn-sm btn-icon"><img src="assets/images/icon-card.svg" alt=""> Create Plan</button> -->
         </div>
         <br>
-        <div class="filter">
-            <div class="filter-box1">
-                <h3>Plan Status:</h3>
-                <!-- [(ngModel)]="selectedStatus" -->
-                <select class="form-select" aria-label="Select Plan" (ngModelChange)="getPlans()">
-                    <option value="FAILED">Failed</option>
-                    <option value="INPROCESS">Pending</option>
-                    <option value="SUCCESS">Success</option>
-                </select>
-            </div>
-            <div class="filter-box">
-                <h3>Paused:</h3>
-                <div class="form-check form-switch">
-                    <!-- [(ngModel)]="isLockStatus" -->
-                    <input class="form-check-input"  type="checkbox" role="switch"  (ngModelChange)="getPlans()">
-                </div>
-            </div>
-        </div>
         <div class="site-table">
             <table class="table">
                 <thead>
@@ -30,29 +12,21 @@
                         <th scope="col">Plan name</th>
                         <th scope="col">Open date</th>
                         <th scope="col">Close date</th>
-                        <th scope="col">Min / Max <br> token lock count</th>
-                        <th scope="col">Max users</th>
-                        <th scope="col">Min / Max <br> Duration (Days)</th>
-                        <th scope="col">Fixed APY %</th>
-                        <th scope="col">Whitelist</th>
-                        <th scope="col">Status</th>
-                        <th scope="col">Paused</th>
+                        <th scope="col">Min Amount</th>
+                        <th scope="col">Refer Commission </th>
+                        <th scope="col">Show Staking</th>
                         <th scope="col"></th>
                     </tr>
                 </thead>
-                <tbody *ngIf="pageData">
-                    <tr *ngFor="let item of pageData">
-                        <td>{{item.name}}</td>
-                        <td>{{item.staking_startdate | date}}</td>
-                        <td>{{item.staking_enddate | date}}</td>
-                        <td>{{item.min_tokenstake}} / {{item.max_tokenstake}}</td>
-                        <td>{{item.max_user_count}}</td>
-                        <td>{{item.min_duration_days}} / {{item.max_duration_days}}</td>
-                        <td>{{item.fixed_apy_per}}%</td>
-                        <td><span class="status" [class.false]="item.is_whitelist === 0">{{item.is_whitelist | status}}</span></td>
-                        <td><span class="status" [class.false]="item.is_locked === 0">{{item.status}}</span></td>
-                        <td><span class="status" [class.false]="item.is_paused === 0">{{item.is_paused | status}}</span></td>
-                        <td><span class="action" [routerLink]="'/user/create-plans/'+item.id" ><img src="assets/images/icon-edit.svg" alt=""> Edit</span></td>
+                <tbody *ngIf="planData">
+                    <tr *ngFor="let item of planData">
+                        <td><span title="{{item.descrp}}"></span> {{item.name}}</td>
+                        <td>{{item.startdate | date}}</td>
+                        <td>{{item.enddate | date}}</td>
+                        <td>{{item.min_amount}}</td>
+                        <td>{{item.ref_comm_per}}</td>
+                        <td><span class="status" [class.false]="item.show_stakeoption === 0">{{item.show_stakeoption | status}}</span></td>
+                        <td><span class="action" [routerLink]="'/user/pledge/create-plans/'+item.id" ><img src="assets/images/icon-edit.svg" alt=""> Edit</span></td>
                     </tr>
                 </tbody>
             </table>

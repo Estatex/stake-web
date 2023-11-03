@@ -1,4 +1,11 @@
 @import "../../../../../../assets/scss/base/_variables.scss";
+
+.btn-connect{font-size:10px; color:$clDefault; font-weight:700; letter-spacing:0.3px;  padding:3px 10px 3px 5px; margin-left:10px;
+    border-radius:26px; background-color:#E0EAEC;
+    img{width:16px;}
+    &.btn-link{background:none;}
+}
+
 .chart-box{border-radius:16px; background:#FFF; box-shadow:0px 2px 2px 0px rgba(224, 234, 236, 0.50);
     box-shadow: 0px 2px 2px 0px rgba(224, 234, 236, 0.50);
     display:flex; justify-content:space-between;
@@ -18,3 +25,13 @@
     }
     // .chart{width:240px; align-self:flex-end; margin-top:-20px; margin-right:20px;}
 }
+
+.form-control-box{
+    input::-webkit-outer-spin-button,
+    input::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+    }
+    .input-group{padding-left:15px;}
+}
+
+.invalid-feedback{display:block;}

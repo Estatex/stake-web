@@ -1,6 +1,4 @@
 @import "../../../../../../assets/scss/base/_variables.scss";
-
-
 .status{background:#E0F8F2; border-radius:26px; padding:4px 10px; font-size:10px; text-transform:uppercase; font-weight:700; color:#31D0AA;
     &.FAILED{color:$clDanger;}
     svg{width:14px;}

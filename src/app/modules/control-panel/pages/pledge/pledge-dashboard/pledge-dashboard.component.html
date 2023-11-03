@@ -1,14 +1,14 @@
 <div class="dashboard-page">
-    <div class="row" >
+    <div class="row" *ngIf="dashboardDate">
         <div class="col-md-4">
             <div class="chart-box">
                 <div class="info">
                     <div class="type">Total Active Users</div>
-                    <div class="count">58</div>
-                    <!-- <div class="result" [ngClass]="dashboardDate.totalUsersPercent < 0 ? 'red' : ''" >
+                    <div class="count">{{dashboardDate.totalUsers}}</div>
+                    <div class="result" [ngClass]="dashboardDate.totalUsersPercent < 0 ? 'red' : ''" >
                         <img class="green" src="assets/images/icon-up-green.svg" alt="">
                         <img class="red" src="assets/images/icon-down-red.svg" alt=""> {{dashboardDate.totalUsersPercent}}%
-                    </div> -->
+                    </div>
                 </div>
             </div>
         </div>
@@ -16,11 +16,11 @@
             <div class="chart-box">
                 <div class="info">
                     <div class="type">Total Pledge</div>
-                    <div class="count">17491.00</div>
-                    <!-- <div class="result" [ngClass]="dashboardDate.totalUsersPercent > 0 ? 'red' : ''">
+                    <div class="count">{{dashboardDate.totalPledged}}</div>
+                    <div class="result" [ngClass]="dashboardDate.totalPledgedPercent < 0 ? 'red' : ''">
                         <img class="green" src="assets/images/icon-up-green.svg" alt="">
-                        <img class="red" src="assets/images/icon-down-red.svg" alt=""> {{dashboardDate.tokenStakedPercent}}%
-                    </div> -->
+                        <img class="red" src="assets/images/icon-down-red.svg" alt=""> {{dashboardDate.totalPledgedPercent}}%
+                    </div>
                 </div>
             </div>
         </div>
@@ -28,96 +28,139 @@
             <div class="chart-box">
                 <div class="info">
                     <div class="type">Total Commission</div>
-                    <div class="count"><span>ESX</span> 0.11</div>
-                    <!-- <div class="result" [ngClass]="dashboardDate.totalUsersPercent > 0 ? 'red' : ''">
+                    <div class="count"><span>ESX</span> {{dashboardDate.commissionEarned}}</div>
+                    <div class="result" [ngClass]="dashboardDate.commissionEarnedPercent < 0 ? 'red' : ''">
                         <img class="green" src="assets/images/icon-up-green.svg" alt="">
-                        <img class="red" src="assets/images/icon-down-red.svg" alt=""> {{dashboardDate.rewardsEarnedPercent}}%
-                    </div> -->
+                        <img class="red" src="assets/images/icon-down-red.svg" alt=""> {{dashboardDate.commissionEarnedPercent}}%
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 
     <div class="site-data">
-        <h2>Contract Balance</h2>
-        <div class="site-table">
-            <div class="table-container">
-                <table class="table">
-                    <thead>
-                        <tr class="sortable">
-                            <th>Chain</th>
-                            <th>Token</th>
-                            <th>Amount</th>
-                            <th></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>Ethereum Chain</td>
-                            <td>ETH</td>
-                            <td>1.23</td>
-                            <td><span class="action" (click)="openModal(withdrawTemplate)"><img src="assets/images/icon-edit.svg" alt=""> Withdraw</span></td>
-                        </tr>
-                        <tr>
-                            <td>Ethereum Chain</td>
-                            <td>USDT</td>
-                            <td>.36</td>
-                            <td><span class="action" (click)="openModal(withdrawTemplate)"><img src="assets/images/icon-edit.svg" alt=""> Withdraw</span></td>
-                        </tr>
-                        <tr>
-                            <td>Ethereum Chain</td>
-                            <td>USDC</td>
-                            <td>.23</td>
-                            <td><span class="action" (click)="openModal(withdrawTemplate)"><img src="assets/images/icon-edit.svg" alt=""> Withdraw</span></td>
-                        </tr>
-                        <tr>
-                            <td>Binance SmartChain</td>
-                            <td>BNB</td>
-                            <td>1.236</td>
-                            <td><span class="action"><img src="assets/images/icon-edit.svg" alt=""> Withdraw</span></td>
-                        </tr>
-                        <tr>
-                            <td>Binance SmartChain</td>
-                            <td>BUSD</td>
-                            <td>.5623</td>
-                            <td><span class="action"><img src="assets/images/icon-edit.svg" alt=""> Withdraw</span></td>
-                        </tr>
-                    </tbody>
-                    <!-- <tr *ngIf="userData && userData.length === 0">
-                        <td colspan="7" class="text-center">No records found.</td>
-                    </tr> -->
-                </table>
+        <div class="d-flex justify-content-between">
+            <h2>Contract Balance</h2>
+            <div>
+                <button *ngIf="!walletAddress; else connected" type="button" (click)="openNetworkModal()" class="btn btn-connect btn-accent">CONNECT WALLET</button>
+                <ng-template #connected>
+                    <button type="button" class="btn btn-connect btn-accent"><img src="assets/images/eth.svg" alt=""> {{walletAddress | trimValue}}</button>
+                    <button type="button" class="btn btn-connect btn-link" (click)="logoutWallet()">Wallet Logout</button>
+                </ng-template>
             </div>
         </div>
+        <tabset>
+            <tab heading="Balance" id="tabBalance">
+                <div class="filter mb-0 mt-3">
+                    <div class="filter-box1">
+                        <h3>Select Plan</h3>
+                        <select class="form-select" aria-label="Select Plan" [(ngModel)]="selectedPlan" (ngModelChange)="getChainBalance()" style="width:180px;" >
+                            <option *ngFor="let plan of planData" [value]="plan.id">{{plan.name}}</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="site-table mt-3">
+                    <div class="table-container">
+                        <table class="table">
+                            <thead>
+                                <tr class="sortable">
+                                    <th>Chain</th>
+                                    <th>Token</th>
+                                    <th>Amount</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody *ngIf="chainBalanceData && chainBalanceData.length > 0">
+                                <tr *ngFor="let item of chainBalanceData">
+                                    <td>{{item.chain_name}}</td>
+                                    <td>{{item.token_name}}</td>
+                                    <td>{{item.balance}}</td>
+                                    <td>
+                                        <button *ngIf="item.chainType===web3Network" class="action" [disabled]="!walletAddress" (click)="openModal(withdrawTemplate,item)"><img src="assets/images/icon-edit.svg" alt=""> Withdraw</button>
+                                        <button *ngIf="item.chainType!==web3Network" class="action" disabled="true" tooltip="Switch Network"><img src="assets/images/icon-edit.svg" alt=""> Withdraw</button>
+                                        <!-- <button *ngIf="walletAddress && item.chainType!==web3Network" (click)="changeNetwork()" class="btn btn-link text-danger">Change Network</button> -->
+                                    </td>
+                                </tr>
+                            </tbody>
+                            <tr *ngIf="chainBalanceData && chainBalanceData.length === 0">
+                                <td colspan="4" class="text-center">No records found.</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </tab>
+            <tab heading="Transtion" id="tabTranstion">
+                <app-withdraw-transaction [eventEmitter]="getTransactionData"></app-withdraw-transaction>
+            </tab>
+        </tabset>
+        
     </div>
 </div>
 
 <ng-template #withdrawTemplate>
     <div class="d-flex justify-content-between ">
         <h3 class="modal-title">Withdraw</h3>
-        <div class="align-self-center" >Balance : XER 23.32</div>
     </div>
     <button type="button" class="btn-close modal-close" aria-label="Close" (click)="modalRef.hide()">
         <span aria-hidden="true" class="visually-hidden">&times;</span>
     </button>
-    <div class="modal-body">
+    <div class="modal-body pt-3">
+        <div class="text-end mb-2">Balance : {{selectedChainData.token_name}} {{selectedChainData.balance}}</div>
         <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-12">
                 <div class="form-control-box dark">
                     <label for="amount">Amount</label>
-                    <input id="amount" type="text" class="form-control" autocomplete="off"/>
+                    <div class="input-group">
+                        <span>{{selectedChainData.token_name}}</span>
+                        <input id="claimedAmount" type="text"  class="form-control" [(ngModel)]="withdrawAmount" autocomplete="off" />
+                        <span role="button" (click)="withdrawAmount = selectedChainData.balance" class="text-focus">Max</span>
+                    </div>
                 </div>
-                <!-- <div *ngIf="submitted && f['name'].errors" class="invalid-feedback">
-                    <div *ngIf="f['name'].errors['required']">Plan name is required</div>
-                </div> -->
+                <div class="invalid-feedback" *ngIf="submitted && !withdrawAmount">
+                    Please Enter Amount.
+                </div>
             </div>
+            <!-- <div class="col-md-8">
+                <div class="form-control-box dark">
+                    <label for="amount">To Address</label>
+                    <input id="amount" type="text" class="form-control" [(ngModel)]="toAddress" autocomplete="off"/>
+                </div>
+                <div class="invalid-feedback" *ngIf="submitted && !toAddress">
+                    Please Enter To Address.
+                </div>
+            </div> -->
         </div>
         <br>
         <div class="d-flex justify-content-end">
-            <button class="btn btn-primary2">Cancel</button>
-            <button class="btn btn-focus ms-3">submit <svg xmlns="http://www.w3.org/2000/svg" width="24" height="25" viewBox="0 0 24 25" fill="none">
+            <button class="btn btn-primary2" (click)="close()" >Cancel</button>
+            <button class="btn btn-focus ms-3" (click)="saveTransaction()">submit <svg xmlns="http://www.w3.org/2000/svg" width="24" height="25" viewBox="0 0 24 25" fill="none">
                 <path fill-rule="evenodd" clip-rule="evenodd" d="M16.5021 16.8766C16.1573 17.3079 16.2274 17.9372 16.6587 18.2821C17.0901 18.627 17.7194 18.5568 18.0643 18.1255L21.5625 13.7499C22.1464 13.0197 22.1464 11.9824 21.5625 11.2521L18.0643 6.87655C17.7194 6.44519 17.0901 6.37508 16.6587 6.71996C16.2274 7.06484 16.1573 7.69411 16.5021 8.12547L19.2009 11.501L2.99902 11.501C2.44674 11.501 1.99902 11.9487 1.99902 12.501C1.99902 13.0533 2.44674 13.501 2.99902 13.501L19.2009 13.501L16.5021 16.8766Z" fill="#FAFCFE"/>
               </svg></button>
         </div>
     </div>
 </ng-template>
+
+<div [hidden]="!isWaitingTxShow" class="page-overlay show">
+    <div class="box">
+        <br><br>
+        <div>
+            <div class="loader loader--style3" title="2">
+                <svg version="1.1" id="loader-1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                   width="80px" height="80px" viewBox="0 0 50 50" style="enable-background:new 0 0 50 50;" xml:space="preserve">
+                <path fill="#FFF" d="M43.935,25.145c0-10.318-8.364-18.683-18.683-18.683c-10.318,0-18.683,8.365-18.683,18.683h4.068c0-8.071,6.543-14.615,14.615-14.615c8.072,0,14.615,6.543,14.615,14.615H43.935z">
+                  <animateTransform attributeType="xml"
+                    attributeName="transform"
+                    type="rotate"
+                    from="0 25 25"
+                    to="360 25 25"
+                    dur="0.6s"
+                    repeatCount="indefinite"/>
+                  </path>
+                </svg>
+            </div>
+        </div>
+        <br>
+        Waiting for Transaction
+        <br><br>
+    </div>
+</div>
