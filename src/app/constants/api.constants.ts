@@ -23,6 +23,7 @@ export class ApiConstants {
     public static get GET_STAKE_USERS_COUNT() : string { return this.ADMIN_API_URL + 'getStakeUsersCount'}
     public static get CSV_STAKE_USERS() : string { return this.ADMIN_API_URL + 'csvStakeUsers'}
     public static get DASHBOARD() : string { return this.ADMIN_API_URL + 'dashboard'}
+    public static get UPDATE_PASSWORD() : string { return this.ADMIN_API_URL + 'update-passwd'}
 
     public static get PLEDGE_DASHBOARD() : string { return this.ADMIN_API_URL + 'pledgeDashboard'}
     public static get PLEDGE_GET_PLANS() : string { return this.ADMIN_API_URL + 'getPledgePlans'}

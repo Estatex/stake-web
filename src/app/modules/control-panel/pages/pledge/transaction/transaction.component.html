@@ -13,7 +13,7 @@
             </select>
         </div>
         <div class="filter-box1">
-            <select class="form-select" aria-label="Select Chain" [(ngModel)]="selectedChain" (ngModelChange)="getToken();" style="width:180px;" >
+            <select class="form-select" aria-label="Select Chain" [(ngModel)]="selectedChain" (ngModelChange)="getTokenData();" style="width:180px;" >
                 <option value="">Select Chain</option>
                 <option *ngFor="let chain of chainList" [value]="chain">{{chain}}</option>
             </select>

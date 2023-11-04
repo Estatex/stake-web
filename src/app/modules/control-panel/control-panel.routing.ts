@@ -9,6 +9,7 @@ import { PledgeUsersComponent } from './pages/pledge/users/users.component';
 import { PledgeTransactionComponent } from './pages/pledge/transaction/transaction.component';
 import { PledgePlansComponent } from './pages/pledge/pledge-plans/pledge-plans.component';
 import { CreatePledgePlansComponent } from './pages/pledge/create-pledge-plans/create-pledge-plans.component';
+import { UpdatePasswordComponent } from './pages/setting/update-password/update-password.component';
 
 const routes: Routes = [
   {
@@ -35,6 +36,10 @@ const routes: Routes = [
   {
     path: 'create-plans/:id',
     component: CreatePlansComponent
+  },
+  {
+    path: 'update-password',
+    component: UpdatePasswordComponent
   },
   {
     path: 'pledge',

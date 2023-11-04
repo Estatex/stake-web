@@ -1,5 +1,4 @@
 import { EventEmitter, Injectable, Output } from '@angular/core';
-import { PledgeService } from 'app/modules/pledge/services/pledge.service';
 
 @Injectable({ providedIn: 'root' })
 

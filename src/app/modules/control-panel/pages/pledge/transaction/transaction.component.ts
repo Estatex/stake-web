@@ -1,6 +1,5 @@
 import { DatePipe } from '@angular/common';
-import { Component, OnInit,TemplateRef } from '@angular/core';
-import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
+import { Component, OnInit } from '@angular/core';
 import { BaseComponent } from '../base.component';
 import { ToastrService } from 'ngx-toastr';
 import { PledgeControlPanelService } from 'app/modules/control-panel/services/pledge-control-panel.service';
@@ -54,6 +53,11 @@ export class PledgeTransactionComponent extends BaseComponent implements OnInit 
                 console.error(error);
             }
         });
+    }
+
+    getTokenData(){
+        super.getToken();
+        this.getData();
     }
 
 

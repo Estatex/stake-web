@@ -66,6 +66,10 @@ export class ControlPanelService {
         return this.baseService.postRequest(ApiConstants.DASHBOARD,data);
     }
 
+    updatePassword(data:any) {
+        return this.baseService.postRequest(ApiConstants.UPDATE_PASSWORD,data);
+    }
+
     public get stakingPlans() : any[] {
         return this._stakingPlans;
     }

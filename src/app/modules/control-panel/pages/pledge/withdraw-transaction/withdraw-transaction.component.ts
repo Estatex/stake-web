@@ -60,6 +60,11 @@ export class PledgeWithdrawTransactionComponent extends BaseComponent implements
         });
     }
 
+    getTokenData(){
+        super.getToken();
+        this.getData();
+    }
+
 
     shortBy(type:string){
         this.shortDataBy(type);

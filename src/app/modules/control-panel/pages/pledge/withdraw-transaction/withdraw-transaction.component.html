@@ -9,7 +9,7 @@
         </select>
     </div>
     <div class="filter-box1">
-        <select class="form-select" aria-label="Select Chain" [(ngModel)]="selectedChain" (ngModelChange)="getToken();" style="width:180px;" >
+        <select class="form-select" aria-label="Select Chain" [(ngModel)]="selectedChain" (ngModelChange)="getTokenData();" style="width:180px;" >
             <option value="">Select Chain</option>
             <option *ngFor="let chain of chainList" [value]="chain">{{chain}}</option>
         </select>
@@ -47,18 +47,6 @@
     <div class="table-container">
         <table class="table">
             <thead>
-                <!-- {
-                    "wallet_addr": "0x79ABcB53e5F17131e8405307bF70FB01F6E0c712",
-                    //"chain": "Ethereum Chain",
-                    //"token": "USDT",
-                    //"token_value": "0.1000",
-                    ?"to_addr": "0x79ABcB53e5F17131e8405307bF70FB01F6E0c712",
-                    //"status": "FAILED",
-                    //"txhash": "0xef98af8e2b41a9d9df34e5baedcfecba3ea3797f81876551ade0d3d915365069",
-                    ?"ip_addr": "::ffff:127.0.0.1",
-                    //"created": "2023-11-01T09:18:36.000Z",
-                    "lastupdated": "2023-11-01T09:19:18.000Z"
-                } -->
                 <tr class="sortable">
                     <th scope="col" [ngClass]="this.sortBy === 'chain' ? this.sortOrder : ''" (click)="shortBy('chain')">Chain</th>
                     <th scope="col" [ngClass]="this.sortBy === 'token' ? this.sortOrder : ''" (click)="shortBy('token')">Token</th>

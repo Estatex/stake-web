@@ -22,6 +22,7 @@ import { PledgeTransactionComponent } from './pages/pledge/transaction/transacti
 import { PledgePlansComponent } from './pages/pledge/pledge-plans/pledge-plans.component';
 import { CreatePledgePlansComponent } from './pages/pledge/create-pledge-plans/create-pledge-plans.component';
 import { PledgeWithdrawTransactionComponent } from './pages/pledge/withdraw-transaction/withdraw-transaction.component';
+import { UpdatePasswordComponent } from './pages/setting/update-password/update-password.component';
 
 
 @NgModule({
@@ -38,7 +39,8 @@ import { PledgeWithdrawTransactionComponent } from './pages/pledge/withdraw-tran
     PledgeTransactionComponent,
     PledgePlansComponent,
     CreatePledgePlansComponent,
-    PledgeWithdrawTransactionComponent
+    PledgeWithdrawTransactionComponent,
+    UpdatePasswordComponent
   ],
   imports: [
     ControlPanelRoutingModule,
