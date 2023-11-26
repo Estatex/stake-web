@@ -62,7 +62,7 @@ const pledgeRouter: Routes = [
 
 const isPledgeDomain: boolean = 
 (window.location.hostname === 'pledge.estatex.eu') 
-|| true; // prod
+//|| true; // prod
 
 @NgModule({
   imports: [

@@ -11,14 +11,22 @@
                     <div *ngIf="f['name'].errors['required']">Plan name is required</div>
                 </div>
             </div>
-            <div class="col-md-6">
-                <div class="form-control-box" [ngClass]="{ 'is-invalid': submitted && f['comm_per'].errors }">
-                    <!-- Supply allocation -->
-                    <label for="comm_per">Refer Commission</label>
-                    <input id="comm_per" type="number" formControlName="comm_per" class="form-control" autocomplete="off"/>
+            <div class="col-md-3">
+                <div class="form-control-box" [ngClass]="{ 'is-invalid': submitted && f['comm_per_referrer'].errors }">
+                    <label for="comm_per_referrer">Referrer Commission</label>
+                    <input id="comm_per_referrer" type="number" formControlName="comm_per_referrer" class="form-control" autocomplete="off"/>
                 </div>
-                <div *ngIf="submitted && f['comm_per'].errors" class="invalid-feedback">
-                    <div *ngIf="f['comm_per'].errors['required']">Refer commission is required</div>
+                <div *ngIf="submitted && f['comm_per_referrer'].errors" class="invalid-feedback">
+                    <div *ngIf="f['comm_per_referrer'].errors['required']">Refer commission is required</div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-control-box" [ngClass]="{ 'is-invalid': submitted && f['comm_per_referee'].errors }">
+                    <label for="comm_per_referee">Referee Commission</label>
+                    <input id="comm_per_referee" type="number" formControlName="comm_per_referee" class="form-control" autocomplete="off"/>
+                </div>
+                <div *ngIf="submitted && f['comm_per_referee'].errors" class="invalid-feedback">
+                    <div *ngIf="f['comm_per_referee'].errors['required']">Refer commission is required</div>
                 </div>
             </div>
             <div class="col-md-6">

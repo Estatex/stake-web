@@ -51,7 +51,8 @@ export class CreatePledgePlansComponent extends BaseWeb3Class implements OnInit 
             enddate: new FormControl('', [Validators.required]),
             min_amount: new FormControl('', [Validators.required]),
             // max_amount: new FormControl('', [Validators.required]),
-            comm_per: new FormControl('', [Validators.required]),
+            comm_per_referrer: new FormControl('', [Validators.required]),
+            comm_per_referee: new FormControl('', [Validators.required]),
             desc: new FormControl(''),
             show_stake: new FormControl(false)
         });
@@ -73,7 +74,8 @@ export class CreatePledgePlansComponent extends BaseWeb3Class implements OnInit 
                 enddate: new Date(data.enddate),
                 min_amount: data.min_amount,
                 // max_amount: data.max_amount ? data.max_amount : 0,
-                comm_per: data.ref_comm_per,
+                comm_per_referrer: data.comm_per_referrer,
+                comm_per_referee: data.comm_per_referee,
                 desc: data.descrp.replace(/<br\/>/g, "\n").replace(/<br \/>/g, "\n"),
                 show_stake: data.show_stakeoption === 1,
             });

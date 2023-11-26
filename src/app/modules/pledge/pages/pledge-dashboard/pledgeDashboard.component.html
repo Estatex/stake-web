@@ -186,7 +186,7 @@
                                 <button class="button" data-sharer="whatsapp" [attr.data-title]="referralTitle" [attr.data-url]="referralURL"><img src="/assets/images/icon-whatsapp.svg"/></button>
                                 <button class="button" data-sharer="telegram" [attr.data-title]="referralTitle" [attr.data-url]="referralURL" ><img src="/assets/images/icon-telegram.svg"/></button>
                                 <button class="button" (click)="copy(referralURL)" ><img src="/assets/images/icon-copy.svg"/></button>
-                                <div class="refer-com" *ngIf="planData">**Referral Commission : {{planData.ref_comm_per}}%</div>
+                                <div class="refer-com" *ngIf="planData">**Referrer/Referee Commission : {{planData.comm_per_referrer}}/{{planData.comm_per_referee}}%</div>
                             </div>
                         </div>
                         <div>
@@ -323,7 +323,7 @@
             
         </div>
         <div class="staking-video">
-            <video src="https://staking.estatex.eu/video/staking.mp4" class="object-fit-contain" autoplay controls></video>
+            <video src="https://staking.estatex.eu/cdn/staking.mp4" class="object-fit-contain" autoplay controls></video>
         </div>
         
     </div>

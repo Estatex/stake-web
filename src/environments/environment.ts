@@ -10,7 +10,6 @@ export const environment = {
   adminApiUrl: 'https://staking.estatex.eu/api/admin/',
   pledgeWebUrl: 'https://pledge.estatex.eu/',
   config: {
-    base_url: "http://localhost:4200",
     blockchain: "Ethereum Mainnet",
     blockchain_url: "https://goerli.etherscan.io/",
     Token		: "0x73da84ad118aea1327d0fdec3549356c963218c1",

@@ -10,40 +10,39 @@ export const environment = {
   adminApiUrl: 'https://staking.estatex.eu/api/admin/',
   pledgeWebUrl: 'https://pledge.estatex.eu/',
   config: {
-    base_url: "http://localhost:4200",
     blockchain: "Ethereum Mainnet",
-    blockchain_url: "https://goerli.etherscan.io/",
-    Token		: "0x73da84ad118aea1327d0fdec3549356c963218c1",
+    blockchain_url: "https://etherscan.io/",
+    Token		: "0x4ad006e61d77453ce99f6e24ba45d59e1c194644",
     ETH_NETWORK : {
-      StakingContractAddress: "0x5b87b33307783a6705BD76DA0a638Dcf741EEa94",
-      PledgeContractAddress: "0x56c7cC9199CaCcfb00824bA2DCb71CdD5c1893D4",
+      PledgeContractAddress: "0x5EEee8B304Ad51447736F74A5675c2cB070e52A7",
       Web3Modal: {
-        network: 5,
-        rpcUrl:'https://rpc.ankr.com/eth_goerli',
-        walletUrl:'https://rpc.ankr.com/eth_goerli',
-        chainName: 'Goerli test network'
+        network: 1,
+        rpcUrl:'https://rpc.ankr.com/eth',
+        walletUrl:'https://rpc.ankr.com/eth',
+        chainName: 'Ethereum Mainnet'
       },
       nativeCurrency: {
         name: 'Ethereum',
         symbol: 'ETH',
         decimals: 18
       },
-      blockExplorerUrls:'https://goerli.etherscan.io/'
+      blockExplorerUrls:'https://etherscan.io/'
     },
     BSC_NETWORK : {
-      PledgeContractAddress: "0x9ba6747497b2563c2477fA278658Ed3Fe8b20A7c",
+      StakingContractAddress: "0x5EEee8B304Ad51447736F74A5675c2cB070e52A7",
+      PledgeContractAddress: "0x07d086Cc91BD3aad22C6ff76AFF6aefe15763258",
       Web3Modal: {
-        network: 97,
-        rpcUrl:'https://rpc.ankr.com/bsc_testnet_chapel',
-        walletUrl:'https://rpc.ankr.com/bsc_testnet_chapel',
-        chainName: 'Binance TestChain',
+        network: 56,
+        rpcUrl:'https://rpc.ankr.com/bsc',
+        walletUrl:'https://rpc.ankr.com/bsc',
+        chainName: 'Binance Smartchain',
       },
       nativeCurrency: {
         name: 'Binance Coin',
         symbol: 'BNB',
         decimals: 18
       },
-      blockExplorerUrls:'https://testnet.bscscan.com'
+      blockExplorerUrls:'https://bscscan.com'
     }
   }
 };

@@ -85,8 +85,16 @@ export abstract class BaseWeb3Class {
 
     openNetworkModal(type:string = ''){
         this.web3Service.pageType = type;
-        this.networkModalRef = this.modalService.show(networkModalComponent,this.networkModalConfig);
+        if(type === 'staking'){
+            this.web3Network = 'BSC_NETWORK';
+            localStorage.setItem('network',this.web3Network);
+            this.web3Service.setWeb3Network(this.web3Network);
+            this.web3Service.connectWalletAction();
+        } else {
+            this.networkModalRef = this.modalService.show(networkModalComponent,this.networkModalConfig);
+        }
         return;
+        
     }
  
 }

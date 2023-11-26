@@ -16,7 +16,9 @@ export class networkModalComponent {
     constructor(
         private networkModalRef: BsModalRef,
         private web3Service: Web3Service
-    ) { }
+    ) { 
+        this.pageType = this.web3Service.pageType;
+    }
 
     closeModal() {
         this.networkModalRef.hide();

@@ -138,13 +138,13 @@ export class Web3Service {
         this.web3Network = this.getWeb3Network();
         this.networkType = this.getNetworkType(this.web3Network);
         if(this.pageType){
-        setTimeout(() => {
-            if(this.pageType === 'staking'){
-                this.router.navigate(['staking-pool']);
-            } else if (this.pageType === 'pledge'){
-                this.checkUser();
-            }
-        }, 500);
+            setTimeout(() => {
+                if(this.pageType === 'staking'){
+                    this.router.navigate(['staking-pool']);
+                } else if (this.pageType === 'pledge'){
+                    this.checkUser();
+                }
+            }, 500);
         }
     }
 
