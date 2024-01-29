@@ -128,6 +128,19 @@
                             </div>
                         </div>
                     </div>
+                    <div class="referral">
+                        <button (click)="isSocialIconShow = !isSocialIconShow" class="btn btn-focus">Refer Your Friends <img src="/assets/images/share-icon.svg"/></button>
+                        <div class="social-icons" [ngClass]="{'show':isSocialIconShow}">
+                            <button class="button" data-sharer="facebook" data-hashtag="EstateX" [attr.data-url]="referralURL"><img src="/assets/images/icon-facebook.svg"/></button>
+                            <button class="button" data-sharer="linkedin" [attr.data-url]="referralURL"><img src="/assets/images/icon-linkedin.svg"/></button>
+                            <button class="button" data-sharer="twitter" [attr.data-title]="referralTitle" [attr.data-url]="referralURL" data-hashtags="EstateX" ><img src="/assets/images/icon-x.svg"/></button>
+                            <button class="button" data-sharer="email" [attr.data-title]="referralTitle" [attr.data-url]="referralURL" [attr.data-subject]="referralTitle" [attr.data-to]="userData.email"><img src="/assets/images/icon-email2.svg"/></button>
+                            <button class="button" data-sharer="whatsapp" [attr.data-title]="referralTitle" [attr.data-url]="referralURL"><img src="/assets/images/icon-whatsapp.svg"/></button>
+                            <button class="button" data-sharer="telegram" [attr.data-title]="referralTitle" [attr.data-url]="referralURL" ><img src="/assets/images/icon-telegram.svg"/></button>
+                            <button class="button" (click)="copy(referralURL)" ><img src="/assets/images/icon-copy.svg"/></button>
+                            <div class="refer-com" *ngIf="planData">**Referrer/Referee Commission : {{planData.comm_per_referrer}}/{{planData.comm_per_referee}}%</div>
+                        </div>
+                    </div>
                 </div>
             </accordion-group>
             
