@@ -23,8 +23,10 @@ export class PledgeService {
     }
 
     public set userAuth(auth:any){
-        this._userAuth = auth;
-        localStorage.setItem('pledgeAuth',auth);
+        if(auth){
+            this._userAuth = auth;
+            localStorage.setItem('pledgeAuth',auth);
+        }
     }
 
 

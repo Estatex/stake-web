@@ -100,7 +100,7 @@ export class PledgeDashboardComponent extends BaseWeb3Class implements OnInit {
     }
     this.depositText =  'Deposit'
     if(this.selectedChain.token_type === 'ERC20'){
-      this.depositText =  'Approved and Deposit'
+      this.depositText =  'Approve and Deposit'
     }
     this.tokenBalance();
   }
@@ -126,7 +126,8 @@ export class PledgeDashboardComponent extends BaseWeb3Class implements OnInit {
     }
     this.modalRef.hide();
     this.submitted = false;
-    this.openModal(this.pledgeAgreement);
+    // this.openModal(this.pledgeAgreement);
+    this.saveTransaction();
   }
 
   close(){
@@ -280,7 +281,7 @@ export class PledgeDashboardComponent extends BaseWeb3Class implements OnInit {
       // stake_days: this.stakingDays ? this.stakingDays : null,
       token_amount:this.pledgeAmount,
       token_usd: this.selectedChain.usd_value * Number(this.pledgeAmount),
-      comm_per: this.planData.ref_comm_per,
+      comm_per: this.planData.comm_per_referrer,
     };
     this.pledgeService.save_transaction(obj).subscribe({
         next: (data) => {
