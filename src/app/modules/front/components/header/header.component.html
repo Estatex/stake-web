@@ -8,7 +8,7 @@
         <div class="right">
             <button *ngIf="!walletAddress; else connected" type="button" (click)="openNetworkModal(type)" class="btn btn-accent">CONNECT WALLET</button>
             <ng-template #connected>
-                <button type="button" class="btn metamask-btn btn-accent"><img src="assets/images/eth.svg" alt=""> {{walletAddress | trimValue}}</button>
+                <button type="button" class="btn metamask-btn btn-accent"><img src="assets/images/{{networkIcon}}" alt=""> {{walletAddress | trimValue}}</button>
                 <button *ngIf="wrongNetwork" (click)="changeNetwork()" class="btn btn-link text-danger">Change Network</button>
                 <button type="button" class="btn btn-link" *ngIf="type==='pledge' && isPledgeLogin" routerLink="/dashboard">Dashboard</button>
                 <button type="button" class="btn btn-link" (click)="logout()">Logout</button>

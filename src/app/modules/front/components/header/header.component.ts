@@ -15,6 +15,7 @@ import { NavigationStart, Router } from '@angular/router';
 export class HeaderComponent extends BaseWeb3Class {
     @Input() type:string = 'staking';
     isPledgeLogin: boolean = false;
+    networkIcon: string = 'eth.svg';
     constructor(
         private pledgeService: PledgeService,
         private authenticationService: AuthenticationService,
@@ -35,6 +36,7 @@ export class HeaderComponent extends BaseWeb3Class {
         this.bindWeb3Service();
         const pledgeAuth = this.pledgeService.userAuth;
         this.isPledgeLogin = pledgeAuth && pledgeAuth !== 'undefined' ? true : false;
+        this.networkIcon = this.networkType === 'ETH' ? 'eth.svg' : 'BNB.png';
         this.router.events.subscribe(event => {
             if (event instanceof NavigationStart) {
                 const pledgeAuth = this.pledgeService.userAuth;
