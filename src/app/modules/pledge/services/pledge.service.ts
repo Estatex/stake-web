@@ -78,4 +78,8 @@ export class PledgeService {
         return this.baseService.postRequest(ApiConstants.PLEDGE_GET_REFREE_TRANSACTIONS);
     }
 
+    get_active_plan() {
+        return this.baseService.postRequest(ApiConstants.PLEDGE_GET_ACTIVE_PLAN);
+    }
+
 }

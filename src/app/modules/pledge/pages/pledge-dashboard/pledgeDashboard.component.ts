@@ -54,6 +54,8 @@ export class PledgeDashboardComponent extends BaseWeb3Class implements OnInit {
   isAmountInvalid: boolean = false;
   saveTransactionData:any;
   currentBalance:any;
+  planStatus:string;
+  planMsg:any;
   @ViewChild('pledgeAgreement') pledgeAgreement: TemplateRef<any>;
   @ViewChild('pledgeStakingDays') pledgeStakingDays: TemplateRef<any>;
   constructor(
@@ -74,7 +76,7 @@ export class PledgeDashboardComponent extends BaseWeb3Class implements OnInit {
     if(!userAuth || !this.isWalletConnected){
       this.router.navigate(['home']);
     } else {
-      this.getDashboardData();
+      this.getActivePlan();
     }
     this.refData = localStorage.getItem('pledgeRefData');
     this.refData = this.refData ? JSON.parse(this.refData) : '';
@@ -224,6 +226,28 @@ export class PledgeDashboardComponent extends BaseWeb3Class implements OnInit {
         if(data.type === true){
           this.refreeTransactionsData = data.data;
           console.log(this.refreeTransactionsData);
+        } else {
+            this.toastrService.error(data.message);
+        }
+      },
+      error: (error) => {
+        console.error(error);
+      }
+    });
+  }
+
+  getActivePlan(){
+    this.pledgeService.get_active_plan().subscribe({
+      next: (data) => {
+        if(data.type === true){
+          this.getDashboardData();
+          console.log(data.data);
+          this.planId = data.data.plan_id;
+          this.planStatus = data.data.status;
+          this.planMsg = data.message;
+          if(data.message){
+            this.toastrService.info(data.message);
+          }
         } else {
             this.toastrService.error(data.message);
         }

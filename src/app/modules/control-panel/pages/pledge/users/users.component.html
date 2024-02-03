@@ -7,6 +7,12 @@
     </div>
     <div class="filter">
         <div class="filter-box1">
+            <select class="form-select" aria-label="Select Plan" [(ngModel)]="selectedPlan" (ngModelChange)="updateData()" style="width:180px;" >
+                <option value="">Select Plan</option>
+                <option *ngFor="let plan of planData" [value]="plan.id">{{plan.name}}</option>
+            </select>
+        </div>
+        <div class="filter-box1">
             <select class="form-select" aria-label="Select Plan" [(ngModel)]="selectedStatus" (ngModelChange)="updateData();" style="width:200px;" >
                 <option value="">Select KYC Status</option>
                 <option class="text-uppercase" *ngFor="let status of kycStatus" [value]="status">{{status}}</option>

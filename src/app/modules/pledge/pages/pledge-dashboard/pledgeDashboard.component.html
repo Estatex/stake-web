@@ -210,9 +210,14 @@
                             </div>
                         </div>
                         <div>
-                            <button (click)="openModal(pledgeTemplate)" class="btn btn-focus" [disabled]="userData.kyc_status !== 'approved' || wrongNetwork">Pledge <svg xmlns="http://www.w3.org/2000/svg" width="24" height="25" viewBox="0 0 24 25" fill="none">
+                            <span *ngIf="planStatus !== 'ACTIVE' else pledgebtn" [tooltip]="planMsg" class="btn btn-focus" style="opacity:.65;">Pledge <svg xmlns="http://www.w3.org/2000/svg" width="24" height="25" viewBox="0 0 24 25" fill="none">
                                 <path fill-rule="evenodd" clip-rule="evenodd" d="M16.5021 16.8766C16.1573 17.3079 16.2274 17.9372 16.6587 18.2821C17.0901 18.627 17.7194 18.5568 18.0643 18.1255L21.5625 13.7499C22.1464 13.0197 22.1464 11.9824 21.5625 11.2521L18.0643 6.87655C17.7194 6.44519 17.0901 6.37508 16.6587 6.71996C16.2274 7.06484 16.1573 7.69411 16.5021 8.12547L19.2009 11.501L2.99902 11.501C2.44674 11.501 1.99902 11.9487 1.99902 12.501C1.99902 13.0533 2.44674 13.501 2.99902 13.501L19.2009 13.501L16.5021 16.8766Z" fill="#FAFCFE"/>
-                            </svg></button>
+                            </svg></span>
+                            <ng-template #pledgebtn>
+                                <button (click)="openModal(pledgeTemplate)" class="btn btn-focus" [disabled]="userData.kyc_status !== 'approved' || wrongNetwork">Pledge <svg xmlns="http://www.w3.org/2000/svg" width="24" height="25" viewBox="0 0 24 25" fill="none">
+                                    <path fill-rule="evenodd" clip-rule="evenodd" d="M16.5021 16.8766C16.1573 17.3079 16.2274 17.9372 16.6587 18.2821C17.0901 18.627 17.7194 18.5568 18.0643 18.1255L21.5625 13.7499C22.1464 13.0197 22.1464 11.9824 21.5625 11.2521L18.0643 6.87655C17.7194 6.44519 17.0901 6.37508 16.6587 6.71996C16.2274 7.06484 16.1573 7.69411 16.5021 8.12547L19.2009 11.501L2.99902 11.501C2.44674 11.501 1.99902 11.9487 1.99902 12.501C1.99902 13.0533 2.44674 13.501 2.99902 13.501L19.2009 13.501L16.5021 16.8766Z" fill="#FAFCFE"/>
+                                </svg></button>
+                            </ng-template>
                         </div>
                     </div>
                 </div>

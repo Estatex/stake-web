@@ -60,4 +60,5 @@ export class ApiConstants {
     public static get PLEDGE_GET_PLAN() : string { return this.PLEDGE_API_URL + 'getPlan'}
     public static get PLEDGE_GET_REFREE_TRANSACTIONS() : string { return this.PLEDGE_API_URL + 'getRefreeTransactions'}
     public static get PLEDGE_CHECK_USER() : string { return this.PLEDGE_API_URL + 'checkUser'}
+    public static get PLEDGE_GET_ACTIVE_PLAN() : string { return this.PLEDGE_API_URL + 'getActivePlan'}
 }

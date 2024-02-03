@@ -58,7 +58,7 @@
                     <div *ngIf="f['min_amount'].errors['required']">Set minimum stake is required</div>
                 </div>
             </div>
-            <!-- <div class="col-md-6">
+            <div class="col-md-6">
                 <div class="form-control-box" [ngClass]="{ 'is-invalid': submitted && f['max_amount'].errors }">
                     <label for="max_amount">Set maximum amount</label>
                     <input id="max_amount" type="number" formControlName="max_amount" class="form-control" autocomplete="off"/>
@@ -66,7 +66,16 @@
                 <div *ngIf="submitted && f['max_amount'].errors" class="invalid-feedback">
                     <div *ngIf="f['max_amount'].errors['required']">Set maximum stake is required</div>
                 </div>
-            </div> -->
+            </div>
+            <div class="col-md-6">
+                <div class="form-control-box" [ngClass]="{ 'is-invalid': submitted && f['total_amount'].errors }">
+                    <label for="total_amount">Total Amount</label>
+                    <input id="total_amount" type="number" formControlName="total_amount" class="form-control" autocomplete="off"/>
+                </div>
+                <div *ngIf="submitted && f['total_amount'].errors" class="invalid-feedback">
+                    <div *ngIf="f['total_amount'].errors['required']">Total amount is required</div>
+                </div>
+            </div>
             <div class="col-md-6">
                 <div class="form-control-box">
                     <label for="descrp">Description</label>
@@ -86,12 +95,12 @@
                             <input class="form-check-input" formControlName="show_stake" type="checkbox" role="switch" id="stakeoptionCheck">
                         </div>
                     </div>
-                    <!-- <div>
-                        <label class="pe-3">Paused</label>
+                    <div>
+                        <label class="pe-3">Status</label>
                         <div class="form-check form-switch">
-                            <input class="form-check-input" formControlName="is_paused" type="checkbox" role="switch" id="pausedSwitchCheck">
+                            <input class="form-check-input" formControlName="status" type="checkbox" role="switch" id="pausedSwitchCheck">
                         </div>
-                    </div> -->
+                    </div>
                 </div>
                 <!-- <button class="btn btn-sm btn-danger"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="17" viewBox="0 0 16 17" fill="none">
                     <path fill-rule="evenodd" clip-rule="evenodd" d="M4.17675 3.69848C3.90315 3.42914 3.46461 3.43461 3.19725 3.7107C2.92989 3.98679 2.93496 4.42894 3.20856 4.69827L7.07053 8.5L3.20856 12.3017C2.93496 12.5711 2.92989 13.0132 3.19725 13.2893C3.46461 13.5654 3.90315 13.5709 4.17675 13.3015L8.06245 9.47644L11.8233 13.1786C12.0969 13.4479 12.5354 13.4424 12.8027 13.1664C13.0701 12.8903 13.065 12.4481 12.7914 12.1788L9.05436 8.5L12.7914 4.82122C13.065 4.55188 13.0701 4.10973 12.8027 3.83364C12.5354 3.55755 12.0969 3.55208 11.8233 3.82142L8.06245 7.52356L4.17675 3.69848Z" fill="white"/>

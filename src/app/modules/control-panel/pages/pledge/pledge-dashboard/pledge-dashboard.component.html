@@ -1,6 +1,15 @@
 <div class="dashboard-page">
+    <div class="filter mb-0 ms-auto">
+        <div class="filter-box1">
+            <h3>Select Plan</h3>
+            <select class="form-select" aria-label="Select Plan" [(ngModel)]="selectedPlan" (ngModelChange)="getDashboardDate()" style="width:180px;" >
+                <option value="0">All</option>
+                <option *ngFor="let plan of planData" [value]="plan.id">{{plan.name}}</option>
+            </select>
+        </div>
+    </div>
     <div class="row" *ngIf="dashboardDate">
-        <div class="col-md-4">
+        <div class="col-md-3">
             <div class="chart-box">
                 <div class="info">
                     <div class="type">Total Active Users</div>
@@ -12,7 +21,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-4">
+        <div class="col-md-3">
             <div class="chart-box">
                 <div class="info">
                     <div class="type">Total Pledge</div>
@@ -24,7 +33,16 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-4">
+        <div class="col-md-3">
+            <div class="chart-box">
+                <div class="info">
+                    <div class="type">Pool Fill Ratio</div>
+                    <div class="count">{{dashboardDate.totalPledged}}/{{dashboardDate.capping}}</div>
+                    <div class="result">{{dashboardDate.cappingPercent}}%</div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
             <div class="chart-box">
                 <div class="info">
                     <div class="type">Total Commission</div>
@@ -51,14 +69,6 @@
         </div>
         <tabset>
             <tab heading="Balance" id="tabBalance">
-                <div class="filter mb-0 mt-3">
-                    <div class="filter-box1">
-                        <h3>Select Plan</h3>
-                        <select class="form-select" aria-label="Select Plan" [(ngModel)]="selectedPlan" (ngModelChange)="getChainBalance()" style="width:180px;" >
-                            <option *ngFor="let plan of planData" [value]="plan.id">{{plan.name}}</option>
-                        </select>
-                    </div>
-                </div>
                 <div class="site-table mt-3">
                     <div class="table-container">
                         <table class="table">
@@ -89,7 +99,7 @@
                     </div>
                 </div>
             </tab>
-            <tab heading="Transtion" id="tabTranstion">
+            <tab heading="Withdrawls" id="tabTranstion">
                 <app-withdraw-transaction [eventEmitter]="getTransactionData"></app-withdraw-transaction>
             </tab>
         </tabset>

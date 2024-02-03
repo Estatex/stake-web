@@ -50,11 +50,13 @@ export class CreatePledgePlansComponent extends BaseWeb3Class implements OnInit 
             startdate: new FormControl('', [Validators.required]),
             enddate: new FormControl('', [Validators.required]),
             min_amount: new FormControl('', [Validators.required]),
-            // max_amount: new FormControl('', [Validators.required]),
+            max_amount: new FormControl('', [Validators.required]),
+            total_amount: new FormControl('', [Validators.required]),
             comm_per_referrer: new FormControl('', [Validators.required]),
             comm_per_referee: new FormControl('', [Validators.required]),
             desc: new FormControl(''),
-            show_stake: new FormControl(false)
+            show_stake: new FormControl(false),
+            status: new FormControl(true)
         });
         this.route.paramMap.subscribe((params: ParamMap) => {
             const id  = params.get('id');
@@ -73,11 +75,13 @@ export class CreatePledgePlansComponent extends BaseWeb3Class implements OnInit 
                 startdate: new Date(data.startdate),
                 enddate: new Date(data.enddate),
                 min_amount: data.min_amount,
-                // max_amount: data.max_amount ? data.max_amount : 0,
+                max_amount: data.max_amount ? data.max_amount : 0,
+                total_amount: data.total_amount ? data.total_amount : 0,
                 comm_per_referrer: data.comm_per_referrer,
                 comm_per_referee: data.comm_per_referee,
                 desc: data.descrp.replace(/<br\/>/g, "\n").replace(/<br \/>/g, "\n"),
                 show_stake: data.show_stakeoption === 1,
+                status: data.status === 'ACTIVE',
             });
         } else {
             this.router.navigate(['/user/pledge/pledge-plans']);
@@ -94,6 +98,7 @@ export class CreatePledgePlansComponent extends BaseWeb3Class implements OnInit 
         this.form.value.desc = this.form.value.desc.replace(/\n/g, "<br />");;
         this.form.value.startdate = this.datePipe.transform(this.form.value.startdate, 'yyyy-MM-dd');
         this.form.value.enddate = this.datePipe.transform(this.form.value.enddate, 'yyyy-MM-dd');
+        this.form.value.status = this.form.value.status ? 'ACTIVE' : 'INACTIVE';
         if(this.planId){
             this.form.value.plan_id = this.planId;
         }

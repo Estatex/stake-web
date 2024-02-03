@@ -62,7 +62,9 @@ export class PledgeAdminDashboardComponent extends BaseWeb3Class implements OnIn
     }
 
     getDashboardDate() {
-        const data = {}
+        const data = {
+            plan_id:this.selectedPlan
+        }
         this.pledgeService.dashboard(data).subscribe({
             next: (data) => {
                 if(data.type === true){

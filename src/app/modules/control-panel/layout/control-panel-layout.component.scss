@@ -79,7 +79,7 @@
             }
             tr td{font-size:$ft14;}
             .status{background:#E0F8F2; border-radius:26px; padding:4px 10px; font-size:10px; text-transform:uppercase; font-weight:700; color:#31D0AA;
-                &.false{color:#33404F;}
+                &.false{color:#7a838d; background-color:#e4ebe9;}
             }
             .action{font-size:$ft14; font-weight:$ftB; cursor: pointer; background: none; border:none;
                 img{display:inline-block; margin-right:4px; max-height:20px;}
