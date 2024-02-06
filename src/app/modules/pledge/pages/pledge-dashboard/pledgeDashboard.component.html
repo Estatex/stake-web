@@ -129,8 +129,8 @@
                         </div>
                     </div>
                     <div class="referral">
-                        <button (click)="isSocialIconShow = !isSocialIconShow" class="btn btn-focus">Refer Your Friends <img src="/assets/images/share-icon.svg"/></button>
-                        <div class="social-icons" [ngClass]="{'show':isSocialIconShow}">
+                        <button (click)="isSocialIconShow1 = !isSocialIconShow1" class="btn btn-focus">Refer Your Friends <img src="/assets/images/share-icon.svg"/></button>
+                        <div class="social-icons" [ngClass]="{'show':isSocialIconShow1}">
                             <button class="button" data-sharer="facebook" data-hashtag="EstateX" [attr.data-url]="referralURL"><img src="/assets/images/icon-facebook.svg"/></button>
                             <button class="button" data-sharer="linkedin" [attr.data-url]="referralURL"><img src="/assets/images/icon-linkedin.svg"/></button>
                             <button class="button" data-sharer="twitter" [attr.data-title]="referralTitle" [attr.data-url]="referralURL" data-hashtags="EstateX" ><img src="/assets/images/icon-x.svg"/></button>
@@ -261,7 +261,7 @@
                 <div class="invalid-feedback">
                     <span *ngIf="submitted && !pledgeAmount">Please Enter Amount.</span>
                     <span *ngIf="submitted && pledgeAmount && isAmountInvalid">
-                        Pledge minimum: {{planData.min_amount}} USD.
+                        Pledge minimum: {{planData.min_amount}} USD, maximum: {{planData.max_amount}}.
                     </span>
                     <span *ngIf="submitted && pledgeAmount && pledgeAmount > currentBalance" class="invalid-feedback">
                         Insufficient Balance.

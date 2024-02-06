@@ -23,6 +23,7 @@ export class PledgeDashboardComponent extends BaseWeb3Class implements OnInit {
   isTxComaplete:boolean = false;
   transactionHash: string;
   isSocialIconShow: boolean = false;
+  isSocialIconShow1: boolean = false;
   depositText:string = 'Deposit'
   isOpen: number = 2;
   isESXtokens:boolean = false;
@@ -117,7 +118,7 @@ export class PledgeDashboardComponent extends BaseWeb3Class implements OnInit {
     this.isAmountInvalid = false;
     if(!this.pledgeAmount){
       this.isFormInvalid = true;
-    } else if (Number(this.pledgeUSDAmount) < this.planData.min_amount){
+    } else if (Number(this.pledgeUSDAmount) < this.planData.min_amount || Number(this.pledgeUSDAmount) > this.planData.max_amount){
       this.isFormInvalid = true;
       this.isAmountInvalid = true;
     } else if(this.pledgeAmount > this.currentBalance){
