@@ -17,8 +17,8 @@ export const environment = {
       PledgeContractAddress: "0x5EEee8B304Ad51447736F74A5675c2cB070e52A7",
       Web3Modal: {
         network: 1,
-        rpcUrl:'https://rpc.ankr.com/eth',
-        walletUrl:'https://rpc.ankr.com/eth',
+        rpcUrl:'https://rpc.ankr.com/eth/44f6564e08e537851827bcb2f908fbe9b409f6a885a8dd912289c47155194960',
+        walletUrl:'https://rpc.ankr.com/eth/44f6564e08e537851827bcb2f908fbe9b409f6a885a8dd912289c47155194960',
         chainName: 'Ethereum Mainnet'
       },
       nativeCurrency: {
@@ -33,8 +33,8 @@ export const environment = {
       PledgeContractAddress: "0x07d086Cc91BD3aad22C6ff76AFF6aefe15763258",
       Web3Modal: {
         network: 56,
-        rpcUrl:'https://rpc.ankr.com/bsc',
-        walletUrl:'https://rpc.ankr.com/bsc',
+        rpcUrl:'https://rpc.ankr.com/bsc/44f6564e08e537851827bcb2f908fbe9b409f6a885a8dd912289c47155194960',
+        walletUrl:'https://rpc.ankr.com/bsc/44f6564e08e537851827bcb2f908fbe9b409f6a885a8dd912289c47155194960',
         chainName: 'Binance Smartchain',
       },
       nativeCurrency: {
@@ -46,4 +46,3 @@ export const environment = {
     }
   }
 };
-
