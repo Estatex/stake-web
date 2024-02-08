@@ -417,7 +417,7 @@ export class PledgeDashboardComponent extends BaseWeb3Class implements OnInit {
     const addr = this.walletAddress;
     const myContractInstance = new this.web3js.eth.Contract(AbiToken,this.selectedChain.contract_address);
     const count = '100000' + "0".padStart(this.selectedChain.token_decimals, '0');
-    await myContractInstance.methods.approve(this.configToken[this.web3Network].PledgeContractAddress, count).send({ from: addr }, (err:any, res:any ) => {
+    await myContractInstance.methods.approve(this.configToken[this.web3Network].PledgeContractAddress, count).send({ from:addr, gasLimit:80000 }, (err:any, res:any ) => {
         if (res) {
             console.log('get Approval ESX', res);
         } else {
@@ -446,7 +446,7 @@ export class PledgeDashboardComponent extends BaseWeb3Class implements OnInit {
     const myContractInstance = new this.web3js.eth.Contract(AbiPledge, this.configToken[this.web3Network].PledgeContractAddress);
     const count = (Number(this.pledgeAmount) * Math.pow(10,this.selectedChain.token_decimals)).toString();
     if(this.selectedChain.token_type === 'ERC20'){
-      await myContractInstance.methods.pledgeToken(this.selectedChain.contract_address,count).send({ from: addr }, (err:any, res:any ) => {
+      await myContractInstance.methods.pledgeToken(this.selectedChain.contract_address,count).send({ from: addr, gasLimit:80000 }, (err:any, res:any ) => {
           if (res) {
               console.log('stakeProcess', res);
               this.transactionHash = res;
@@ -469,7 +469,7 @@ export class PledgeDashboardComponent extends BaseWeb3Class implements OnInit {
           console.log('sendETH then error =>', error);
       });
     } else {
-      await myContractInstance.methods.pledge().send({ from: addr, gasLimit:30000, value: count }, (err:any, res:any ) => {
+      await myContractInstance.methods.pledge().send({ from: addr, gasLimit:80000, value: count }, (err:any, res:any ) => {
           if (res) {
               console.log('stakeProcess', res);
               this.transactionHash = res;
