@@ -90,6 +90,9 @@ export class PledgeDashboardComponent extends BaseWeb3Class implements OnInit {
     // setTimeout(() => {
     //   this.openModal(this.pledgeStakingDays);
     // }, 2000);
+    this.web3Service.walletAddress$.subscribe(x => {
+      this.tokenBalance();
+    })
   }
 
   openModal(template: TemplateRef<any>){
