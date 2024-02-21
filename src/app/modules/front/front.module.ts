@@ -5,8 +5,6 @@ import { HomeComponent } from './pages/home/home.component';
 import { StakingPoolComponent } from './pages/staking-pool/staking-pool.component';
 import { AppRoutingModule } from 'app/app-routing.module';
 import { AccordionModule } from 'ngx-bootstrap/accordion';
-import { HeaderComponent } from './components/header/header.component';
-import { FooterComponent } from './components/footer/footer.component';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { DatePipe } from '@angular/common';
 

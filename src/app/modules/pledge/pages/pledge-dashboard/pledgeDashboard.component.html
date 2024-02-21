@@ -95,7 +95,7 @@
                     <div class="row mb-3" *ngIf="dashboardData">
                         <div class="col-6">
                             <div class="balance-info">
-                                <h4>Amount pledged</h4>
+                                <h4>Amount Pledged</h4>
                                 <div class="value">
                                     <span>USD</span>
                                     {{dashboardData.total_pledged}}
@@ -104,7 +104,7 @@
                         </div>
                         <div class="col-6">
                             <div class="balance-info">
-                                <h4>Total Referrals</h4>
+                                <h4>Total Referrals (Count)</h4>
                                 <div class="value">
                                     {{dashboardData.total_referrals}}
                                 </div>
@@ -112,18 +112,37 @@
                         </div>
                         <div class="col-6">
                             <div class="balance-info">
-                                <h4>Pledged by Referrers</h4>
+                                <h4>Pledge by Referrals</h4>
                                 <div class="value">
+                                    <span>USD</span>
                                     {{dashboardData.total_ref_pledged}}
                                 </div>
                             </div>
                         </div>
                         <div class="col-6">
                             <div class="balance-info">
-                                <h4>Commission earned through Referres</h4>
+                                <h4>Commission Earned (Referrals)</h4>
                                 <div class="value">
                                     <span>USD</span>
                                     {{dashboardData.total_ref_comm}}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="balance-info">
+                                <h4>Commission Earned (Referre)</h4>
+                                <div class="value">
+                                    <span>USD</span>
+                                    {{dashboardData.total_referral_comm}}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="balance-info">
+                                <h4>Commission Earned (Total)</h4>
+                                <div class="value">
+                                    <span>USD</span>
+                                    {{dashboardData.total_comm}}
                                 </div>
                             </div>
                         </div>
